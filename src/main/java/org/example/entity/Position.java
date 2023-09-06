@@ -4,8 +4,8 @@ import java.util.Objects;
 
 /**
  * The Position class represent a two-dimensional integer position
- *  @author [Rong Sun]
- *  @version 1.0
+ *  @author Rong Sun
+ *
  */
 public class Position {
     private int x;

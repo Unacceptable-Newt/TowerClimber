@@ -4,8 +4,8 @@ package org.example.entity;
  * The Enemy class represent the enemy that player can fight with.
  * Enemy can attack player and player's health will reduce the value of attack
  * player can attack Enemy and Enemy's health will reduce the value of attack
- *  @author [Rong Sun]
- *  @version 1.0
+ *  @author Rong Sun
+ *
  */
 public class Enemy {
     private Integer attack;

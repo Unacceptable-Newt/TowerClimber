@@ -9,8 +9,8 @@ import java.io.IOException;
  * The NPC class represent user's charactor, and he/she will have money, health, and player level
  * if player was attacked, player's health will decrease
  * .....
- *  @author [Rong Sun]
- *  @version 1.0
+ *  @author Rong Sun
+ *
  */
 public class NPC {
     private String name;

@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="366eeda4-e38d-4071-9037-d4e218690fdc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Enemy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/NPC.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Position.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Weapon.java" afterDir="false" />
+    <list default="true" id="366eeda4-e38d-4071-9037-d4e218690fdc" name="Changes" comment="Entity class commit &#10;include enemy, NPC, player,...&#10;Version_1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/NPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/NPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Weapon.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,8 +75,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693914867262</updated>
-      <workItem from="1694004169140" duration="4658000" />
+      <workItem from="1694004169140" duration="5906000" />
     </task>
+    <task id="LOCAL-00001" summary="Entity class commit &#10;include enemy, NPC, player,...&#10;Version_1">
+      <created>1694011261060</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1694011261060</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -92,5 +100,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Entity class commit &#10;include enemy, NPC, player,...&#10;Version_1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Entity class commit &#10;include enemy, NPC, player,...&#10;Version_1" />
   </component>
 </project>

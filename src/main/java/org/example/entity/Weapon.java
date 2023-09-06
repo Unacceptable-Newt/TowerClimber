@@ -4,8 +4,8 @@ package org.example.entity;
  * The `Weapon` class represents a weapon object in the game.
  * It tells  about the weapon's name, price, and attack value.
  *
- * @author [Rong Sun]
- * @version 1.0
+ * @author Rong Sun
+ *
  */
 public class Weapon {
     private String weaponName;
