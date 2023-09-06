@@ -6,11 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="366eeda4-e38d-4071-9037-d4e218690fdc" name="Changes" comment="Entity class commit &#10;include enemy, NPC, player,...&#10;Version_1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/NPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/NPC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Position.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Weapon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Inventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Movement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Movement.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,32 +41,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="TowerCrawler.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "belonging-classes"
+  }
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
