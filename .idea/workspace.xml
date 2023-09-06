@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="366eeda4-e38d-4071-9037-d4e218690fdc" name="Changes" comment="">
+    <list default="true" id="366eeda4-e38d-4071-9037-d4e218690fdc" name="Changes" comment="Entity class commit &#10;include enemy, NPC, player,...&#10;Version_1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/GameState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Gui.java" afterDir="false" />
@@ -35,10 +35,6 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 0
-}</component>
   <component name="ProjectId" id="2UybewAqYOjK6J1iEjQAVpVzrEf" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -60,7 +56,34 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693914867262</updated>
+      <workItem from="1694004169140" duration="5906000" />
     </task>
+    <task id="LOCAL-00001" summary="Entity class commit &#10;include enemy, NPC, player,...&#10;Version_1">
+      <created>1694011261060</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1694011261060</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Entity class commit &#10;include enemy, NPC, player,...&#10;Version_1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Entity class commit &#10;include enemy, NPC, player,...&#10;Version_1" />
   </component>
 </project>
