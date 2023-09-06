@@ -1,2 +1,4 @@
-package org.example;public class GameState {
+package org.example;
+
+public class GameState {
 }

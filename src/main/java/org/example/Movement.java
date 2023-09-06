@@ -1,2 +1,4 @@
-package org.example;public class Movement {
+package org.example;
+
+public class Movement {
 }
