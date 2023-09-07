@@ -1,5 +1,7 @@
 package org.example.interaction;
 
+import org.example.belonging.Inventory;
+import org.example.entity.Player;
 import org.example.entity.Position;
 
 /**
@@ -8,7 +10,10 @@ import org.example.entity.Position;
  */
 public class MonsterFighter implements Interaction {
     @Override
-    public void interactWithAdjacent(Direction direction, int level, Position playerCurrentPosition) {
+    public void interactWithAdjacent(
+            Direction direction, int level,
+            Player player, Inventory inventory
+    ) {
         // FIXME
     }
 }
