@@ -6,13 +6,13 @@ import org.example.util.Pair;
 
 /**
  * @author
- * Initialises a talk with an adjacent NPC
+ * Initialises a fight with an adjacent monster
  */
-public class NpcTalker implements Interaction{
+public class EnemyFighter implements Interaction {
     /**
      * @author
      *
-     * Interacts with an adjacent NPC to talk to him/her and changes the player and his inventory in the process.
+     * Interacts with an adjacent enemy to fight him/her/it and changes the player and his inventory in the process.
      *
      * @param direction Which direction the player should move
      * @param level The level of the maze. (e.g. maze level 1, maze level 2, maze level 3)
