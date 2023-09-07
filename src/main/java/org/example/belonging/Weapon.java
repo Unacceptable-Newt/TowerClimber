@@ -8,29 +8,10 @@ package org.example.belonging;
  *
  */
 public class Weapon extends Item {
-    private String name;
 
-    private Integer price;
+    private int attackValue;
 
-    private Integer attackValue;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Integer getAttackValue() {
+    public int getAttackValue() {
         return attackValue;
     }
 

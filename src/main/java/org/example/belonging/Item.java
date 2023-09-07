@@ -7,13 +7,13 @@ package org.example.belonging;
  */
 public abstract class Item {
     // Name of the item
-    private String name;
+    String name;
 
     // Price of the item
-    private int price;
+    int price;
 
     // Weight of the item. Defaults to 1
-    private int weight = 1;
+    int weight = 1;
 
     /**
      * @author Yucheng Zhu
