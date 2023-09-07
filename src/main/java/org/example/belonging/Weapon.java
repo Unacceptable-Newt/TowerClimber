@@ -1,4 +1,4 @@
-package org.example.entity;
+package org.example.belonging;
 
 /**
  * The `Weapon` class represents a weapon object in the game.
