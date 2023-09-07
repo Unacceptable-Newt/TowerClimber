@@ -1,4 +1,4 @@
-package org.example;
+package org.example.belonging;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.example.entity;
+package org.example.belonging;
 
 /**
  * The `Weapon` class represents a weapon object in the game.
@@ -7,22 +7,22 @@ package org.example.entity;
  * @author Rong Sun
  *
  */
-public class Weapon {
-    private String weaponName;
+public class Weapon extends Item {
+    private String name;
 
     private Integer price;
 
     private Integer attackValue;
 
-    public String getWeaponName() {
-        return weaponName;
+    public String getName() {
+        return name;
     }
 
-    public void setWeaponName(String weaponName) {
-        this.weaponName = weaponName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getPrice() {
+    public int getPrice() {
         return price;
     }
 
@@ -39,7 +39,7 @@ public class Weapon {
     }
 
     public Weapon(String weaponName, Integer price, Integer attackValue) {
-        this.weaponName = weaponName;
+        this.name = weaponName;
         this.price = price;
         this.attackValue = attackValue;
     }
