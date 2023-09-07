@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.BeforeEach;
 
-import java.util.Objects;
-
 /**
  * @author Yucheng Zhu
  * Test the `Pair` class
