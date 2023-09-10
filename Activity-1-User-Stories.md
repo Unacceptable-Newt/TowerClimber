@@ -100,7 +100,7 @@ PD = person-day(s)
 
 
 ## Hidden Items
-|  **Spring 4:** |  Estimated Time |Story Point |
+|  **Sprint 4:** |  Estimated Time |Story Point |
 | ------------------------------------------------------------ | ------ | -----|
 | As a player, I want to collect items on the ground by searching the map, so that I can have a sense of surprise. | 1-2 PD | 10-20|
 | As a player, I want NPC(s) can give hints (via conversion) to collect the hidden items from somewhere, so that I can get the hidden items easier. | 1-2 PD | 10-20|
