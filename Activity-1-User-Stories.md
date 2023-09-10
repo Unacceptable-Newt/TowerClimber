@@ -49,7 +49,7 @@ PD = person-day(s)
 | As a player, I want to get rewards by defeating the enemies, so that I feel rewarded by playing the game. | < 1 PD | 5 |
 
 |  **Sprint 5:** | Estimated Time  |Story Point |
-| ------------------------------------------------------------ | ------ |
+| ------------------------------------------------------------ | ------ | -----|
 | As a player, I want to know the requirements for defeating the enemies, so that I understand what I need to do to beat them. | 1 PD   | 10 |
 | As a player, I want to get a hint about the whereabouts of the enemies, so that I do not waste wandering through the whole map for nothing. | 1 PD   | 10 |
 | As a developer, I want to set the NPC with the closest relationship to the hero as the final boss, so that the player can be intrigued by the game plot. | < 1 PD | 5 |
