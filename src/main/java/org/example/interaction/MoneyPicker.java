@@ -16,7 +16,7 @@ public class MoneyPicker implements Interaction {
      *
      * @param direction Which direction the player should move
      * @param level The level of the maze. (e.g. maze level 1, maze level 2, maze level 3)
-     * @param player The player's current position in the maze.
+     * @param player The player.
      * @param inventory The player's inventory.
      *
      * @return Modified player and inventory

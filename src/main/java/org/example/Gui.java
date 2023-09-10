@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.HashMap;
+
 /**
  * @author
  *
@@ -13,11 +15,12 @@ public class Gui {
 
     /**
      * @author
-     * Given a gameStateString, update the char "pixels" for the GUI.
-     * @param gameStateString A string summarising all the current game variables
+     * Given all game objects, update the char "pixels" for the GUI.
+     * @param gameObjects Game objects summarising all the object with game variables
+     * @param previousCharsPixels Char "pixels" before the change
      * @return A matrix of all char "pixels" to be displayed on GUI
      */
-    public char[][] rasterise(String gameStateString) {
+    public char[][] rasterise(HashMap<String, Object> gameObjects, char[][] previousCharsPixels) {
         // FIXME
         return null;
     }

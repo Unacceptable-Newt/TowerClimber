@@ -12,9 +12,8 @@ import java.io.IOException;
  *  @author Rong Sun
  *
  */
-public class NPC {
+public class NPC extends Life {
     private String name;
-    private Position position;
     private List<String> dialogue;
 
     public NPC(String name, Position position) {
@@ -28,14 +27,6 @@ public class NPC {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
     }
 
     public List<String> getDialogue() {

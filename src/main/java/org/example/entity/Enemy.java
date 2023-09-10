@@ -7,26 +7,26 @@ package org.example.entity;
  *  @author Rong Sun
  *
  */
-public class Enemy {
-    private Integer attack;
-    private Integer health;
-    private Integer defense;
+public class Enemy extends Life {
+    private int attack;
+    private int health;
+    private int defense;
 
-    public Enemy(Integer attack, Integer health, Integer defense) {
+    public Enemy(int attack, int health, int defense) {
         this.attack = attack;
         this.health = health;
         this.defense = defense;
     }
 
-    public Integer getAttack() {
+    public int getAttack() {
         return attack;
     }
 
-    public void setAttack(Integer attack) {
+    public void setAttack(int attack) {
         this.attack = attack;
     }
 
-    public Integer getHealth() {
+    public int getHealth() {
         return health;
     }
 
@@ -34,7 +34,7 @@ public class Enemy {
         this.health = health;
     }
 
-    public Integer getDefense() {
+    public int getDefense() {
         return defense;
     }
 

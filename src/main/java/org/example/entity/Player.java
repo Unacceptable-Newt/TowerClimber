@@ -9,16 +9,9 @@ import org.example.belonging.Weapon;
  *  @author Rong Sun
  *
  */
-public class Player {
-
-    private Integer money;
-    private Integer health;
-    private Integer level;
-
-    private Weapon currentWeapon;
-
-    private Position position;
-
+public class Player extends Life {
+    Weapon currentWeapon;
+    int level;
     public Player(Integer money, Integer health, Integer level, Position position) {
         this.money = money;
         this.health = health;
@@ -26,28 +19,8 @@ public class Player {
         this.position = position;
     }
 
-    public Integer getMoney() {
-        return money;
-    }
-
-    public void setMoney(Integer money) {
-        this.money = money;
-    }
-
-    public Integer getHealth() {
-        return health;
-    }
-
-    public void setHealth(Integer health) {
-        this.health = health;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
+    public void getAttacked(){
+        defense();
     }
 
     public Weapon getCurrentWeapon() {
@@ -58,26 +31,13 @@ public class Player {
         this.currentWeapon = currentWeapon;
     }
 
-    public Position getPosition() {
-        return position;
+    public int getLevel() {
+        return level;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setLevel(int level) {
+        this.level = level;
     }
-
-    public void getAttacked(){
-        defense();
-    }
-
-    public void defense(){
-
-    }
-
-    public void attack(){
-
-    }
-
 
 
 }
