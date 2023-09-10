@@ -58,23 +58,23 @@ PD = person-day(s)
 
 ## Inventory system
 
-| **Sprint 3:** | Estimated Time  |Story Point |
-| ------------------------------------------------------------ | ------ | -----|
+| **Sprint 2:**                                                                                                                            | Estimated Time  |Story Point |
+|------------------------------------------------------------------------------------------------------------------------------------------| ------ | -----|
 | As a player, I want to pick up weapons and store them in my weapon bag, so that I can continuously use these weapons whenever I want to. | 1 PD   | 10|
-| As a player, I want to drop the weapon from my weapon bag, so that I can abandon the item I don’t want to use anymore. | < 1 PD | 5| 
-| As a player, I want to select my weapons in my weapon bag, so that I can select a proper weapon to fight. | 1 PD   | 10 |
-| As a player, I want to see my gold coin balance in my wallet, so that I can see how much virtual currency I currently have. | 1 PD   | 10 |
+| As a player, I want to drop the weapon from my weapon bag, so that I can abandon the item I don’t want to use anymore.                   | < 1 PD | 5| 
+| As a player, I want to select my weapons in my weapon bag, so that I can select a proper weapon to fight.                                | 1 PD   | 10 |
+| As a player, I want to see my gold coin balance in my wallet, so that I can see how much virtual currency I currently have.              | 1 PD   | 10 |
 
-| **Sprint 4:**  | Estimated Time  |Story Point |
-| ------------------------------------------------------------ | ------ | -----|
-| As a player, I want to see all of the weapons I have in my weapon bag, so that I know what weapon I currently can use. | < 1 PD | 5 |
-| As a player, I want to look at the specific quest items I need for the task I'm currently doing, so that I can see what items I held. | < 1 PD | 5 |
+| **Sprint 3:**                                                                                                                                           | Estimated Time  |Story Point |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------| ------ | -----|
+| As a player, I want to see all of the weapons I have in my weapon bag, so that I know what weapon I currently can use.                                  | < 1 PD | 5 |
+| As a player, I want to look at the specific quest items I need for the task I'm currently doing, so that I can see what items I held.                   | < 1 PD | 5 |
 | As a player, I want to see the details of each weapon, including name, description, attributes, and effects, so that I can know when I should use them. | 1 PD   | 10| 
-| As a player, I want my weapon bag to have a maximum capacity, so that I can have a sense of challenge. | 1 PD   | 10|
+| As a player, I want my weapon bag to have a maximum capacity, so that I can have a sense of challenge.                                                  | 1 PD   | 10|
 
-|  **Sprint 5:** | Estimated Time  |Story Point |
-| ------------------------------------------------------------ | ------ | -----|
-| As a player, I want to be rewarded with the virtual gold coin by completing tasks,  so that I can be engaged with the game . | 1 PD | 10|
+| **Sprint 4:**                                                                                                                  | Estimated Time  |Story Point |
+|--------------------------------------------------------------------------------------------------------------------------------| ------ | -----|
+| As a player, I want to be rewarded with the virtual gold coin by completing tasks,  so that I can be engaged with the game .   | 1 PD | 10|
 | As a player, I want to spend my virtual currency from my wallet, so that I can upgrade my weapons and participate in the draw. | 1 PD |10 |
 
 
