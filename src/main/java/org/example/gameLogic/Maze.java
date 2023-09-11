@@ -120,6 +120,7 @@ public class Maze {
     }
 
     /**
+     * @author Austin Zerk, u6648099
      * adds a weapon to a position on the map
      * @param pos position on the map to put weapon
      * @param item weapon to put at location
@@ -129,6 +130,7 @@ public class Maze {
     }
 
     /**
+     * @author Austin Zerk, u6648099
      * gets Item at position and removes it from map
      * @param pos position to get item from
      * @return item at location if there is no item there returns null
@@ -138,6 +140,7 @@ public class Maze {
     }
 
     /**
+     * @author Austin Zerk, u6648099
      * adds an enemy to a position on the map
      * @param pos position on the map to put weapon
      * @param enemy weapon to put at location
@@ -147,6 +150,7 @@ public class Maze {
     }
 
     /**
+     * @author Austin Zerk, u6648099
      * gets Enemy at position and removes it from map
      * @param pos position to get item from
      * @return Enemy at location if there is no Enemy there returns null
@@ -165,11 +169,26 @@ public class Maze {
     }
 
     /**
+     * @author Austin Zerk, u6648099
      * gets NPC at position and removes it from map
      * @param pos position to get item from
      * @return NPC at location if there is no NPC there returns null
      */
     public NPC getNPCAtPosition(Position pos){
         return NPCs.get(pos);
+    }
+
+    /**
+     * @author Austin Zerk, u6648099
+     * @return xSize of map
+     */
+    public int getxSize(){return xSize;}
+
+    /**
+     * @author Austin Zerk, u6648099
+     * @return ySize of map
+     */
+    public int getySize() {
+        return ySize;
     }
 }
