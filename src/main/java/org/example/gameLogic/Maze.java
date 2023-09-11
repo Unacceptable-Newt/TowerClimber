@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 public class Maze {
     private boolean[][] walls;
-    private ArrayList<Wall> encodedWalls;
+    private ArrayList<Wall> encodedWalls = new ArrayList<>();
     private int xSize;
     private int ySize;
     private Player player;
@@ -50,18 +50,18 @@ public class Maze {
      * it will just set values to true regardless of what was in the position
      * @param pos starting position of the wall segment
      * @param length length of the wall segment
-     * @param up whether to go left or down from the starting position
+     * @param down whether to go left or down from the starting position
      */
-    public void addWall(Position pos, int length, boolean up){
-        encodedWalls.add(new Wall(length,pos,up));
+    public void addWall(Position pos, int length, boolean down){
+        encodedWalls.add(new Wall(length,pos,down));
         if (pos.getY() > walls.length || pos.getX() > walls[0].length)
             return;
-        if (up){
-            for (int i = pos.getY(); i <= length + pos.getY(); i++) {
+        if (down){
+            for (int i = pos.getY(); i < length + pos.getY(); i++) {
                 walls[i][pos.getX()] = true;
             }
         }else {
-            for (int i = pos.getX(); i <= length + pos.getX() ; i++) {
+            for (int i = pos.getX(); i < length + pos.getX() ; i++) {
                 walls[pos.getY()][i] = true;
             }
         }

@@ -3,12 +3,12 @@ package org.example.entity;
 public class Wall {
     private int length;
     private Position start;
-    private boolean up;
+    private boolean down;
 
     public Wall(int length, Position start, boolean up){
         this.length = length;
         this.start = start;
-        this.up = up;
+        this.down = up;
     }
 
     public int getLength() {
@@ -20,6 +20,6 @@ public class Wall {
     }
 
     public boolean isUp() {
-        return up;
+        return down;
     }
 }

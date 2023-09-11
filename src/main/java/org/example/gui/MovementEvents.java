@@ -54,12 +54,12 @@ public class MovementEvents {
 
         HashMap<PersistentDataNames, Object> gameObjects = new HashMap<>();
         gameObjects.put(PersistentDataNames.PLAYER, player);
-        maze.getEnemies().forEach( e -> gameObjects.put(PersistentDataNames.ENEMIES,e));
-        maze.getItems().forEach((k,v) -> gameObjects.put(PersistentDataNames.INVENTORY, new Pair<>(k,v)));
-        maze.getNPCs().forEach((n -> gameObjects.put(PersistentDataNames.NPCS, n)));
-        maze.getEncodedWalls().forEach( w -> gameObjects.put(PersistentDataNames.WALL, w));
+        gameObjects.put(PersistentDataNames.ENEMIES,maze.getEnemies());
+        gameObjects.put(PersistentDataNames.INVENTORY,maze.getItems());
+        gameObjects.put(PersistentDataNames.NPCS,maze.getNPCs());
+        gameObjects.put(PersistentDataNames.WALL,maze.getEncodedWalls());
 
-        char[][] rasterise = gui.rasterise(gameObjects);
+        char[][] rasterise = gui.rasterise(gameObjects, maze.getySize(), maze.getxSize());
         return gui.flatten(rasterise);
     }
 }

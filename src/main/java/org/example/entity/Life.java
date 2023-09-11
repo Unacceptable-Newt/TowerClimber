@@ -7,12 +7,17 @@ import org.example.interaction.Direction;
  * An abstract superclass for all humans, monster and life-like creatures
  */
 public abstract class Life {
-    int money;
-    int health;
+    protected int money;
+    protected int health;
 
-    Position position;
-    Direction direction;
+    protected Position position;
+    protected Direction direction;
 
+    public Life(int money, int health, Position position){
+        this.position = position;
+        this.health = health;
+        this.money = money;
+    }
     public int getMoney() {
         return money;
     }
@@ -30,7 +35,7 @@ public abstract class Life {
     }
 
     public Position getPosition() {
-        return position;
+        return this.position;
     }
 
     public void setPosition(Position position) {

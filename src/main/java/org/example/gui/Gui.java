@@ -6,6 +6,7 @@ import org.example.entity.*;
 import org.example.interaction.ItemPicker;
 import org.example.util.Pair;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -14,16 +15,14 @@ import java.util.HashMap;
  * Given a gameStateString, update the GUI frame on screen.
  */
 public class Gui {
-    private char[][] rasteriseBlankGUI() {
-        int rowsCount = 20; // Chars count in a line // TODO compute chars count from Maze size when Maze is implemented
-        int columnsCount = 40; // lines number // TODO compute chars count from Maze size when Maze is implemented
+    private char[][] rasteriseBlankGUI(int rows, int columns) {
 
         // The char matrix to return
-        char[][] charsMatrix = new char[rowsCount][columnsCount];
+        char[][] charsMatrix = new char[rows][columns];
 
         // Fill the char matrix with '.'
-        for (int row = 0; row < rowsCount; row++) {
-            for (int column = 0; column < columnsCount; column++) {
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
                 charsMatrix[row][column] = '.';
             }
         }
@@ -37,11 +36,11 @@ public class Gui {
      * @param gameObjects Game objects summarising all the object with game variables
      * @return A matrix of all char "pixels" to be displayed on GUI
      */
-    public char[][] rasterise(HashMap<PersistentDataNames, Object> gameObjects) {
+    public char[][] rasterise(HashMap<PersistentDataNames, Object> gameObjects,int rows,int columns) {
         // FIXME
 
         // -- Create a blank GUI
-        char[][] charsPixels = rasteriseBlankGUI();
+        char[][] charsPixels = rasteriseBlankGUI(rows, columns);
 
         gameObjects.forEach( (name,object) -> {
             if (name.equals(PersistentDataNames.PLAYER)) {
@@ -54,42 +53,46 @@ public class Gui {
 
                 charsPixels[row][col] = 'P';
             } else if (name.equals(PersistentDataNames.ENEMIES)) {
-                Enemy enemy = (Enemy) object;
+                ArrayList<Enemy> enemies = (ArrayList<Enemy>) object;
 
-                Position position = enemy.getPosition();
-                int row = position.getY();
-                int col = position.getX();
-                charsPixels[row][col] = 'e';
+                enemies.forEach( enemy -> {
+                    Position position = enemy.getPosition();
+                    int row = position.getY();
+                    int col = position.getX();
+                    charsPixels[row][col] = 'e';
+                });
             } else if (name.equals(PersistentDataNames.INVENTORY)) {
-                Pair<Position, Item> itemPair = (Pair<Position, Item>) object;
-                Item item = itemPair.second();
+                HashMap<Position,Item> items = (HashMap<Position, Item>) object;
 
-
-                Position position = itemPair.first();
-                int row = position.getY();
-                int col = position.getX();
-                charsPixels[row][col] = 'i';
+                items.forEach(((position, item) -> {
+                    int row = position.getY();
+                    int col = position.getX();
+                    charsPixels[row][col] = 'i';
+                }));
             } else if (name.equals(PersistentDataNames.NPCS)) {
-                NPC npc = (NPC) object;
+                ArrayList<NPC> NPCs = (ArrayList<NPC>) object;
 
-
-                Position position = npc.getPosition();
-                int row = position.getY();
-                int col = position.getX();
-                charsPixels[row][col] = 'n';
+                NPCs.forEach(npc -> {
+                    Position position = npc.getPosition();
+                    int row = position.getY();
+                    int col = position.getX();
+                    charsPixels[row][col] = 'n';
+                });
             } else if (name.equals(PersistentDataNames.WALL)) {
-                Wall wall = (Wall) object;
+                ArrayList<Wall> walls = (ArrayList<Wall>) object;
 
-                Position position = wall.getStart();
-                if (wall.isUp()){
-                    for (int i = position.getY(); i <= wall.getLength() + position.getY(); i++) {
-                        charsPixels[i][position.getX()] = '#';
+                walls.forEach(wall -> {
+                    Position position = wall.getStart();
+                    if (wall.isUp()){
+                        for (int i = position.getY(); i < wall.getLength() + position.getY(); i++) {
+                            charsPixels[i][position.getX()] = '#';
+                        }
+                    }else {
+                        for (int i = position.getX(); i < wall.getLength() + position.getX() ; i++) {
+                            charsPixels[position.getY()][i] = '#';
+                        }
                     }
-                }else {
-                    for (int i = position.getX(); i <= wall.getLength() + position.getX() ; i++) {
-                        charsPixels[position.getY()][i] = '#';
-                    }
-                }
+                });
             }
         });
 
