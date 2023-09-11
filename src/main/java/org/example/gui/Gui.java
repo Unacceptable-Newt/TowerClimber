@@ -1,8 +1,10 @@
 package org.example.gui;
 
 import org.example.PersistentDataNames;
-import org.example.entity.Player;
-import org.example.entity.Position;
+import org.example.belonging.Item;
+import org.example.entity.*;
+import org.example.interaction.ItemPicker;
+import org.example.util.Pair;
 
 import java.util.HashMap;
 
@@ -41,30 +43,55 @@ public class Gui {
         // -- Create a blank GUI
         char[][] charsPixels = rasteriseBlankGUI();
 
-        // -- Rasterise a player
-        // Construct a player object
-        if (gameObjects.containsKey(PersistentDataNames.PLAYER)) {
-            Player player = (Player) gameObjects.get(PersistentDataNames.PLAYER);
+        gameObjects.forEach( (name,object) -> {
+            if (name.equals(PersistentDataNames.PLAYER)) {
+                Player player = (Player) object;
 
-            // Get the player's position
-            Position position = player.getPosition();
-            int row = position.getY();
-            int col = position.getX();
+                // Get the player's position
+                Position position = player.getPosition();
+                int row = position.getY();
+                int col = position.getX();
 
-            charsPixels[row][col] = 'P';
-        }
+                charsPixels[row][col] = 'P';
+            } else if (name.equals(PersistentDataNames.ENEMIES)) {
+                Enemy enemy = (Enemy) object;
 
-        // -- Rasterise all items
-        // FIXME
+                Position position = enemy.getPosition();
+                int row = position.getY();
+                int col = position.getX();
+                charsPixels[row][col] = 'e';
+            } else if (name.equals(PersistentDataNames.INVENTORY)) {
+                Pair<Position, Item> itemPair = (Pair<Position, Item>) object;
+                Item item = itemPair.second();
 
-        // -- Rasterise all enemies
-        // FIXME
 
-        // -- Rasterise all NPCs
-        // FIXME
+                Position position = itemPair.first();
+                int row = position.getY();
+                int col = position.getX();
+                charsPixels[row][col] = 'i';
+            } else if (name.equals(PersistentDataNames.NPCS)) {
+                NPC npc = (NPC) object;
 
-        // -- Rasterise the exit to the next level
-        // FIXME
+
+                Position position = npc.getPosition();
+                int row = position.getY();
+                int col = position.getX();
+                charsPixels[row][col] = 'n';
+            } else if (name.equals(PersistentDataNames.WALL)) {
+                Wall wall = (Wall) object;
+
+                Position position = wall.getStart();
+                if (wall.isUp()){
+                    for (int i = position.getY(); i <= wall.getLength() + position.getY(); i++) {
+                        charsPixels[i][position.getX()] = '#';
+                    }
+                }else {
+                    for (int i = position.getX(); i <= wall.getLength() + position.getX() ; i++) {
+                        charsPixels[position.getY()][i] = '#';
+                    }
+                }
+            }
+        });
 
         return charsPixels;
     }

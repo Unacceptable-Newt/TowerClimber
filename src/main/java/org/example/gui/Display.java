@@ -69,7 +69,7 @@ public class Display extends JFrame {
         Position currentPosition = new Position(20, 10);
         player = new Player(10, 100, 1, currentPosition);
         movement = new Movement();
-        maze = new Maze(50, 50);
+        maze = new Maze(50, 50, new Position(1,1));
         gui = new Gui();
     }
 }

@@ -2,10 +2,7 @@ package org.example.gameLogic;
 
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
-import org.example.entity.Enemy;
-import org.example.entity.NPC;
-import org.example.entity.Player;
-import org.example.entity.Position;
+import org.example.entity.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,14 +13,15 @@ import java.util.HashMap;
  */
 public class Maze {
     private boolean[][] walls;
+    private ArrayList<Wall> encodedWalls;
     private int xSize;
     private int ySize;
     private Player player;
 
     private Position exit;
     private HashMap<Position, Item> Items = new HashMap<>();
-    private HashMap<Position, NPC> NPCs = new HashMap<>();
-    private HashMap<Position, Enemy> Enemies = new HashMap<>();
+    private ArrayList<NPC> NPCs = new ArrayList<>();
+    private ArrayList<Enemy> Enemies = new ArrayList<>();
 
     /**
      * @author Austin Zerk u6648099
@@ -55,6 +53,7 @@ public class Maze {
      * @param up whether to go left or down from the starting position
      */
     public void addWall(Position pos, int length, boolean up){
+        encodedWalls.add(new Wall(length,pos,up));
         if (pos.getY() > walls.length || pos.getX() > walls[0].length)
             return;
         if (up){
@@ -99,7 +98,7 @@ public class Maze {
      * @author Austin Zerk, u6648099
      * a simple getter for enimies list
      */
-    public HashMap<Position, Enemy> getEnemies() {
+    public ArrayList< Enemy> getEnemies() {
         return Enemies;
     }
 
@@ -115,7 +114,7 @@ public class Maze {
      * @author Austin Zerk, u6648099
      * a simple getter for NPCs
      */
-    public HashMap<Position, NPC> getNPCs() {
+    public ArrayList<NPC> getNPCs() {
         return NPCs;
     }
 
@@ -141,12 +140,11 @@ public class Maze {
 
     /**
      * @author Austin Zerk, u6648099
-     * adds an enemy to a position on the map
-     * @param pos position on the map to put weapon
+     * adds an enemy on the map
      * @param enemy weapon to put at location
      */
-    public void addEnemy(Position pos, Enemy enemy){
-        Enemies.put(pos,enemy);
+    public void addEnemy(Enemy enemy){
+        Enemies.add(enemy);
     }
 
     /**
@@ -156,16 +154,18 @@ public class Maze {
      * @return Enemy at location if there is no Enemy there returns null
      */
     public Enemy getEnemyAtPosition(Position pos){
-        return Enemies.get(pos);
+        for (Enemy e : Enemies) {
+            if (e.getPosition() == pos) return e;
+        }
+        return null;
     }
 
     /**
-     * adds a NPC to a position on the map
-     * @param pos position on the map to put weapon
+     * adds a NPC on the map
      * @param npc NPC to put at location
      */
-    public void addNPC(Position pos, NPC npc){
-        NPCs.put(pos,npc);
+    public void addNPC(NPC npc){
+        NPCs.add(npc);
     }
 
     /**
@@ -175,7 +175,11 @@ public class Maze {
      * @return NPC at location if there is no NPC there returns null
      */
     public NPC getNPCAtPosition(Position pos){
-        return NPCs.get(pos);
+        for (NPC n :
+                NPCs) {
+            if (n.getPosition() == pos) return n;
+        }
+        return null;
     }
 
     /**
@@ -190,5 +194,9 @@ public class Maze {
      */
     public int getySize() {
         return ySize;
+    }
+
+    public ArrayList<Wall> getEncodedWalls() {
+        return encodedWalls;
     }
 }

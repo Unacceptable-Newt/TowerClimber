@@ -27,7 +27,7 @@ public class MovementTest {
         player = new Player(10, 100, 1, currentPosition);
         player.setDirection(Direction.DOWN);
         movement = new Movement();
-        maze = new Maze(50, 50);
+        maze = new Maze(50, 50, new Position(1,1));
     }
 
     /**

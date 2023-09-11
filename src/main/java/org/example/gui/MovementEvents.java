@@ -2,9 +2,12 @@ package org.example.gui;
 
 import org.example.Movement;
 import org.example.PersistentDataNames;
+import org.example.belonging.Item;
 import org.example.entity.Player;
+import org.example.entity.Position;
 import org.example.gameLogic.Maze;
 import org.example.interaction.Direction;
+import org.example.util.Pair;
 
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -51,6 +54,10 @@ public class MovementEvents {
 
         HashMap<PersistentDataNames, Object> gameObjects = new HashMap<>();
         gameObjects.put(PersistentDataNames.PLAYER, player);
+        maze.getEnemies().forEach( e -> gameObjects.put(PersistentDataNames.ENEMIES,e));
+        maze.getItems().forEach((k,v) -> gameObjects.put(PersistentDataNames.INVENTORY, new Pair<>(k,v)));
+        maze.getNPCs().forEach((n -> gameObjects.put(PersistentDataNames.NPCS, n)));
+        maze.getEncodedWalls().forEach( w -> gameObjects.put(PersistentDataNames.WALL, w));
 
         char[][] rasterise = gui.rasterise(gameObjects);
         return gui.flatten(rasterise);
