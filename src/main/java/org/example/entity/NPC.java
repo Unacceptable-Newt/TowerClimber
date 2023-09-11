@@ -18,7 +18,6 @@ public class NPC extends Life {
 
     public NPC(String name, Position position) {
         this.name = name;
-        this.position = position;
     }
 
     public String getName() {

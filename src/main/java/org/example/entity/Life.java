@@ -9,8 +9,6 @@ public abstract class Life {
     int money;
     int health;
 
-    Position position;
-
     public int getMoney() {
         return money;
     }
@@ -25,14 +23,6 @@ public abstract class Life {
 
     public void setHealth(int health) {
         this.health = health;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
     }
 
 

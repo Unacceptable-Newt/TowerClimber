@@ -20,8 +20,8 @@ public class Maze {
     private int ySize;
     private Player player;
     private HashMap<Position, Item> Items = new HashMap<>();
-    private ArrayList<NPC> NPCs = new ArrayList<>();
-    private ArrayList<Enemy> Enemies = new ArrayList<>();
+    private HashMap<Position, NPC> NPCs = new HashMap<>();
+    private HashMap<Position, Enemy> Enemies = new HashMap<>();
 
     /**
      * @author Austin Zerk u6648099
@@ -96,7 +96,7 @@ public class Maze {
      * @author Austin Zerk, u6648099
      * a simple getter for enimies list
      */
-    public ArrayList<Enemy> getEnemies() {
+    public HashMap<Position, Enemy> getEnemies() {
         return Enemies;
     }
 
@@ -112,7 +112,7 @@ public class Maze {
      * @author Austin Zerk, u6648099
      * a simple getter for NPCs
      */
-    public ArrayList<NPC> getNPCs() {
+    public HashMap<Position, NPC> getNPCs() {
         return NPCs;
     }
 
@@ -132,5 +132,41 @@ public class Maze {
      */
     public Item getItemAtPosition(Position pos){
         return Items.remove(pos);
+    }
+
+    /**
+     * adds an enemy to a position on the map
+     * @param pos position on the map to put weapon
+     * @param enemy weapon to put at location
+     */
+    public void addEnemy(Position pos, Enemy enemy){
+        Enemies.put(pos,enemy);
+    }
+
+    /**
+     * gets Enemy at position and removes it from map
+     * @param pos position to get item from
+     * @return Enemy at location if there is no Enemy there returns null
+     */
+    public Enemy getEnemyAtPosition(Position pos){
+        return Enemies.get(pos);
+    }
+
+    /**
+     * adds a NPC to a position on the map
+     * @param pos position on the map to put weapon
+     * @param npc NPC to put at location
+     */
+    public void addNPC(Position pos, NPC npc){
+        NPCs.put(pos,npc);
+    }
+
+    /**
+     * gets NPC at position and removes it from map
+     * @param pos position to get item from
+     * @return NPC at location if there is no NPC there returns null
+     */
+    public NPC getNPCAtPosition(Position pos){
+        return NPCs.get(pos);
     }
 }
