@@ -19,6 +19,8 @@ public class Maze {
     private int xSize;
     private int ySize;
     private Player player;
+
+    private Position exit;
     private HashMap<Position, Item> Items = new HashMap<>();
     private HashMap<Position, NPC> NPCs = new HashMap<>();
     private HashMap<Position, Enemy> Enemies = new HashMap<>();
@@ -30,8 +32,9 @@ public class Maze {
      * @param xSize the length of the horizontal axis of the walls
      * @param ySize the length of the vertical axis of the walls
      */
-    public Maze(int xSize, int ySize){
-        walls = new boolean[ySize][xSize];
+    public Maze(int xSize, int ySize, Position exit){
+        this.walls = new boolean[ySize][xSize];
+        this.exit = exit;
         this.xSize = xSize;
         this.ySize = ySize;
         for (int i = 0; i < xSize; i++){
