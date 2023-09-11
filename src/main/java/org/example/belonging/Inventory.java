@@ -1,10 +1,11 @@
 package org.example.belonging;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author
+ * @author RS
  * The Inventory class states
  * the max number of items and
  * details the precise items objects
@@ -17,33 +18,42 @@ public class Inventory {
     private int capacity = 5;
 
     /**
-     * @author
+     * @author RS
      * List all items in the inventory
      * @return All items in the inventory
      */
     public List<Item> listItems() {
         // FIXME
-        return null;
+        return new ArrayList<>(items.values());
     }
 
     /**
-     * @author Yucheng Zhu
+     * @author RS
      * Add an item to the inventory
      * @param itemToAdd The item to add to the inventory
      */
     public void addItem(Item itemToAdd) {
+        if(items.size()>=capacity){
+            return;
+        }else if (items.containsKey(itemToAdd.getName())) {
+            return;
+        }
         this.items.put(itemToAdd.getName(), itemToAdd);
     }
 
     /**
-     * @author
+     * @author RS
      * Remove an item from the inventory
      * @param itemToRemove The item to remove from the inventory
      * @return The removed item. Can be used in another task such as calculate the sell price in shopping.
      */
     public Item removeItem(String itemToRemove) {
         // FIXME
-        return null;
+        if (!items.containsKey(itemToRemove)) {
+            return null; // 项目不存在，返回null
+        }
+
+        return items.remove(itemToRemove);
     }
 
 

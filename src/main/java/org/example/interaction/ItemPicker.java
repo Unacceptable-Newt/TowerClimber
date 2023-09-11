@@ -1,7 +1,10 @@
 package org.example.interaction;
 
 import org.example.belonging.Inventory;
+import org.example.belonging.Item;
 import org.example.entity.Player;
+import org.example.entity.Position;
+import org.example.gameLogic.Maze;
 import org.example.util.Pair;
 
 /**
@@ -9,6 +12,8 @@ import org.example.util.Pair;
  * Initialises picking up an adjacent item
  */
 public class ItemPicker implements Interaction {
+    Maze maze;
+
     /**
      * @author
      *
@@ -22,11 +27,23 @@ public class ItemPicker implements Interaction {
      * @return Modified player and inventory
      */
     @Override
-    public Pair<Player, Inventory> interactWithAdjacent(
-            Direction direction, int level,
-            Player player, Inventory inventory
-    ) {
-        // FIXME
+    public Pair<Player, Inventory> interactWithAdjacent( Direction direction, int level, Player player, Inventory inventory) {
+        // get the player's current position's item
+        Item gainedItem = pickItem(direction, level, player);
+        // if there is item in that position
+        if (gainedItem != null) {
+            // add the item into the inventory
+            inventory.addItem(gainedItem);
+        }
+        // return the new player and inventory
+        return new Pair<>(player, inventory);
+    }
+
+    // get the item from the maze
+    private Item pickItem(Direction direction, int level, Player player) {
+
+        maze.getItemAtPosition(player.getPosition());
         return null;
     }
+
 }

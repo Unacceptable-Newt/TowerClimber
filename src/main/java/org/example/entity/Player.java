@@ -41,5 +41,11 @@ public class Player extends Life {
         this.level = level;
     }
 
+    public Position getPosition() {
+        return position;
+    }
 
+    public void setPosition(Position position) {
+        this.position = position;
+    }
 }
