@@ -34,7 +34,7 @@ public class Movement {
      * @param maze The maze where the entity finds him-/her-/it-self in
      * @return The entity with his/her/its new position after movement
      */
-    private Life move(Life entityToMove, Direction direction, Maze maze) throws IllegalArgumentException {
+    public Life move(Life entityToMove, Direction direction, Maze maze) throws IllegalArgumentException {
         // Get the entity's current position and direction in the maze
         Position currentPosition = entityToMove.getPosition();
 
@@ -51,10 +51,6 @@ public class Movement {
         switch (direction) {
             case UP -> {
                 position = new Position(currentPosition.getX(), currentPosition.getY() - 1);
-                break;
-//                System.out.println("move(): position = "+position);
-//                entityToMove.setPosition(position);
-//                return entityToMove;
             }
             case DOWN -> {
                 position = new Position(currentPosition.getX(), currentPosition.getY() + 1);
