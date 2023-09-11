@@ -1,6 +1,14 @@
 package org.example.gameLogic;
 
+import org.example.belonging.Item;
+import org.example.belonging.Weapon;
+import org.example.entity.Enemy;
+import org.example.entity.NPC;
+import org.example.entity.Player;
 import org.example.entity.Position;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author
@@ -8,6 +16,10 @@ import org.example.entity.Position;
  */
 public class Maze {
     private boolean[][] walls;
+    private Player player;
+    private HashMap<Position, Item> Items = new HashMap<>();
+    private ArrayList<NPC> NPCs = new ArrayList<>();
+    private ArrayList<Enemy> Enemies = new ArrayList<>();
 
     /**
      * @author Austin Zerk u6648099
@@ -26,7 +38,7 @@ public class Maze {
     }
 
     /**
-     * @author Austin Zerk
+     * @author Austin Zerk u6648099
      * This function adds a wall to the current walls array
      * this is done by having a starting position then setting all the bools in the walls array from the
      * starting position either left or down for depending on weather up is set for length characters
@@ -35,7 +47,7 @@ public class Maze {
      * @param length length of the wall segment
      * @param up whether to go left or down from the starting position
      */
-    public void add_wall(Position pos, int length, boolean up){
+    public void addWall(Position pos, int length, boolean up){
         if (pos.getY() > walls.length || pos.getX() > walls[0].length)
             return;
         if (up){
@@ -50,12 +62,71 @@ public class Maze {
     }
 
     /**
-     * @author Austin Zerk
+     * @author Austin Zerk u6648099
      * This function chechs if there is a wall at a given position
      * @param pos the position to check
      * @return true if there is a wall false otherwise
      */
-    public boolean is_wall(Position pos){
+    public boolean isWall(Position pos){
         return walls[pos.getY()][pos.getX()];
+    }
+
+    /**
+     * @author Austin Zerk u6648099
+     * creates a level one player at the specified position
+     * @param pos position for the player to start at
+     */
+    public void createNewPlayer(Position pos){
+        this.player = new Player(0,10,1,pos);
+    }
+
+    /**
+     * @author Austin Zerk
+     * a simple getter for player
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
+    /**
+     * @author Austin Zerk, u6648099
+     * a simple getter for enimies list
+     */
+    public ArrayList<Enemy> getEnemies() {
+        return Enemies;
+    }
+
+    /**
+     * @author Austin Zerk, u6648099
+     * a simple getter for items
+     */
+    public HashMap<Position, Item> getItems() {
+        return Items;
+    }
+
+    /**
+     * @author Austin Zerk, u6648099
+     * a simple getter for NPCs
+     */
+    public ArrayList<NPC> getNPCs() {
+        return NPCs;
+    }
+
+    /**
+     * adds a weapon to a position on the map
+     * @param pos position on the map to put weapon
+     * @param item weapon to put at location
+     */
+    public void addItem(Position pos, Item item){
+        Items.put(pos,item);
+    }
+
+    /**
+     * gets Item at position and removes it from map
+     * @param pos position to get item from
+     * @return item at location if there is no item there returns null
+     */
+    public Item getItemAtPosition(Position pos){
+        return Items.remove(pos);
     }
 }
