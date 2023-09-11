@@ -16,6 +16,8 @@ import java.util.HashMap;
  */
 public class Maze {
     private boolean[][] walls;
+    private int xSize;
+    private int ySize;
     private Player player;
     private HashMap<Position, Item> Items = new HashMap<>();
     private ArrayList<NPC> NPCs = new ArrayList<>();
@@ -30,6 +32,8 @@ public class Maze {
      */
     public Maze(int xSize, int ySize){
         walls = new boolean[ySize][xSize];
+        this.xSize = xSize;
+        this.ySize = ySize;
         for (int i = 0; i < xSize; i++){
             for (int j = 0; j < ySize; j++){
                 walls[i][j] = false;
