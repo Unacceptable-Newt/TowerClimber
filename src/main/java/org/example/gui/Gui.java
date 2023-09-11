@@ -1,5 +1,6 @@
-package org.example;
+package org.example.gui;
 
+import org.example.PersistentDataNames;
 import org.example.entity.Player;
 import org.example.entity.Position;
 

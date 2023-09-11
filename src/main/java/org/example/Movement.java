@@ -47,6 +47,23 @@ public class Movement {
         }
 
         // Change the player's position
+        Position position = getPosition(direction, currentPosition);
+
+        // Move the entity's position
+        entityToMove.setPosition(position);
+        return entityToMove;
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Changes the entity's position after having moved to an adjacent cell in the given direction.
+     * Return the current position if the entity cannot move.
+     *
+     * @param direction The direction the entity is facing
+     * @param currentPosition The position the entity is standing at before movement
+     * @return The entity's new position after movement
+     */
+    private static Position getPosition(Direction direction, Position currentPosition) {
         Position position;
         switch (direction) {
             case UP -> {
@@ -63,10 +80,7 @@ public class Movement {
             }
             default -> throw new IllegalArgumentException("Direction must be up, down, left xor right");
         }
-
-        // Move the entity's position
-        entityToMove.setPosition(position);
-        return entityToMove;
+        return position;
     }
 
     /**
