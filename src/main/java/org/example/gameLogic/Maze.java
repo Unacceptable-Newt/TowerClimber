@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author
+ * @author Austin Zerk
  * All objects in a maze.
  */
 public class Maze {
@@ -15,7 +15,7 @@ public class Maze {
     private ArrayList<Wall> encodedWalls = new ArrayList<>();
     private int columns;
     private int rows;
-    private HashMap<Position,Integer> money = new HashMap<Position, Integer>();
+    private HashMap<Position,Integer> money = new HashMap<>();
     private Player player;
     private Position exit;
     private HashMap<Position, Item> Items = new HashMap<>();
@@ -23,7 +23,7 @@ public class Maze {
     private HashMap<Position, Enemy> Enemies = new HashMap<>();
 
     /**
-     * @author Austin Zerk u6648099
+     * @author Austin Zerk
      * This is the creator of maze and takes an x and y size of the maze then sets the walls to be that size
      * and sets all the values to false
      * @param xSize the length of the horizontal axis of the walls
@@ -42,7 +42,7 @@ public class Maze {
     }
 
     /**
-     * @author Austin Zerk u6648099
+     * @author Austin Zerk
      * This function adds a wall to the current walls array
      * this is done by having a starting position then setting all the bools in the walls array from the
      * starting position either left or down for depending on weather up is set for length characters
@@ -67,7 +67,7 @@ public class Maze {
     }
 
     /**
-     * @author Austin Zerk u6648099
+     * @author Austin Zerk
      * This function chechs if there is a wall at a given position
      * @param pos the position to check
      * @return true if there is a wall false otherwise
@@ -77,7 +77,7 @@ public class Maze {
     }
 
     /**
-     * @author Austin Zerk u6648099
+     * @author Austin Zerk
      * creates a level one player at the specified position
      * @param pos position for the player to start at
      */
@@ -94,7 +94,7 @@ public class Maze {
     }
 
     /**
-     * @author Austin Zerk, u6648099
+     * @author Austin Zerk
      * a simple getter for enimies list
      */
     public HashMap<Position, Enemy> getEnemies() {
@@ -102,7 +102,7 @@ public class Maze {
     }
 
     /**
-     * @author Austin Zerk, u6648099
+     * @author Austin Zerk
      * a simple getter for items
      */
     public HashMap<Position, Item> getItems() {
@@ -110,7 +110,7 @@ public class Maze {
     }
 
     /**
-     * @author Austin Zerk, u6648099
+     * @author Austin Zerk
      * a simple getter for NPCs
      */
     public HashMap<Position, NPC> getNPCs() {
@@ -118,46 +118,48 @@ public class Maze {
     }
 
     /**
-     * @author Austin Zerk, u6648099
-     * adds a weapon to a position on the map
-     * @param pos position on the map to put weapon
-     * @param item weapon to put at location
+     * @author Austin Zerk
+     * Adds a weapon to a position on the map
+     * @param pos Position on the map to put weapon
+     * @param item Weapon to put at location
      */
     public void addItem(Position pos, Item item){
         Items.put(pos,item);
     }
 
     /**
-     * @author Austin Zerk, u6648099
-     * gets Item at position and removes it from map
-     * @param pos position to get item from
-     * @return item at location if there is no item there returns null
+     * @author Austin Zerk
+     * Gets Item at position and removes it from map
+     * @param pos Position to get item from
+     * @return Item at location. If there is no item, it returns null
      */
     public Item getItemAtPosition(Position pos){
         return Items.remove(pos);
     }
 
     /**
-     * @author Austin Zerk, u6648099
-     * adds an enemy on the map
-     * @param enemy weapon to put at location
+     * @author Austin Zerk
+     * Adds an enemy on the map
+     * @param enemy Weapon to put at location
      */
     public void addEnemy(Position position, Enemy enemy){
         Enemies.put(position, enemy);
     }
 
     /**
-     * @author Austin Zerk, u6648099
-     * gets Enemy at position and removes it from map
-     * @param pos position to get item from
-     * @return Enemy at location if there is no Enemy there returns null
+     * @author Austin Zerk
+     * Gets Enemy at position and removes it from map
+     * @param pos Position to get item from
+     * @return Enemy at location. If there is no Enemy, it returns null
      */
     public Enemy getEnemyAtPosition(Position pos){
         return Enemies.get(pos);
     }
 
     /**
-     * adds a NPC on the map
+     * @author Austin Zerk
+     * Adds a NPC on the map.
+     * @param position The position NPC is at
      * @param npc NPC to put at location
      */
     public void addNPC(Position position, NPC npc){
@@ -165,44 +167,72 @@ public class Maze {
     }
 
     /**
-     * @author Austin Zerk, u6648099
-     * gets NPC at position and removes it from map
-     * @param pos position to get item from
-     * @return NPC at location if there is no NPC there returns null
+     * @author Austin Zerk
+     * Gets NPC at position and removes it from the map.
+     * @param pos Position to get item from
+     * @return NPC at location. If there is no NPC, it returns null
      */
     public NPC getNPCAtPosition(Position pos){
         return NPCs.get(pos);
     }
 
     /**
-     * @author Austin Zerk, u6648099
+     * @author Austin Zerk
      * @return xSize of map
      */
     public int getColumns(){return columns;}
 
     /**
-     * @author Austin Zerk, u6648099
+     * @author Austin Zerk
+     * Get rows
      * @return ySize of map
      */
     public int getRows() {
         return rows;
     }
 
+    /**
+     * @author Austin Zerk
+     * Get encoded walls
+     * @return Encoded walls
+     */
     public ArrayList<Wall> getEncodedWalls() {
         return encodedWalls;
     }
 
+    /**
+     * @author Austin Zerk
+     * Get exit's location
+     * @return The exit's location
+     */
     public Position getExit() {
         return exit;
     }
+
+    /**
+     * @author Austin Zerk
+     * Set exit's location.
+     * @param exit The exit's location
+     */
     public void setExit(Position exit) {
         this.exit = exit;
     }
 
+    /**
+     * @author Austin Zerk
+     * Get money on the maze's floor.
+     * @return Money's location and value
+     */
     public HashMap<Position, Integer> getMoney() {
         return money;
     }
 
+    /**
+     * @author Austin Zerk
+     * Add money to the maze's floor.
+     * @param position Money's location
+     * @param money Money's value
+     */
     public void addMoney(Position position, int money){
         this.money.put(position, money);
     }
