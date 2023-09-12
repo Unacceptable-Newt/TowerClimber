@@ -1,7 +1,6 @@
 package org.example.gameLogic;
 
 import org.example.belonging.Item;
-import org.example.belonging.Weapon;
 import org.example.entity.*;
 
 import java.util.ArrayList;
@@ -14,14 +13,14 @@ import java.util.HashMap;
 public class Maze {
     private boolean[][] walls;
     private ArrayList<Wall> encodedWalls = new ArrayList<>();
-    private int xSize;
-    private int ySize;
+    private int columns;
+    private int rows;
+    private HashMap<Position,Integer> money = new HashMap<Position, Integer>();
     private Player player;
-
     private Position exit;
     private HashMap<Position, Item> Items = new HashMap<>();
-    private ArrayList<NPC> NPCs = new ArrayList<>();
-    private ArrayList<Enemy> Enemies = new ArrayList<>();
+    private HashMap<Position, NPC> NPCs = new HashMap<>();
+    private HashMap<Position, Enemy> Enemies = new HashMap<>();
 
     /**
      * @author Austin Zerk u6648099
@@ -33,8 +32,8 @@ public class Maze {
     public Maze(int xSize, int ySize, Position exit){
         this.walls = new boolean[ySize][xSize];
         this.exit = exit;
-        this.xSize = xSize;
-        this.ySize = ySize;
+        this.columns = xSize;
+        this.rows = ySize;
         for (int i = 0; i < xSize; i++){
             for (int j = 0; j < ySize; j++){
                 walls[i][j] = false;
@@ -98,7 +97,7 @@ public class Maze {
      * @author Austin Zerk, u6648099
      * a simple getter for enimies list
      */
-    public ArrayList< Enemy> getEnemies() {
+    public HashMap<Position, Enemy> getEnemies() {
         return Enemies;
     }
 
@@ -114,7 +113,7 @@ public class Maze {
      * @author Austin Zerk, u6648099
      * a simple getter for NPCs
      */
-    public ArrayList<NPC> getNPCs() {
+    public HashMap<Position, NPC> getNPCs() {
         return NPCs;
     }
 
@@ -143,8 +142,8 @@ public class Maze {
      * adds an enemy on the map
      * @param enemy weapon to put at location
      */
-    public void addEnemy(Enemy enemy){
-        Enemies.add(enemy);
+    public void addEnemy(Position position, Enemy enemy){
+        Enemies.put(position, enemy);
     }
 
     /**
@@ -154,18 +153,15 @@ public class Maze {
      * @return Enemy at location if there is no Enemy there returns null
      */
     public Enemy getEnemyAtPosition(Position pos){
-        for (Enemy e : Enemies) {
-            if (e.getPosition() == pos) return e;
-        }
-        return null;
+        return Enemies.get(pos);
     }
 
     /**
      * adds a NPC on the map
      * @param npc NPC to put at location
      */
-    public void addNPC(NPC npc){
-        NPCs.add(npc);
+    public void addNPC(Position position, NPC npc){
+        NPCs.put(position, npc);
     }
 
     /**
@@ -175,28 +171,39 @@ public class Maze {
      * @return NPC at location if there is no NPC there returns null
      */
     public NPC getNPCAtPosition(Position pos){
-        for (NPC n :
-                NPCs) {
-            if (n.getPosition() == pos) return n;
-        }
-        return null;
+        return NPCs.get(pos);
     }
 
     /**
      * @author Austin Zerk, u6648099
      * @return xSize of map
      */
-    public int getxSize(){return xSize;}
+    public int getColumns(){return columns;}
 
     /**
      * @author Austin Zerk, u6648099
      * @return ySize of map
      */
-    public int getySize() {
-        return ySize;
+    public int getRows() {
+        return rows;
     }
 
     public ArrayList<Wall> getEncodedWalls() {
         return encodedWalls;
+    }
+
+    public Position getExit() {
+        return exit;
+    }
+    public void setExit(Position exit) {
+        this.exit = exit;
+    }
+
+    public HashMap<Position, Integer> getMoney() {
+        return money;
+    }
+
+    public void addMoney(Position position, int money){
+        this.money.put(position, money);
     }
 }
