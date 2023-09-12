@@ -4,10 +4,9 @@ import org.example.belonging.Weapon;
 import org.example.entity.Player;
 import org.example.entity.Position;
 import org.example.gameLogic.Maze;
-import org.example.interaction.Direction;
 import org.example.interaction.ItemPicker;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class InventoryTest {
     private Player mainPlayer = new Player(12,12,12,new Position(1,1));
     private Inventory inventory = new Inventory(5);
 
-    @Before
+    @BeforeEach
     void addItem(){
         items.put("A", new Weapon("A", 24, 12));
         items.put("B", new Weapon("B", 15, 18));
