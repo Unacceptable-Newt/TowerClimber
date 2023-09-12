@@ -53,10 +53,9 @@ public class Gui {
 
                 charsPixels[row][col] = 'P';
             } else if (name.equals(PersistentDataNames.ENEMIES)) {
-                ArrayList<Enemy> enemies = (ArrayList<Enemy>) object;
+                HashMap<Position, Enemy> enemies = (HashMap<Position, Enemy>) object;
 
-                enemies.forEach( enemy -> {
-                    Position position = enemy.getPosition();
+                enemies.forEach( (position, enemy) -> {
                     int row = position.getY();
                     int col = position.getX();
                     charsPixels[row][col] = 'e';
@@ -70,10 +69,9 @@ public class Gui {
                     charsPixels[row][col] = 'i';
                 }));
             } else if (name.equals(PersistentDataNames.NPCS)) {
-                ArrayList<NPC> NPCs = (ArrayList<NPC>) object;
+                HashMap<Position, NPC> NPCs = (HashMap<Position, NPC>) object;
 
-                NPCs.forEach(npc -> {
-                    Position position = npc.getPosition();
+                NPCs.forEach((position, npc) -> {
                     int row = position.getY();
                     int col = position.getX();
                     charsPixels[row][col] = 'n';

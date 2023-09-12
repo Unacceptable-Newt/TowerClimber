@@ -2,12 +2,9 @@ package org.example.gui;
 
 import org.example.Movement;
 import org.example.PersistentDataNames;
-import org.example.belonging.Item;
 import org.example.entity.Player;
-import org.example.entity.Position;
 import org.example.gameLogic.Maze;
 import org.example.interaction.Direction;
-import org.example.util.Pair;
 
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -39,7 +36,7 @@ public class MovementEvents {
         }
 
         if (direction != null) {
-            guiText = updateGuiStringOnMovementKeyPressed(player, movement, maze, gui, direction);
+            guiText = updateGuiStringOnMovementKeyPressed(movement, maze, gui, direction);
         }
         return guiText;
     }
@@ -47,19 +44,22 @@ public class MovementEvents {
     /**
      * @author Yucheng Zhu
      * Return strings to be displayed in GUI when a movement key is pressed
-     * @param player PlayerObject
+     * @param maze the maze to be turned into a string
+     * @param gui gui object REMOVE AFTER MAKING CLASS STATIC
+     * @param direction the direction the player is moving
+     * @return a string representing the state of the maze after the move
      */
-    public String updateGuiStringOnMovementKeyPressed(Player player, Movement movement, Maze maze, Gui gui, Direction direction) {
-        player = (Player) movement.move(player, direction, maze);
+    public String updateGuiStringOnMovementKeyPressed(Movement movement, Maze maze, Gui gui, Direction direction) {
+        Player player = (Player) movement.move(maze.getPlayer(), direction, maze);
 
         HashMap<PersistentDataNames, Object> gameObjects = new HashMap<>();
         gameObjects.put(PersistentDataNames.PLAYER, player);
-        gameObjects.put(PersistentDataNames.ENEMIES,maze.getEnemies());
-        gameObjects.put(PersistentDataNames.INVENTORY,maze.getItems());
-        gameObjects.put(PersistentDataNames.NPCS,maze.getNPCs());
-        gameObjects.put(PersistentDataNames.WALL,maze.getEncodedWalls());
+        gameObjects.put(PersistentDataNames.ENEMIES, maze.getEnemies());
+        gameObjects.put(PersistentDataNames.INVENTORY, maze.getItems());
+        gameObjects.put(PersistentDataNames.NPCS, maze.getNPCs());
+        gameObjects.put(PersistentDataNames.WALL, maze.getEncodedWalls());
 
-        char[][] rasterise = gui.rasterise(gameObjects, maze.getySize(), maze.getxSize());
+        char[][] rasterise = gui.rasterise(gameObjects, maze.getRows(), maze.getColumns());
         return gui.flatten(rasterise);
     }
 }

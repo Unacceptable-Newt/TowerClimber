@@ -15,7 +15,7 @@ public class Player extends Life {
 
     private Position position;
     public Player(Integer money, Integer health, Integer level, Position position) {
-        super(money,health,position);
+        super(money, health, position);
         this.level = level;
     }
 

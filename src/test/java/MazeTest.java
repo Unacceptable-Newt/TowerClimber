@@ -15,7 +15,7 @@ public class MazeTest {
         MovementEvents move = new MovementEvents();
         Movement movement = new Movement();
         Gui gui = new Gui();
-        String outString = move.updateGuiStringOnMovementKeyPressed(maze.getPlayer(),movement,maze,gui, Direction.DOWN);
+        String outString = move.updateGuiStringOnMovementKeyPressed(movement,maze,gui, Direction.DOWN);
         assert outString.equals("""
                 ....................
                 P...................
@@ -54,7 +54,7 @@ public class MazeTest {
         MovementEvents move = new MovementEvents();
         Movement movement = new Movement();
         Gui gui = new Gui();
-        String outString = move.updateGuiStringOnMovementKeyPressed(maze.getPlayer(),movement,maze,gui, Direction.DOWN);
+        String outString = move.updateGuiStringOnMovementKeyPressed(movement,maze,gui, Direction.DOWN);
         assert outString.equals("""
                 ..........#.........
                 P.........#.........
