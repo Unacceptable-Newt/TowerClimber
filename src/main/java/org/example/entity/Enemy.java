@@ -13,8 +13,8 @@ public class Enemy extends Life {
     private int defense;
 
     public Enemy(int attack, int health, int defense) {
+        super(0,health,new Position(0,0));
         this.attack = attack;
-        this.health = health;
         this.defense = defense;
     }
 
@@ -24,14 +24,6 @@ public class Enemy extends Life {
 
     public void setAttack(int attack) {
         this.attack = attack;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(Integer health) {
-        this.health = health;
     }
 
     public int getDefense() {

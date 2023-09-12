@@ -1,4 +1,7 @@
-package org.example.gameLogic;
+package org.example;
+
+import org.example.gameLogic.Level;
+import org.example.gui.Display;
 
 /**
  * @author
@@ -27,4 +30,14 @@ public class Game {
      * Run from saved game
      */
     public void runSavedGame() {}
+
+    /**
+     * @author Yucheng Zhu
+     * Run the game
+     * @param args Typically nothing at the moment
+     */
+    public static void main(String[] args) {
+        // Call the GUI
+        Display gui = new Display();
+    }
 }
