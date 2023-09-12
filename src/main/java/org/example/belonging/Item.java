@@ -1,7 +1,7 @@
 package org.example.belonging;
 
 /**
- * @author Yucheng Zhu
+ * @author RS
  * An abstract class for all kinds of items,
  * such as weapons
  */
@@ -65,6 +65,13 @@ public abstract class Item {
      * Used to calculate whether an inventory reaches the max capacity.
      */
     public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+
+    public Item(String name, int price, int weight) {
+        this.name = name;
+        this.price = price;
         this.weight = weight;
     }
 }

@@ -2,6 +2,7 @@ package org.example.interaction;
 
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
+import org.example.gameLogic.Maze;
 import org.example.util.Pair;
 
 /**
@@ -9,6 +10,10 @@ import org.example.util.Pair;
  * Initialises picking up adjacent money
  */
 public class MoneyPicker implements Interaction {
+    @Override
+    public Pair<Player, Inventory> interactWithAdjacent(Player player, Inventory inventory, Maze maze) {
+        return null;
+    }
     /**
      * @author
      *
@@ -20,13 +25,5 @@ public class MoneyPicker implements Interaction {
      * @param inventory The player's inventory.
      *
      * @return Modified player and inventory
-     */
-    @Override
-    public Pair<Player, Inventory> interactWithAdjacent(
-            Direction direction, int level,
-            Player player, Inventory inventory
-    ) {
-        // FIXME
-        return null;
-    }
+  */
 }

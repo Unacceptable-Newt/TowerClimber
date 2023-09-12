@@ -12,24 +12,22 @@ import org.example.util.Pair;
  * Initialises picking up an adjacent item
  */
 public class ItemPicker implements Interaction {
-    Maze maze;
+
 
     /**
-     * @author
+     * @author RS
      *
      * Interacts with an adjacent item to pick it up and changes the player and his inventory in the process.
-     *
-     * @param direction Which direction the player should move
-     * @param level The level of the maze. (e.g. maze level 1, maze level 2, maze level 3)
+
      * @param player The player.
      * @param inventory The player's inventory.
      *
      * @return Modified player and inventory
      */
     @Override
-    public Pair<Player, Inventory> interactWithAdjacent( Direction direction, int level, Player player, Inventory inventory) {
+    public Pair<Player, Inventory> interactWithAdjacent(Player player, Inventory inventory, Maze maze) {
         // get the player's current position's item
-        Item gainedItem = pickItem(direction, level, player);
+        Item gainedItem = pickItem( player, maze);
         // if there is item in that position
         if (gainedItem != null) {
             // add the item into the inventory
@@ -40,7 +38,7 @@ public class ItemPicker implements Interaction {
     }
 
     // get the item from the maze
-    private Item pickItem(Direction direction, int level, Player player) {
+    private Item pickItem( Player player, Maze maze) {
 
         maze.getItemAtPosition(player.getPosition());
         return null;

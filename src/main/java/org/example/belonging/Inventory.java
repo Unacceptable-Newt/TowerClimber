@@ -12,10 +12,15 @@ import java.util.List;
  */
 public class Inventory {
     // Store items
-    private final HashMap<String, Item> items = new HashMap<>();
+    private HashMap<String, Item> items = new HashMap<>();
 
     // Max number of weight a player can carry
     private int capacity = 5;
+
+
+    public Inventory(int capacity) {
+        this.capacity = capacity;
+    }
 
     /**
      * @author RS
@@ -25,6 +30,18 @@ public class Inventory {
     public List<Item> listItems() {
         // FIXME
         return new ArrayList<>(items.values());
+    }
+
+    /**
+     * check whether an item contains in the inventory
+     * @param item item want to be checked
+     * @return true if the inventory has that item
+     */
+    public boolean hasItem(Item item){
+        if(items.containsValue(item)){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -75,5 +92,17 @@ public class Inventory {
      */
     public void updateCapacity(int capacityIncrement) {
         this.capacity = Math.max(0, this.capacity + capacityIncrement);
+    }
+
+    public HashMap<String, Item> getItems() {
+        return items;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setItems(HashMap<String, Item> items) {
+        this.items = items;
     }
 }

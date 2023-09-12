@@ -2,6 +2,7 @@ package org.example.interaction;
 
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
+import org.example.gameLogic.Maze;
 import org.example.util.Pair;
 
 /**
@@ -23,8 +24,7 @@ interface Interaction {
      * @return Modified player and inventory
      */
     Pair<Player, Inventory> interactWithAdjacent(
-            Direction direction, int level,
-            Player player, Inventory inventory
+            Player player, Inventory inventory, Maze maze
     );
 
 }

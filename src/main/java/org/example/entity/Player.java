@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import org.example.belonging.Inventory;
+import org.example.belonging.Item;
 import org.example.belonging.Weapon;
 
 /**
@@ -47,5 +49,17 @@ public class Player extends Life {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    /**
+     * once player choose an item from the inventory, player's current item will changed
+     * @param newItem chosen item
+     * @return true if the newItem can be used, which means it is in the inventory system
+     */
+    public boolean changeItem(Item newItem, Inventory inventory){
+        if(inventory.hasItem(newItem )){
+            currentWeapon = (Weapon) newItem;
+        }
+        return false;
     }
 }

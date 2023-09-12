@@ -19,9 +19,12 @@ public class Weapon extends Item {
         this.attackValue = attackValue;
     }
 
-    public Weapon(String weaponName, Integer price, Integer attackValue) {
-        this.name = weaponName;
-        this.price = price;
+    public Weapon(String name, int price, int weight) {
+        super(name, price, weight);
+    }
+
+    public Weapon(String name, int price, int weight, int attackValue) {
+        super(name, price, weight);
         this.attackValue = attackValue;
     }
 }
