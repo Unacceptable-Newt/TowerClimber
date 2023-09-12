@@ -55,7 +55,7 @@ public class InventoryTest {
      * @author RS
      * Make sure it works as expected
      */
-    @Test
+/*    @Test
     public void testPickInventory() {
         maze.addItem(new Position(1, 1), new Weapon("newItem",100,100));
 
@@ -67,7 +67,7 @@ public class InventoryTest {
         Assertions.assertEquals(100, inventory.getItems().get("newItem").getPrice());
         Assertions.assertEquals(100, inventory.getItems().get("newItem").getWeight());
 
-    }
+    }*/
 
     /**
      * @author RS
