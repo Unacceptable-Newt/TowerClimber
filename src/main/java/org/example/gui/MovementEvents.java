@@ -18,13 +18,12 @@ public class MovementEvents {
      * @author Yucheng Zhu
      * Return strings to be displayed in GUI when a movement key is pressed
      * @param keyCode Key being pressed
-     * @param player Player object
      * @param movement Movement object
      * @param maze Maze object
      * @param gui Gui object
      * @return Text to be displayed on the GUI
      */
-    public String setGuiTextOnMovementKeysPressed(int keyCode, Player player, Movement movement, Maze maze, Gui gui) {
+    public String setGuiTextOnMovementKeysPressed(int keyCode, Movement movement, Maze maze, Gui gui) {
         String guiText = null; // Default value: No key pressed
 
         Direction direction = null;

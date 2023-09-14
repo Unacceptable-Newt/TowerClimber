@@ -12,10 +12,8 @@ import java.awt.event.*;
  * @author Yucheng Zhu
  * GUI to visualise the game
  */
-public class Display extends JFrame {
+public class  Display extends JFrame {
     private JTextArea textArea;
-
-    Player player;
     private Movement movement;
     private Maze maze;
     private Gui gui;
@@ -45,12 +43,13 @@ public class Display extends JFrame {
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
                 // Get the text after considering change brought by movement
-                String guiText = movementEvents.setGuiTextOnMovementKeysPressed(keyCode, player, movement, maze, gui);
+                String guiText = movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, maze, gui);
 
                 // FIXME: add other events
 
                 // Update the GUI char "pixels" as a string
-                textArea.setText(guiText);
+                if (guiText != null)
+                    textArea.setText(guiText);
             }
         });
 
@@ -67,9 +66,9 @@ public class Display extends JFrame {
         movementEvents = new MovementEvents();
 
         Position currentPosition = new Position(20, 10);
-        player = new Player(10, 100, 1, currentPosition);
         movement = new Movement();
         maze = new Maze(50, 50, new Position(1,1));
+        maze.createNewPlayer(new Position(10,10));
         gui = new Gui();
     }
 }
