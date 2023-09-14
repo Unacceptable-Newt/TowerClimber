@@ -23,7 +23,14 @@ public class Movement {
     private boolean canMove(Position currentPosition, Direction direction, Maze maze) throws IllegalArgumentException {
         Position nextPosition = getPosition(direction, currentPosition);
 
-        if (maze.isWall(nextPosition)) { // not a wall
+        if ( // not outside the boundary
+                nextPosition.getY() < 0 ||
+                        nextPosition.getY() >= maze.getRows() ||
+                        nextPosition.getX() < 0 ||
+                        nextPosition.getX() >= maze.getColumns()
+        ) {
+            return false;
+        } else if (maze.isWall(nextPosition)) { // not a wall
             return false;
         } else if (maze.getEnemies().containsKey(nextPosition)) { // not an enemy
             return false;

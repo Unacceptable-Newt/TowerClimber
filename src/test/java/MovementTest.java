@@ -28,21 +28,81 @@ public class MovementTest {
         movement = new Movement();
 
         // Set up maze
-        int mazeX = 35;
-        int mazeY = 35;
+        int mazeX = 6;
+        int mazeY = 6;
         maze = new Maze(mazeX, mazeY, new Position(1, 1));
-        maze.createNewPlayer(new Position(10, 10));
+//        maze.createNewPlayer(new Position(2, 2));
 
-        // Add walls at the boundary
+        // Add walls at the top boundary
         maze.addWall(new Position(0, 0),mazeX, false);
-        maze.addWall(new Position(0, 0),mazeY, true);
-        maze.addWall(new Position(mazeX - 1, 0), mazeY, true);
-        maze.addWall(new Position(0, mazeY - 1), mazeX, false);
 
         // Add things
         maze.addItem(new Position(1, 3), new Weapon("The Big Axe",3, 5, 4));
         maze.addNPC(new Position(1, 4),new NPC("John", new Position(5, 5)));
         maze.addEnemy(new Position(1, 5),new Enemy(2, 2, 2));
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Test cannot move out of the map.
+     * Change the direction but keep the position the same.
+     */
+    @Test
+    public void testCannotStepOutsideTheBoundary() {
+        // Move left OK, so long as it stays on the map
+        player = (Player) movement.left(player, maze);
+        Assertions.assertEquals(Direction.LEFT, player.getDirection());
+        Assertions.assertEquals(new Position(1, 2), player.getPosition());
+
+        player = (Player) movement.left(player, maze);
+        Assertions.assertEquals(Direction.LEFT, player.getDirection());
+        Assertions.assertEquals(new Position(0, 2), player.getPosition());
+
+        // Cannot move up out of the left boundary
+        player = (Player) movement.left(player, maze);
+        Assertions.assertEquals(Direction.LEFT, player.getDirection());
+        Assertions.assertEquals(new Position(0, 2), player.getPosition());
+
+        // Test down boundary
+        player = (Player) movement.down(player, maze);
+        Assertions.assertEquals(Direction.DOWN, player.getDirection());
+        Assertions.assertEquals(new Position(0, 3), player.getPosition());
+
+        player = (Player) movement.down(player, maze);
+        Assertions.assertEquals(Direction.DOWN, player.getDirection());
+        Assertions.assertEquals(new Position(0, 4), player.getPosition());
+
+        player = (Player) movement.down(player, maze);
+        Assertions.assertEquals(Direction.DOWN, player.getDirection());
+        Assertions.assertEquals(new Position(0, 5), player.getPosition());
+
+        player = (Player) movement.down(player, maze);
+        Assertions.assertEquals(Direction.DOWN, player.getDirection());
+        Assertions.assertEquals(new Position(0, 5), player.getPosition());
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Test cannot move out of the map.
+     * Change the direction but keep the position the same.
+     */
+    @Test
+    public void testCannotStepOutsideTheRightBoundary() {
+        player = (Player) movement.right(player, maze);
+        Assertions.assertEquals(Direction.RIGHT, player.getDirection());
+        Assertions.assertEquals(new Position(3, 2), player.getPosition());
+
+        player = (Player) movement.right(player, maze);
+        Assertions.assertEquals(Direction.RIGHT, player.getDirection());
+        Assertions.assertEquals(new Position(4, 2), player.getPosition());
+
+        player = (Player) movement.right(player, maze);
+        Assertions.assertEquals(Direction.RIGHT, player.getDirection());
+        Assertions.assertEquals(new Position(5, 2), player.getPosition());
+
+        player = (Player) movement.right(player, maze);
+        Assertions.assertEquals(Direction.RIGHT, player.getDirection());
+        Assertions.assertEquals(new Position(5, 2), player.getPosition());
     }
 
     /**
