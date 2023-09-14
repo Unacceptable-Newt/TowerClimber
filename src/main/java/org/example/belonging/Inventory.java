@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author RS
+ * @author Rong Sun
  * The Inventory class states
  * the max number of items and
  * details the precise items objects
@@ -23,7 +23,7 @@ public class Inventory {
     }
 
     /**
-     * @author RS
+     * @author Rong Sun
      * List all items in the inventory
      * @return All items in the inventory
      */
@@ -45,7 +45,7 @@ public class Inventory {
     }
 
     /**
-     * @author RS
+     * @author Rong Sun
      * Add an item to the inventory
      * @param itemToAdd The item to add to the inventory
      */
@@ -59,7 +59,7 @@ public class Inventory {
     }
 
     /**
-     * @author RS
+     * @author Rong Sun
      * Remove an item from the inventory
      * @param itemToRemove The item to remove from the inventory
      * @return The removed item. Can be used in another task such as calculate the sell price in shopping.
@@ -67,7 +67,7 @@ public class Inventory {
     public Item removeItem(String itemToRemove) {
         // FIXME
         if (!items.containsKey(itemToRemove)) {
-            return null; // 项目不存在，返回null
+            return null; // Project does not exist. Return null
         }
 
         return items.remove(itemToRemove);

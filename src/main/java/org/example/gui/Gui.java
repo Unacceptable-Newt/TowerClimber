@@ -1,16 +1,17 @@
 package org.example.gui;
 
+import org.example.Movement;
 import org.example.PersistentDataNames;
 import org.example.belonging.Item;
 import org.example.entity.*;
-import org.example.interaction.ItemPicker;
-import org.example.util.Pair;
+import org.example.gameLogic.Maze;
+import org.example.interaction.Direction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author Yucheng Zhu
+ * @author Austin Zerk, Yucheng Zhu
  *
  * Given a gameStateString, update the GUI frame on screen.
  */
@@ -31,12 +32,16 @@ public class Gui {
     }
 
     /**
-     * @author Yucheng Zhu
+     * @author Austin Zerk, Yucheng Zhu
      * Given all game objects, update the char "pixels" for the GUI.
      * @param gameObjects Game objects summarising all the object with game variables
      * @return A matrix of all char "pixels" to be displayed on GUI
      */
-    public char[][] rasterise(HashMap<PersistentDataNames, Object> gameObjects,int rows,int columns) {
+    public char[][] rasterise(
+            HashMap<PersistentDataNames, Object> gameObjects,
+            int rows,
+            int columns
+    ) {
         // FIXME
 
         // -- Create a blank GUI
@@ -66,7 +71,7 @@ public class Gui {
                 items.forEach(((position, item) -> {
                     int row = position.getY();
                     int col = position.getX();
-                    charsPixels[row][col] = 'i';
+                    charsPixels[row][col] = 'I';
                 }));
             } else if (name.equals(PersistentDataNames.NPCS)) {
                 HashMap<Position, NPC> NPCs = (HashMap<Position, NPC>) object;
@@ -85,7 +90,7 @@ public class Gui {
                         for (int i = position.getY(); i < wall.getLength() + position.getY(); i++) {
                             charsPixels[i][position.getX()] = '#';
                         }
-                    }else {
+                    } else {
                         for (int i = position.getX(); i < wall.getLength() + position.getX() ; i++) {
                             charsPixels[position.getY()][i] = '#';
                         }
@@ -95,6 +100,26 @@ public class Gui {
         });
 
         return charsPixels;
+    }
+
+    /**
+     * @author Austin Zerk, Yucheng Zhu
+     * Return strings to be displayed in GUI when a movement key is pressed
+     * @param maze the maze to be turned into a string
+     * @param gui gui object REMOVE AFTER MAKING CLASS STATIC
+     * @return a string representing the state of the maze after the move
+     */
+    public String updateGuiString(Maze maze, Gui gui) {
+
+        HashMap<PersistentDataNames, Object> gameObjects = new HashMap<>();
+        gameObjects.put(PersistentDataNames.PLAYER, maze.getPlayer());
+        gameObjects.put(PersistentDataNames.ENEMIES, maze.getEnemies());
+        gameObjects.put(PersistentDataNames.INVENTORY, maze.getItems());
+        gameObjects.put(PersistentDataNames.NPCS, maze.getNPCs());
+        gameObjects.put(PersistentDataNames.WALL, maze.getEncodedWalls());
+
+        char[][] rasterise = gui.rasterise(gameObjects, maze.getRows(), maze.getColumns());
+        return gui.flatten(rasterise);
     }
 
     /**

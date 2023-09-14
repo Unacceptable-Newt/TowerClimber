@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 /**
- * @author Yucheng Zhu
+ * @author Austin Zerk, Yucheng Zhu
  * Handle all key events related to movements.
  */
 public class MovementEvents {
@@ -18,13 +18,12 @@ public class MovementEvents {
      * @author Yucheng Zhu
      * Return strings to be displayed in GUI when a movement key is pressed
      * @param keyCode Key being pressed
-     * @param player Player object
      * @param movement Movement object
      * @param maze Maze object
      * @param gui Gui object
      * @return Text to be displayed on the GUI
      */
-    public String setGuiTextOnMovementKeysPressed(int keyCode, Player player, Movement movement, Maze maze, Gui gui) {
+    public String setGuiTextOnMovementKeysPressed(int keyCode, Movement movement, Maze maze, Gui gui) {
         String guiText = null; // Default value: No key pressed
 
         Direction direction = null;
@@ -42,7 +41,7 @@ public class MovementEvents {
     }
 
     /**
-     * @author Yucheng Zhu
+     * @author Austin Zerk, Yucheng Zhu
      * Return strings to be displayed in GUI when a movement key is pressed
      * @param maze the maze to be turned into a string
      * @param gui gui object REMOVE AFTER MAKING CLASS STATIC
@@ -50,16 +49,7 @@ public class MovementEvents {
      * @return a string representing the state of the maze after the move
      */
     public String updateGuiStringOnMovementKeyPressed(Movement movement, Maze maze, Gui gui, Direction direction) {
-        Player player = (Player) movement.move(maze.getPlayer(), direction, maze);
-
-        HashMap<PersistentDataNames, Object> gameObjects = new HashMap<>();
-        gameObjects.put(PersistentDataNames.PLAYER, player);
-        gameObjects.put(PersistentDataNames.ENEMIES, maze.getEnemies());
-        gameObjects.put(PersistentDataNames.INVENTORY, maze.getItems());
-        gameObjects.put(PersistentDataNames.NPCS, maze.getNPCs());
-        gameObjects.put(PersistentDataNames.WALL, maze.getEncodedWalls());
-
-        char[][] rasterise = gui.rasterise(gameObjects, maze.getRows(), maze.getColumns());
-        return gui.flatten(rasterise);
+        maze.movePlayer(movement, direction);
+        return gui.updateGuiString(maze, gui);
     }
 }

@@ -15,7 +15,6 @@ public class Player extends Life {
     Weapon currentWeapon;
     int level;
 
-    private Position position;
     public Player(Integer money, Integer health, Integer level, Position position) {
         super(money, health, position);
         this.level = level;
@@ -39,14 +38,6 @@ public class Player extends Life {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
     }
 
     /**
