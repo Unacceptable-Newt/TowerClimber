@@ -21,7 +21,19 @@ public class Movement {
      * @return True if the entity can move into the cell, otherwise false
      */
     private boolean canMove(Position currentPosition, Direction direction, Maze maze) throws IllegalArgumentException {
-        return true; // FIXME implement this after Maze is done
+        Position nextPosition = getPosition(direction, currentPosition);
+
+        if (maze.isWall(nextPosition)) { // not a wall
+            return false;
+        } else if (maze.getEnemies().containsKey(nextPosition)) { // not an enemy
+            return false;
+        } else if (maze.getNPCs().containsKey(nextPosition)) { // not an NPC
+            return false;
+        } else if (maze.getItems().containsKey(nextPosition)) { // not an item
+            return false;
+        } else { // not an exit
+            return !maze.getExit().equals(nextPosition);
+        }
     }
 
     /**
@@ -63,7 +75,7 @@ public class Movement {
      * @param currentPosition The position the entity is standing at before movement
      * @return The entity's new position after movement
      */
-    private static Position getPosition(Direction direction, Position currentPosition) {
+    private Position getPosition(Direction direction, Position currentPosition) {
         Position position;
         switch (direction) {
             case UP -> {
