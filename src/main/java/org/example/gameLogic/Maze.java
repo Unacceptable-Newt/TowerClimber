@@ -61,7 +61,7 @@ public class Maze {
             for (int i = pos.getY(); i < length + pos.getY(); i++) {
                 walls[i][pos.getX()] = true;
             }
-        }else {
+        } else {
             for (int i = pos.getX(); i < length + pos.getX() ; i++) {
                 walls[pos.getY()][i] = true;
             }
@@ -84,7 +84,7 @@ public class Maze {
      * @param pos position for the player to start at
      */
     public void createNewPlayer(Position pos){
-        this.player = new Player(0,10,1,pos);
+        this.player = new Player(0, 10, 1, pos);
     }
 
     /**
