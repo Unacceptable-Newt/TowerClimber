@@ -1,10 +1,17 @@
 package org.example.gui;
 import org.example.Movement;
+import org.example.belonging.Item;
+import org.example.belonging.Weapon;
+import org.example.entity.Enemy;
+import org.example.entity.NPC;
 import org.example.entity.Player;
 import org.example.entity.Position;
 import org.example.gameLogic.Maze;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -13,7 +20,7 @@ import java.awt.event.*;
  * GUI to visualise the game
  */
 public class  Display extends JFrame {
-    private JTextArea textArea;
+    private JTextPane textArea;
     private Movement movement;
     private Maze maze;
     private Gui gui;
@@ -29,10 +36,13 @@ public class  Display extends JFrame {
         this.setSize(500, 700);
 
         // Add text area
-        textArea = new JTextArea();
+        textArea = new JTextPane();
 
         // Make all characters evenly sized
-        textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+        SimpleAttributeSet spacingSet = new SimpleAttributeSet();
+        StyleConstants.setLineSpacing(spacingSet, -0.25f);
+        textArea.setParagraphAttributes(spacingSet, false);
+        textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 25));
         textArea.setEditable(false);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
@@ -48,8 +58,9 @@ public class  Display extends JFrame {
                 // FIXME: add other events
 
                 // Update the GUI char "pixels" as a string
-                if (guiText != null)
+                if (guiText != null) {
                     textArea.setText(guiText);
+                }
             }
         });
 
@@ -69,6 +80,13 @@ public class  Display extends JFrame {
         movement = new Movement();
         maze = new Maze(50, 50, new Position(1,1));
         maze.createNewPlayer(new Position(10,10));
+        maze.addWall(new Position(0,0),50,false);
+        maze.addWall(new Position(0,0),50,true);
+        maze.addWall(new Position(49,0),50,true);
+        maze.addWall(new Position(0,49),50,false);
+        maze.addItem(new Position(25, 30), new Weapon("The Big Axe",3,5,4));
+        maze.addNPC(new Position(5,5),new NPC("John",new Position(5,5)));
+        maze.addEnemy(new Position(20,25),new Enemy(2,2,2));
         gui = new Gui();
     }
 }

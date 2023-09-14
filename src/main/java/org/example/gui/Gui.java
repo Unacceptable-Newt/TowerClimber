@@ -66,7 +66,7 @@ public class Gui {
                 items.forEach(((position, item) -> {
                     int row = position.getY();
                     int col = position.getX();
-                    charsPixels[row][col] = 'i';
+                    charsPixels[row][col] = 'I';
                 }));
             } else if (name.equals(PersistentDataNames.NPCS)) {
                 HashMap<Position, NPC> NPCs = (HashMap<Position, NPC>) object;
