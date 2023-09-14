@@ -75,14 +75,20 @@ public class Display extends JFrame {
         movementEvents = new MovementEvents();
 
         movement = new Movement();
+
+        // set up maze
         int mazeX = 35;
         int mazeY = 35;
         maze = new Maze(mazeX, mazeY, new Position(1, 1));
         maze.createNewPlayer(new Position(10, 10));
+
+        // add walls at the boundary
         maze.addWall(new Position(0, 0),mazeX, false);
         maze.addWall(new Position(0, 0),mazeY, true);
         maze.addWall(new Position(mazeX - 1, 0), mazeY, true);
         maze.addWall(new Position(0, mazeY - 1), mazeX, false);
+
+        // add things
         maze.addItem(new Position(30, 25), new Weapon("The Big Axe",3, 5, 4));
         maze.addNPC(new Position(5, 5),new NPC("John", new Position(5, 5)));
         maze.addEnemy(new Position(25, 20),new Enemy(2, 2, 2));

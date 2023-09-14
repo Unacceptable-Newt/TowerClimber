@@ -78,18 +78,14 @@ public class Movement {
     private Position getPosition(Direction direction, Position currentPosition) {
         Position position;
         switch (direction) {
-            case UP -> {
+            case UP ->
                 position = new Position(currentPosition.getX(), currentPosition.getY() - 1);
-            }
-            case DOWN -> {
+            case DOWN ->
                 position = new Position(currentPosition.getX(), currentPosition.getY() + 1);
-            }
-            case LEFT -> {
+            case LEFT ->
                 position = new Position(currentPosition.getX() - 1, currentPosition.getY());
-            }
-            case RIGHT -> {
+            case RIGHT ->
                 position = new Position(currentPosition.getX() + 1, currentPosition.getY());
-            }
             default -> throw new IllegalArgumentException("Direction must be up, down, left xor right");
         }
         return position;
