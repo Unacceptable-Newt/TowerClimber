@@ -16,10 +16,9 @@ interface Interaction {
      * An empty method for interaction.
      * Implementing it to have different interactions with different NPCs and entities.
      *
-     * @param direction Which direction the player should move
-     * @param level The level of the maze. (e.g. maze level 1, maze level 2, maze level 3)
      * @param player The player.
      * @param inventory The player's inventory.
+     * @param maze The maze.
      *
      * @return Modified player and inventory
      */

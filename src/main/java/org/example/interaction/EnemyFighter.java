@@ -16,6 +16,7 @@ public class EnemyFighter implements Interaction {
      * Interacts with an adjacent enemy to fight him/her/it and changes the player and his inventory in the process.
      * @param player The player.
      * @param inventory The player's inventory.
+     * @param maze The maze.
      *
      * @return Modified player and inventory
      */

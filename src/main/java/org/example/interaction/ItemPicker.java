@@ -21,6 +21,7 @@ public class ItemPicker implements Interaction {
 
      * @param player The player.
      * @param inventory The player's inventory.
+     * @param maze The maze.
      *
      * @return Modified player and inventory
      */
