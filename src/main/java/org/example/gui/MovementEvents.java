@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 /**
- * @author Yucheng Zhu
+ * @author Austin Zerk, Yucheng Zhu
  * Handle all key events related to movements.
  */
 public class MovementEvents {
@@ -41,7 +41,7 @@ public class MovementEvents {
     }
 
     /**
-     * @author Yucheng Zhu
+     * @author Austin Zerk, Yucheng Zhu
      * Return strings to be displayed in GUI when a movement key is pressed
      * @param maze the maze to be turned into a string
      * @param gui gui object REMOVE AFTER MAKING CLASS STATIC

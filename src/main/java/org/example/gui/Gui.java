@@ -3,14 +3,12 @@ package org.example.gui;
 import org.example.PersistentDataNames;
 import org.example.belonging.Item;
 import org.example.entity.*;
-import org.example.interaction.ItemPicker;
-import org.example.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author Yucheng Zhu
+ * @author Austin Zerk, Yucheng Zhu
  *
  * Given a gameStateString, update the GUI frame on screen.
  */
@@ -31,12 +29,16 @@ public class Gui {
     }
 
     /**
-     * @author Yucheng Zhu
+     * @author Austin Zerk, Yucheng Zhu
      * Given all game objects, update the char "pixels" for the GUI.
      * @param gameObjects Game objects summarising all the object with game variables
      * @return A matrix of all char "pixels" to be displayed on GUI
      */
-    public char[][] rasterise(HashMap<PersistentDataNames, Object> gameObjects,int rows,int columns) {
+    public char[][] rasterise(
+            HashMap<PersistentDataNames, Object> gameObjects,
+            int rows,
+            int columns
+    ) {
         // FIXME
 
         // -- Create a blank GUI
@@ -85,7 +87,7 @@ public class Gui {
                         for (int i = position.getY(); i < wall.getLength() + position.getY(); i++) {
                             charsPixels[i][position.getX()] = '#';
                         }
-                    }else {
+                    } else {
                         for (int i = position.getX(); i < wall.getLength() + position.getX() ; i++) {
                             charsPixels[position.getY()][i] = '#';
                         }

@@ -1,25 +1,22 @@
 package org.example.gui;
 import org.example.Movement;
-import org.example.belonging.Item;
 import org.example.belonging.Weapon;
 import org.example.entity.Enemy;
 import org.example.entity.NPC;
-import org.example.entity.Player;
 import org.example.entity.Position;
 import org.example.gameLogic.Maze;
 
 import javax.swing.*;
-import javax.swing.text.AttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.*;
 
 /**
- * @author Yucheng Zhu
+ * @author Austin Zerk, Yucheng Zhu
  * GUI to visualise the game
  */
-public class  Display extends JFrame {
+public class Display extends JFrame {
     private JTextPane textArea;
     private Movement movement;
     private Maze maze;
@@ -31,9 +28,10 @@ public class  Display extends JFrame {
         initialiseMovementObjects();
 
         // Create GUI
-        this.setTitle("Game");
+        this.setTitle("The Secret of the Princess");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500, 700);
+//        this.setSize(1350, 780);
+        this.setSize(800, 1080);
 
         // Add text area
         textArea = new JTextPane();
@@ -69,7 +67,7 @@ public class  Display extends JFrame {
     }
 
     /**
-     * @author Yucheng Zhu
+     * @author Austin Zerk, Yucheng Zhu
      * Stubbing player's data to test movement.
      * TODO: replace this method from objects in the Maze when it finishes.
      */
@@ -78,15 +76,22 @@ public class  Display extends JFrame {
 
         Position currentPosition = new Position(20, 10);
         movement = new Movement();
-        maze = new Maze(50, 50, new Position(1,1));
-        maze.createNewPlayer(new Position(10,10));
-        maze.addWall(new Position(0,0),50,false);
-        maze.addWall(new Position(0,0),50,true);
-        maze.addWall(new Position(49,0),50,true);
-        maze.addWall(new Position(0,49),50,false);
-        maze.addItem(new Position(25, 30), new Weapon("The Big Axe",3,5,4));
-        maze.addNPC(new Position(5,5),new NPC("John",new Position(5,5)));
-        maze.addEnemy(new Position(20,25),new Enemy(2,2,2));
+        int mazeX = 35;
+        int mazeY = 35;
+        maze = new Maze(mazeX, mazeY, new Position(1, 1));
+        maze.createNewPlayer(new Position(10, 10));
+        maze.addWall(new Position(0, 0),mazeX, false);
+        maze.addWall(new Position(0, 0),mazeY, true);
+        maze.addWall(new Position(mazeX - 1, 0), mazeY, true);
+        maze.addWall(new Position(0, mazeY - 1), mazeX, false);
+        maze.addItem(new Position(30, 25), new Weapon("The Big Axe",3, 5, 4));
+        maze.addNPC(new Position(5, 5),new NPC("John", new Position(5, 5)));
+        maze.addEnemy(new Position(25, 20),new Enemy(2, 2, 2));
         gui = new Gui();
+    }
+
+    public static void main(String[] args) {
+        // Call the GUI
+        Display gui = new Display();
     }
 }

@@ -1,7 +1,7 @@
 package org.example.belonging;
 
 /**
- * @author RS
+ * @author Rong Sun
  * An abstract class for all kinds of items,
  * such as weapons
  */
