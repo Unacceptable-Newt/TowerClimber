@@ -38,6 +38,6 @@ public class Game {
      */
     public static void main(String[] args) {
         // Call the GUI
-        Display gui = new Display();
+        new Display();
     }
 }

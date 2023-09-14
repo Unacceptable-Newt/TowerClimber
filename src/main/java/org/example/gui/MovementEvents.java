@@ -49,16 +49,7 @@ public class MovementEvents {
      * @return a string representing the state of the maze after the move
      */
     public String updateGuiStringOnMovementKeyPressed(Movement movement, Maze maze, Gui gui, Direction direction) {
-        Player player = (Player) movement.move(maze.getPlayer(), direction, maze);
-
-        HashMap<PersistentDataNames, Object> gameObjects = new HashMap<>();
-        gameObjects.put(PersistentDataNames.PLAYER, player);
-        gameObjects.put(PersistentDataNames.ENEMIES, maze.getEnemies());
-        gameObjects.put(PersistentDataNames.INVENTORY, maze.getItems());
-        gameObjects.put(PersistentDataNames.NPCS, maze.getNPCs());
-        gameObjects.put(PersistentDataNames.WALL, maze.getEncodedWalls());
-
-        char[][] rasterise = gui.rasterise(gameObjects, maze.getRows(), maze.getColumns());
-        return gui.flatten(rasterise);
+        maze.movePlayer(movement, direction);
+        return gui.updateGuiString(maze, gui);
     }
 }

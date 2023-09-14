@@ -88,9 +88,4 @@ public class Display extends JFrame {
         maze.addEnemy(new Position(25, 20),new Enemy(2, 2, 2));
         gui = new Gui();
     }
-
-    public static void main(String[] args) {
-        // Call the GUI
-        Display gui = new Display();
-    }
 }

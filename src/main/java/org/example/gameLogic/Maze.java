@@ -1,7 +1,9 @@
 package org.example.gameLogic;
 
+import org.example.Movement;
 import org.example.belonging.Item;
 import org.example.entity.*;
+import org.example.interaction.Direction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,6 +85,17 @@ public class Maze {
      */
     public void createNewPlayer(Position pos){
         this.player = new Player(0,10,1,pos);
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Move player. Change his location in the maze.
+     *
+     * @param movement The movement object containing the method to move the player
+     * @param direction The direction object used to instruct which direction the player will move
+     */
+    public void movePlayer(Movement movement, Direction direction) {
+        this.player = (Player) movement.move(getPlayer(), direction, this);
     }
 
     /**
