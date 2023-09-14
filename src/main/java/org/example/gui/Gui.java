@@ -1,8 +1,11 @@
 package org.example.gui;
 
+import org.example.Movement;
 import org.example.PersistentDataNames;
 import org.example.belonging.Item;
 import org.example.entity.*;
+import org.example.gameLogic.Maze;
+import org.example.interaction.Direction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,6 +100,26 @@ public class Gui {
         });
 
         return charsPixels;
+    }
+
+    /**
+     * @author Austin Zerk, Yucheng Zhu
+     * Return strings to be displayed in GUI when a movement key is pressed
+     * @param maze the maze to be turned into a string
+     * @param gui gui object REMOVE AFTER MAKING CLASS STATIC
+     * @return a string representing the state of the maze after the move
+     */
+    public String updateGuiString(Maze maze, Gui gui) {
+
+        HashMap<PersistentDataNames, Object> gameObjects = new HashMap<>();
+        gameObjects.put(PersistentDataNames.PLAYER, maze.getPlayer());
+        gameObjects.put(PersistentDataNames.ENEMIES, maze.getEnemies());
+        gameObjects.put(PersistentDataNames.INVENTORY, maze.getItems());
+        gameObjects.put(PersistentDataNames.NPCS, maze.getNPCs());
+        gameObjects.put(PersistentDataNames.WALL, maze.getEncodedWalls());
+
+        char[][] rasterise = gui.rasterise(gameObjects, maze.getRows(), maze.getColumns());
+        return gui.flatten(rasterise);
     }
 
     /**

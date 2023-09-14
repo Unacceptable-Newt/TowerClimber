@@ -24,14 +24,10 @@ public class Display extends JFrame {
     MovementEvents movementEvents;
     public Display() {
 
-        // initialise the movement objects
-        initialiseMovementObjects();
-
         // Create GUI
         this.setTitle("The Secret of the Princess");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.setSize(1350, 780);
-        this.setSize(800, 1080);
+        this.setSize(560, 970);
 
         // Add text area
         textArea = new JTextPane();
@@ -45,6 +41,10 @@ public class Display extends JFrame {
 
         JScrollPane scrollPane = new JScrollPane(textArea);
         this.add(scrollPane);
+
+        // initialise the movement objects
+        initialiseMovementObjects();
+        textArea.setText(gui.updateGuiString(maze, gui));
 
         // Listen to key events
         textArea.addKeyListener(new KeyAdapter() {
@@ -74,7 +74,6 @@ public class Display extends JFrame {
     public void initialiseMovementObjects() {
         movementEvents = new MovementEvents();
 
-        Position currentPosition = new Position(20, 10);
         movement = new Movement();
         int mazeX = 35;
         int mazeY = 35;
