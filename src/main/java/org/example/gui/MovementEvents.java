@@ -1,13 +1,10 @@
 package org.example.gui;
 
 import org.example.Movement;
-import org.example.PersistentDataNames;
-import org.example.entity.Player;
 import org.example.gameLogic.Maze;
 import org.example.interaction.Direction;
 
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
 
 /**
  * @author Austin Zerk, Yucheng Zhu

@@ -16,6 +16,7 @@ public class NpcTalker implements Interaction{
      * Interacts with an adjacent NPC to talk to him/her and changes the player and his inventory in the process.
      * @param player The player.
      * @param inventory The player's inventory.
+     * @param maze The maze.
      *
      * @return Modified player and inventory
      */
