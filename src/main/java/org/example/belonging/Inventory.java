@@ -18,8 +18,16 @@ public class Inventory {
     private int capacity = 5;
 
 
+
+    /**
+     * @author Rong Sun
+     * Constructs a new inventory with the specified capacity.
+     * @param capacity The maximum number of items the inventory can hold.
+     */
     public Inventory(int capacity) {
+
         this.capacity = capacity;
+        // this.money = 0;
     }
 
     /**
@@ -33,12 +41,13 @@ public class Inventory {
     }
 
     /**
+     *  @author Rong Sun
      * check whether an item contains in the inventory
      * @param item item want to be checked
      * @return true if the inventory has that item
      */
-    public boolean hasItem(Item item){
-        if(items.containsValue(item)){
+    public boolean hasItem(String item){
+        if(items.containsKey(item)){
             return true;
         }
         return false;
@@ -58,19 +67,25 @@ public class Inventory {
         this.items.put(itemToAdd.getName(), itemToAdd);
     }
 
+
+
+
+
+
     /**
      * @author Rong Sun
      * Remove an item from the inventory
      * @param itemToRemove The item to remove from the inventory
      * @return The removed item. Can be used in another task such as calculate the sell price in shopping.
      */
-    public Item removeItem(String itemToRemove) {
+    public Boolean removeItem(String itemToRemove) {
         // FIXME
         if (!items.containsKey(itemToRemove)) {
-            return null; // Project does not exist. Return null
+            return false; // Project does not exist. Return false
         }
+        items.remove(itemToRemove);
 
-        return items.remove(itemToRemove);
+        return true;
     }
 
 
@@ -94,15 +109,30 @@ public class Inventory {
         this.capacity = Math.max(0, this.capacity + capacityIncrement);
     }
 
+    /**@author Rong Sun
+     * Retrieves a reference to the internal HashMap containing items in the inventory.
+     * @return A reference to the HashMap of items.
+     */
     public HashMap<String, Item> getItems() {
         return items;
     }
 
+    /**@author Rong Sun
+     * Sets the capacity of the inventory to the specified value.
+     * @param capacity The new capacity of the inventory.
+     */
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
+    /**@author Rong Sun
+     * Sets the items in the inventory to the provided HashMap of items.
+     * @param items The HashMap of items to set in the inventory.
+     */
     public void setItems(HashMap<String, Item> items) {
         this.items = items;
     }
+
+
+
 }

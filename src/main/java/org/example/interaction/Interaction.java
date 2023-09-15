@@ -15,15 +15,15 @@ interface Interaction {
      *
      * An empty method for interaction.
      * Implementing it to have different interactions with different NPCs and entities.
-     *
-     * @param player The player.
      * @param inventory The player's inventory.
      * @param maze The maze.
      *
      * @return Modified player and inventory
      */
     Pair<Player, Inventory> interactWithAdjacent(
-            Player player, Inventory inventory, Maze maze
+         Inventory inventory, Maze maze
     );
+
+
 
 }

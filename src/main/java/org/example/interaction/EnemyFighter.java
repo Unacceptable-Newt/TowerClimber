@@ -14,7 +14,6 @@ public class EnemyFighter implements Interaction {
      * @author
      *
      * Interacts with an adjacent enemy to fight him/her/it and changes the player and his inventory in the process.
-     * @param player The player.
      * @param inventory The player's inventory.
      * @param maze The maze.
      *
@@ -22,7 +21,7 @@ public class EnemyFighter implements Interaction {
      */
     @Override
     public Pair<Player, Inventory> interactWithAdjacent(
-            Player player, Inventory inventory, Maze maze
+            Inventory inventory, Maze maze
     ) {
         // FIXME
         return null;
