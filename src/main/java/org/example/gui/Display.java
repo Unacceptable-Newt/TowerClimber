@@ -80,27 +80,19 @@ public class Display extends JFrame {
                 int keyCode = e.getKeyCode();
                 // Get the text after considering change brought by movement
                 if (isMovementKeys(keyCode)) { // Movement events
-                    guiText = movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, level.getMaze(), gui);
+                    movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, level.getMaze(), gui);
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
-                    // Get the text after considering change brought by movement
-//                    LevelStates levelStates = exitLeaver.exit(level.getMaze());
-
                     Object frontalObject = movement.getFrontalObject(
                             level.getMaze(),
-                            level.getMaze().getPlayer().getDirection(),
-                            level.getMaze().getPlayer().getPosition()
+                            level.getMaze().getPlayer().getDirection()
                     );
                     if (frontalObject instanceof Position) {
                         level.setLevelStates(LevelStates.EXIT);
 
                         // start a new level
                         level = new Level(level.getLevel() + 1);
-
-//                        guiText = exitEvent();
                     }
                 }
-
-
 
                 // FIXME: add other events
 

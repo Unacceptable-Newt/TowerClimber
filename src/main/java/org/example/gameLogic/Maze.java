@@ -107,6 +107,14 @@ public class Maze {
     }
 
     /**
+     * @author Yucheng Zhu
+     * a simple setter for player
+     */
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    /**
      * @author Austin Zerk
      * a simple getter for enimies list
      */
