@@ -1,14 +1,6 @@
 package org.example.gui;
 import org.example.gameLogic.Level;
-import org.example.interaction.Direction;
-import org.example.move.ExitLeaver;
-import org.example.move.LevelStates;
 import org.example.move.Movement;
-import org.example.belonging.Weapon;
-import org.example.entity.Enemy;
-import org.example.entity.NPC;
-import org.example.entity.Position;
-import org.example.gameLogic.Maze;
 
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
@@ -24,14 +16,11 @@ import java.util.HashSet;
 public class Display extends JFrame {
     private JTextPane textArea;
     private Movement movement;
-//    private Maze maze;
     private Gui gui;
     private Level level;
 
     // Initialise events
     MovementEvents movementEvents;
-    ExitLeaver exitLeaver;
-    ExitEvent exitEvent;
 
     private HashSet<Integer> movementKeys;
 
@@ -82,16 +71,7 @@ public class Display extends JFrame {
                 if (isMovementKeys(keyCode)) { // Movement events
                     movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, level.getMaze(), gui);
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
-                    Object frontalObject = movement.getFrontalObject(
-                            level.getMaze(),
-                            level.getMaze().getPlayer().getDirection()
-                    );
-                    if (frontalObject instanceof Position) {
-                        level.setLevelStates(LevelStates.EXIT);
-
-                        // start a new level
-                        level = new Level(level.getLevel() + 1);
-                    }
+                    level = ExitEvent.exit(movement, level);
                 }
 
                 // FIXME: add other events
@@ -118,23 +98,6 @@ public class Display extends JFrame {
         movementEvents = new MovementEvents();
 
         movement = new Movement();
-
-//        // set up maze
-//        int mazeX = 35;
-//        int mazeY = 35;
-//        maze = new Maze(mazeX, mazeY, new Position(1, 1));
-//        maze.createNewPlayer(new Position(10, 10));
-//
-//        // add walls at the boundary
-//        maze.addWall(new Position(0, 0),mazeX, false);
-//        maze.addWall(new Position(0, 0),mazeY, true);
-//        maze.addWall(new Position(mazeX - 1, 0), mazeY, true);
-//        maze.addWall(new Position(0, mazeY - 1), mazeX, false);
-//
-//        // add things
-//        maze.addItem(new Position(30, 25), new Weapon("The Big Axe",3, 5, 4));
-//        maze.addNPC(new Position(5, 5),new NPC("John", new Position(5, 5)));
-//        maze.addEnemy(new Position(25, 20),new Enemy(2, 2, 2));
 
         level = new Level(1); // FIXME: load from file instead of creating a stubbed level when load is implemented
 
