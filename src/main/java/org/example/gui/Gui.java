@@ -1,11 +1,9 @@
 package org.example.gui;
 
-import org.example.Movement;
 import org.example.PersistentDataNames;
 import org.example.belonging.Item;
 import org.example.entity.*;
 import org.example.gameLogic.Maze;
-import org.example.interaction.Direction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,8 +40,6 @@ public class Gui {
             int rows,
             int columns
     ) {
-        // FIXME
-
         // -- Create a blank GUI
         char[][] charsPixels = rasteriseBlankGUI(rows, columns);
 
@@ -102,7 +98,7 @@ public class Gui {
 
                 int row = exit.getY();
                 int col = exit.getX();
-                charsPixels[row][col] = 'e';
+                charsPixels[row][col] = 'X';
             }
         });
 

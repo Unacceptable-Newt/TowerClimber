@@ -1,7 +1,7 @@
-package org.example;
+package org.example.move;
 
-import org.example.entity.Life;
-import org.example.entity.Position;
+import org.example.belonging.Item;
+import org.example.entity.*;
 import org.example.gameLogic.Maze;
 import org.example.interaction.Direction;
 
@@ -96,6 +96,32 @@ public class Movement {
             default -> throw new IllegalArgumentException("Direction must be up, down, left xor right");
         }
         return position;
+    }
+
+
+    public Object getObjectAtPosition(Maze maze, Position position) {
+        Item item = maze.getItemAtPosition(position);
+        Enemy enemy = maze.getEnemyAtPosition(position);
+        NPC npc = maze.getNPCAtPosition(position);
+        Player player = maze.getPlayer();
+
+        if (item != null) {
+            return item;
+        } else if (enemy != null) {
+            return enemy;
+        } else if (npc != null) {
+            return npc;
+        } else if (player.getPosition().equals(position)) {
+            return player;
+        } else if (maze.getExit().equals(position)) {
+            return maze.getExit();
+        }
+
+        return null;
+    }
+
+    public Object getFrontalObject(Maze maze, Direction direction, Position currentPosition) {
+        return getObjectAtPosition(maze, getPosition(direction, currentPosition));
     }
 
     /**

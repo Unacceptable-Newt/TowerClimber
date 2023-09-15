@@ -1,4 +1,4 @@
-import org.example.Movement;
+import org.example.move.Movement;
 import org.example.entity.Position;
 import org.example.gameLogic.Maze;
 import org.example.gui.Gui;
