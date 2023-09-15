@@ -12,6 +12,10 @@ public class Game {
     private final static int MIN_GAME_LEVEL = 1;
     private final static int MAX_GAME_LEVEL = 3;
 
+    // Game GUI size
+    private static int WIDTH = 560;
+    private static int HEIGHT = 970;
+
     /**
      * @author
      * Run a new game
@@ -37,7 +41,8 @@ public class Game {
      * @param args Typically nothing at the moment
      */
     public static void main(String[] args) {
+
         // Call the GUI
-        new Display();
+        new Display(WIDTH, HEIGHT);
     }
 }

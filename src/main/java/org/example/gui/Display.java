@@ -22,12 +22,13 @@ public class Display extends JFrame {
     private Maze maze;
     private Gui gui;
     MovementEvents movementEvents;
-    public Display() {
+
+    public Display(int width, int height) {
 
         // Create GUI
         this.setTitle("The Secret of the Princess");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(560, 970);
+        this.setSize(width, height);
 
         // Add text area
         textArea = new JTextPane();
