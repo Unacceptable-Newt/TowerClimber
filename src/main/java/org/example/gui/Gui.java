@@ -47,8 +47,8 @@ public class Gui {
         // -- Create a blank GUI
         char[][] charsPixels = rasteriseBlankGUI(rows, columns);
 
-        gameObjects.forEach( (name,object) -> {
-            if (name.equals(PersistentDataNames.PLAYER)) {
+        gameObjects.forEach((name, object) -> {
+            if (name.equals(PersistentDataNames.PLAYER)) { // Add player to GUI
                 Player player = (Player) object;
 
                 // Get the player's position
@@ -57,7 +57,7 @@ public class Gui {
                 int col = position.getX();
 
                 charsPixels[row][col] = 'P';
-            } else if (name.equals(PersistentDataNames.ENEMIES)) {
+            } else if (name.equals(PersistentDataNames.ENEMIES)) { // Add player to GUI
                 HashMap<Position, Enemy> enemies = (HashMap<Position, Enemy>) object;
 
                 enemies.forEach( (position, enemy) -> {
@@ -65,7 +65,8 @@ public class Gui {
                     int col = position.getX();
                     charsPixels[row][col] = 'e';
                 });
-            } else if (name.equals(PersistentDataNames.INVENTORY)) {
+            // FIXME: Change it to TREASURES?
+            } else if (name.equals(PersistentDataNames.INVENTORY)) { // Add items to GUI
                 HashMap<Position,Item> items = (HashMap<Position, Item>) object;
 
                 items.forEach(((position, item) -> {
@@ -73,7 +74,7 @@ public class Gui {
                     int col = position.getX();
                     charsPixels[row][col] = 'I';
                 }));
-            } else if (name.equals(PersistentDataNames.NPCS)) {
+            } else if (name.equals(PersistentDataNames.NPCS)) { // Add NPCs to GUI
                 HashMap<Position, NPC> NPCs = (HashMap<Position, NPC>) object;
 
                 NPCs.forEach((position, npc) -> {
@@ -81,7 +82,7 @@ public class Gui {
                     int col = position.getX();
                     charsPixels[row][col] = 'n';
                 });
-            } else if (name.equals(PersistentDataNames.WALL)) {
+            } else if (name.equals(PersistentDataNames.WALL)) { // Add walls to GUI
                 ArrayList<Wall> walls = (ArrayList<Wall>) object;
 
                 walls.forEach(wall -> {
@@ -91,11 +92,17 @@ public class Gui {
                             charsPixels[i][position.getX()] = '#';
                         }
                     } else {
-                        for (int i = position.getX(); i < wall.getLength() + position.getX() ; i++) {
+                        for (int i = position.getX(); i < wall.getLength() + position.getX(); i++) {
                             charsPixels[position.getY()][i] = '#';
                         }
                     }
                 });
+            } else if (name.equals(PersistentDataNames.EXIT)) { // Add Exit to GUI
+                Position exit = (Position) object;
+
+                int row = exit.getY();
+                int col = exit.getX();
+                charsPixels[row][col] = 'e';
             }
         });
 
@@ -117,6 +124,7 @@ public class Gui {
         gameObjects.put(PersistentDataNames.INVENTORY, maze.getItems());
         gameObjects.put(PersistentDataNames.NPCS, maze.getNPCs());
         gameObjects.put(PersistentDataNames.WALL, maze.getEncodedWalls());
+        gameObjects.put(PersistentDataNames.EXIT, maze.getExit());
 
         char[][] rasterise = gui.rasterise(gameObjects, maze.getRows(), maze.getColumns());
         return gui.flatten(rasterise);
