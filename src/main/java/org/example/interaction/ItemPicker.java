@@ -43,7 +43,7 @@ public class ItemPicker implements Interaction {
 
 
 
-        Item gainedItem = maze.getItemAtPosition(maze.getPlayer().getPosition());
+        Item gainedItem = maze.pickItemAtPosition(maze.getPlayer().getPosition());
         // if there is item in that position
         if (gainedItem != null) {
             // add the item into the inventory

@@ -146,9 +146,10 @@ public class Maze {
      * @param pos Position to get item from
      * @return Item at location. If there is no item, it returns null
      */
-    public Item getItemAtPosition(Position pos){
+    public Item pickItemAtPosition(Position pos){
         return Items.remove(pos);
     }
+
 
     /**
      * @author Austin Zerk
