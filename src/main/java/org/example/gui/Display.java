@@ -1,12 +1,7 @@
 package org.example.gui;
 import org.example.move.Movement;
 import org.example.belonging.Inventory;
-import org.example.belonging.Weapon;
-import org.example.entity.Enemy;
-import org.example.entity.NPC;
 import org.example.entity.Player;
-import org.example.entity.Position;
-import org.example.gameLogic.Maze;
 import org.example.interaction.ItemPicker;
 import org.example.interaction.MoneyPicker;
 import org.example.util.Pair;
@@ -58,6 +53,7 @@ public class Display extends JFrame {
         this.setTitle("The Secret of the Princess");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(width, height);
+        this.setResizable(false);
 
         // Add text area
         textArea = new JTextPane();
