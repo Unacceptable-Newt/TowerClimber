@@ -56,7 +56,7 @@ public class Level {
         // FIXME: Load data from the file when load is implemented
         // REPLACE THE STUBBED DATA
         // set up maze
-        int mazeX = 35;
+        int mazeX = 34;
         int mazeY = 35;
         maze = new Maze(mazeX, mazeY, new Position(1, 1));
         maze.createNewPlayer(new Position(10, 10));
