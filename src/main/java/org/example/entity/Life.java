@@ -19,6 +19,8 @@ public abstract class Life {
         this.position = position;
         this.health = health;
         this.money = money;
+
+        this.direction = Direction.UP;
     }
     public int getMoney() {
         return money;

@@ -1,6 +1,6 @@
 package org.example.gameLogic;
 
-import org.example.Movement;
+import org.example.move.Movement;
 import org.example.belonging.Item;
 import org.example.entity.*;
 import org.example.interaction.Direction;
@@ -36,8 +36,8 @@ public class Maze {
         this.exit = exit;
         this.columns = xSize;
         this.rows = ySize;
-        for (int i = 0; i < xSize; i++){
-            for (int j = 0; j < ySize; j++){
+        for (int i = 0; i < ySize; i++){
+            for (int j = 0; j < xSize; j++){
                 walls[i][j] = false;
             }
         }
@@ -85,6 +85,7 @@ public class Maze {
      */
     public void createNewPlayer(Position pos){
         this.player = new Player(0, 10, 1, pos);
+
     }
 
     /**
@@ -104,6 +105,14 @@ public class Maze {
      */
     public Player getPlayer() {
         return player;
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * a simple setter for player
+     */
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     /**
@@ -146,8 +155,18 @@ public class Maze {
      * @param pos Position to get item from
      * @return Item at location. If there is no item, it returns null
      */
-    public Item getItemAtPosition(Position pos){
+    public Item pickItemAtPosition(Position pos){
         return Items.remove(pos);
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Peeks Item at position. It stays at the map
+     * @param pos Position to get item from
+     * @return Item at location. If there is no item, it returns null
+     */
+    public Item getItemAtPosition(Position pos){
+        return Items.get(pos);
     }
 
     /**
@@ -161,7 +180,7 @@ public class Maze {
 
     /**
      * @author Austin Zerk
-     * Gets Enemy at position and removes it from map
+     * Gets Enemy at position
      * @param pos Position to get item from
      * @return Enemy at location. If there is no Enemy, it returns null
      */
@@ -181,7 +200,7 @@ public class Maze {
 
     /**
      * @author Austin Zerk
-     * Gets NPC at position and removes it from the map.
+     * Gets NPC at position.
      * @param pos Position to get item from
      * @return NPC at location. If there is no NPC, it returns null
      */
@@ -232,12 +251,12 @@ public class Maze {
     }
 
     /**
-     * @author Austin Zerk
+     * @author Austin Zerk & Rong Sun
      * Get money on the maze's floor.
      * @return Money's location and value
      */
-    public HashMap<Position, Integer> getMoney() {
-        return money;
+    public Integer pickMoney(Position pos) {
+        return money.remove(pos);
     }
 
     /**
@@ -248,5 +267,31 @@ public class Maze {
      */
     public void addMoney(Position position, int money){
         this.money.put(position, money);
+    }
+
+    /**
+     * @author Rong Sun
+     * a simple getter for all the money and their positions in the maze
+     */
+    public HashMap<Position, Integer> getMoney() {
+        return money;
+    }
+
+    /**
+     * @author Rong Sun
+     * a simple setter for all the money and their positions in the maze
+     * @param money the money will be shown in the maze
+     */
+    public void setMoney(HashMap<Position, Integer> money) {
+        this.money = money;
+    }
+
+    /**
+     * @author Rong Sun
+     * a simple setter for all the items and their positions in the maze
+     * @param items the items that will be shown in the maze
+     */
+    public void setItems(HashMap<Position, Item> items) {
+        Items = items;
     }
 }

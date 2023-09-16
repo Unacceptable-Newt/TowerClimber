@@ -14,7 +14,6 @@ public class NpcTalker implements Interaction{
      * @author
      *
      * Interacts with an adjacent NPC to talk to him/her and changes the player and his inventory in the process.
-     * @param player The player.
      * @param inventory The player's inventory.
      * @param maze The maze.
      *
@@ -22,7 +21,7 @@ public class NpcTalker implements Interaction{
      */
     @Override
     public Pair<Player, Inventory> interactWithAdjacent(
-            Player player, Inventory inventory, Maze maze
+          Inventory inventory, Maze maze
     ) {
         // FIXME
         return null;
