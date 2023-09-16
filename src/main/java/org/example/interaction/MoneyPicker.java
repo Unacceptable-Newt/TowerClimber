@@ -19,7 +19,7 @@ public class MoneyPicker  {
      * @return Modified player
      */
 
-    public Player interactWithAdjacent(Maze maze) {
+/*    public Player interactWithAdjacent(Maze maze) {
         // get the player's current position's item
         Integer pickedMoney = maze.pickMoney(maze.getPlayer().getPosition());
         // if there is item in that position
@@ -30,6 +30,6 @@ public class MoneyPicker  {
         }
         // return the new player and inventory
         return maze.getPlayer();
-    }
+    }*/
 
 }

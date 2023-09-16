@@ -243,7 +243,7 @@ public class MovementTest {
     @Test
     public void testGetFrontalObject() {
         // test nothing at the position
-        Assertions.assertNull(movement.getFrontalObject(maze, Direction.DOWN));
+        Assertions.assertNull(movement.getPlayerFrontalObject(maze));
     }
 }
 

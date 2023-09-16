@@ -85,6 +85,7 @@ public class Maze {
      */
     public void createNewPlayer(Position pos){
         this.player = new Player(0, 10, 1, pos);
+
     }
 
     /**

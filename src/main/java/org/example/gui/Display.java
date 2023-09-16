@@ -141,7 +141,7 @@ public class Display extends JFrame {
         int keyCode = e.getKeyCode();
 
         // Check if the "P" key is pressed
-        if (keyCode == KeyEvent.VK_P) {
+        if (keyCode == KeyEvent.VK_E) {
             int size = inventory.getItems().size();
             // Trigger the ItemPicker operation
             // You might call your ItemPicker method here
@@ -150,7 +150,7 @@ public class Display extends JFrame {
             // Update the GUI text
             String newItemText = "You picked up an item!";
             if(playerInventoryPair.second().getItems().size()>size){
-                if (keyCode == KeyEvent.VK_P) {
+                if (keyCode == KeyEvent.VK_E) {
                     //A pop-up dialog box
                     JOptionPane.showMessageDialog(null, "picked up", "pick message", JOptionPane.INFORMATION_MESSAGE);
 
