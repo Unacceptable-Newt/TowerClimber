@@ -36,8 +36,6 @@ public class Movement {
             return false;
         } else if (maze.getNPCs().containsKey(nextPosition)) { // not an NPC
             return false;
-        } else if (maze.getItems().containsKey(nextPosition)) { // not an item
-            return false;
         } else { // not an exit
             return !maze.getExit().equals(nextPosition);
         }
