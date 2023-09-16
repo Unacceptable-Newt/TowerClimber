@@ -1,16 +1,13 @@
 package org.example.gui;
-import org.example.Movement;
-import org.example.belonging.Weapon;
-import org.example.entity.Enemy;
-import org.example.entity.NPC;
-import org.example.entity.Position;
-import org.example.gameLogic.Maze;
+import org.example.gameLogic.Level;
+import org.example.move.Movement;
 
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashSet;
 
 /**
  * @author Austin Zerk, Yucheng Zhu
@@ -19,15 +16,34 @@ import java.awt.event.*;
 public class Display extends JFrame {
     private JTextPane textArea;
     private Movement movement;
-    private Maze maze;
     private Gui gui;
+    private Level level;
+
+    // Initialise events
     MovementEvents movementEvents;
-    public Display() {
+
+    private HashSet<Integer> movementKeys;
+
+    public boolean isMovementKeys(int key) {
+        return movementKeys.contains(key);
+    }
+
+    private void setMovementKeys() {
+        this.movementKeys = new HashSet<>();
+        this.movementKeys.add(KeyEvent.VK_W);
+        this.movementKeys.add(KeyEvent.VK_S);
+        this.movementKeys.add(KeyEvent.VK_A);
+        this.movementKeys.add(KeyEvent.VK_D);
+    }
+
+    public Display(int width, int height) {
+        // Set movement keys only once
+        setMovementKeys();
 
         // Create GUI
         this.setTitle("The Secret of the Princess");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(560, 970);
+        this.setSize(width, height);
 
         // Add text area
         textArea = new JTextPane();
@@ -44,18 +60,25 @@ public class Display extends JFrame {
 
         // initialise the movement objects
         initialiseMovementObjects();
-        textArea.setText(gui.updateGuiString(maze, gui));
+        textArea.setText(gui.updateGuiString(level.getMaze(), gui));
 
         // Listen to key events
         textArea.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
+                String guiText;
                 int keyCode = e.getKeyCode();
                 // Get the text after considering change brought by movement
-                String guiText = movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, maze, gui);
+                if (isMovementKeys(keyCode)) { // Movement events
+                    movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, level.getMaze(), gui);
+                } else if (keyCode == KeyEvent.VK_E) { // exit event
+                    level = ExitEvent.exit(movement, level);
+                }
 
                 // FIXME: add other events
 
                 // Update the GUI char "pixels" as a string
+                guiText = gui.updateGuiString(level.getMaze(), gui);
+
                 if (guiText != null) {
                     textArea.setText(guiText);
                 }
@@ -76,22 +99,9 @@ public class Display extends JFrame {
 
         movement = new Movement();
 
-        // set up maze
-        int mazeX = 35;
-        int mazeY = 35;
-        maze = new Maze(mazeX, mazeY, new Position(1, 1));
-        maze.createNewPlayer(new Position(10, 10));
+        level = new Level(1); // FIXME: load from file instead of creating a stubbed level when load is implemented
 
-        // add walls at the boundary
-        maze.addWall(new Position(0, 0),mazeX, false);
-        maze.addWall(new Position(0, 0),mazeY, true);
-        maze.addWall(new Position(mazeX - 1, 0), mazeY, true);
-        maze.addWall(new Position(0, mazeY - 1), mazeX, false);
-
-        // add things
-        maze.addItem(new Position(30, 25), new Weapon("The Big Axe",3, 5, 4));
-        maze.addNPC(new Position(5, 5),new NPC("John", new Position(5, 5)));
-        maze.addEnemy(new Position(25, 20),new Enemy(2, 2, 2));
+        // construct GUI
         gui = new Gui();
     }
 }

@@ -1,6 +1,6 @@
 package org.example.gui;
 
-import org.example.Movement;
+import org.example.move.Movement;
 import org.example.gameLogic.Maze;
 import org.example.interaction.Direction;
 

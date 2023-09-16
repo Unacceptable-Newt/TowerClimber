@@ -1,6 +1,6 @@
 package org.example.gameLogic;
 
-import org.example.Movement;
+import org.example.move.Movement;
 import org.example.belonging.Item;
 import org.example.entity.*;
 import org.example.interaction.Direction;
@@ -36,8 +36,8 @@ public class Maze {
         this.exit = exit;
         this.columns = xSize;
         this.rows = ySize;
-        for (int i = 0; i < xSize; i++){
-            for (int j = 0; j < ySize; j++){
+        for (int i = 0; i < ySize; i++){
+            for (int j = 0; j < xSize; j++){
                 walls[i][j] = false;
             }
         }
@@ -107,6 +107,14 @@ public class Maze {
     }
 
     /**
+     * @author Yucheng Zhu
+     * a simple setter for player
+     */
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    /**
      * @author Austin Zerk
      * a simple getter for enimies list
      */
@@ -146,8 +154,18 @@ public class Maze {
      * @param pos Position to get item from
      * @return Item at location. If there is no item, it returns null
      */
-    public Item getItemAtPosition(Position pos){
+    public Item removeItemAtPosition(Position pos){
         return Items.remove(pos);
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Peeks Item at position. It stays at the map
+     * @param pos Position to get item from
+     * @return Item at location. If there is no item, it returns null
+     */
+    public Item getItemAtPosition(Position pos){
+        return Items.get(pos);
     }
 
     /**
@@ -161,7 +179,7 @@ public class Maze {
 
     /**
      * @author Austin Zerk
-     * Gets Enemy at position and removes it from map
+     * Gets Enemy at position
      * @param pos Position to get item from
      * @return Enemy at location. If there is no Enemy, it returns null
      */
@@ -181,7 +199,7 @@ public class Maze {
 
     /**
      * @author Austin Zerk
-     * Gets NPC at position and removes it from the map.
+     * Gets NPC at position.
      * @param pos Position to get item from
      * @return NPC at location. If there is no NPC, it returns null
      */

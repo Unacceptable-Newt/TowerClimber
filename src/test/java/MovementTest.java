@@ -1,4 +1,5 @@
-import org.example.Movement;
+import org.example.belonging.Item;
+import org.example.move.Movement;
 import org.example.belonging.Weapon;
 import org.example.entity.*;
 import org.example.gameLogic.Maze;
@@ -22,16 +23,18 @@ public class MovementTest {
      */
     @BeforeEach
     private void init() {
+        movement = new Movement();
+
         Position currentPosition = new Position(2, 2);
         player = new Player(10, 100, 1, currentPosition);
         player.setDirection(Direction.DOWN);
-        movement = new Movement();
 
         // Set up maze
         int mazeX = 6;
         int mazeY = 6;
         maze = new Maze(mazeX, mazeY, new Position(1, 1));
-//        maze.createNewPlayer(new Position(2, 2));
+
+        maze.setPlayer(player);
 
         // Add walls at the top boundary
         maze.addWall(new Position(0, 0),mazeX, false);
@@ -203,6 +206,44 @@ public class MovementTest {
         Life life = movement.right(player, maze);
         Assertions.assertEquals(Direction.RIGHT, life.getDirection());
         Assertions.assertEquals(new Position(3, 2), life.getPosition());
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Test getting object at the position
+     */
+    @Test
+    public void getObjectAtPosition() {
+        // test nothing at the position
+        Assertions.assertNull(movement.getObjectAtPosition(maze, new Position(1, 2)));
+
+        // test player at the position
+        Assertions.assertTrue(movement.getObjectAtPosition(maze, new Position(2, 2)) instanceof Player);
+
+        // test item at the position
+        Assertions.assertTrue(movement.getObjectAtPosition(maze, new Position(1, 3)) instanceof Item);
+
+        // test weapon at the position
+        Assertions.assertTrue(movement.getObjectAtPosition(maze, new Position(1, 3)) instanceof Weapon);
+
+        // test NPC at the position
+        Assertions.assertTrue(movement.getObjectAtPosition(maze, new Position(1, 4)) instanceof NPC);
+
+        // test enemy at the position
+        Assertions.assertTrue(movement.getObjectAtPosition(maze, new Position(1, 5)) instanceof Enemy);
+
+        // test exit at the position
+        Assertions.assertTrue(movement.getObjectAtPosition(maze, new Position(1, 1)) instanceof Position);
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Test getting the frontal object
+     */
+    @Test
+    public void testGetFrontalObject() {
+        // test nothing at the position
+        Assertions.assertNull(movement.getFrontalObject(maze, Direction.DOWN));
     }
 }
 
