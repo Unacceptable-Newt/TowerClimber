@@ -1,5 +1,5 @@
 package org.example.gui;
-import org.example.Movement;
+import org.example.move.Movement;
 import org.example.belonging.Inventory;
 import org.example.belonging.Weapon;
 import org.example.entity.Enemy;
@@ -11,7 +11,7 @@ import org.example.interaction.ItemPicker;
 import org.example.interaction.MoneyPicker;
 import org.example.util.Pair;
 import org.example.gameLogic.Level;
-import org.example.Movement;
+
 
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
@@ -76,7 +76,6 @@ public class Display extends JFrame {
         initialiseMovementObjects();
         // initialise the picker objects
         initialisePickerObjects();
-        textArea.setText(gui.updateGuiString(maze, gui));
         textArea.setText(gui.updateGuiString(level.getMaze(), gui));
 
         // Listen to key events
@@ -146,7 +145,7 @@ public class Display extends JFrame {
             int size = inventory.getItems().size();
             // Trigger the ItemPicker operation
             // You might call your ItemPicker method here
-            Pair<Player, Inventory> playerInventoryPair = itemPicker.interactWithAdjacent(inventory, maze);
+            Pair<Player, Inventory> playerInventoryPair = itemPicker.interactWithAdjacent(inventory, level.getMaze());
 
             // Update the GUI text
             String newItemText = "You picked up an item!";
@@ -188,7 +187,7 @@ public class Display extends JFrame {
         // Update the GUI char "pixels" as a string
         // You can keep this part if it's relevant to your game
 //        String guiText = movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, maze, gui);
-        String guiText = gui.updateGuiString(maze, gui);
+        String guiText = gui.updateGuiString(level.getMaze(), gui);
         if (guiText != null) {
             textArea.setText(guiText);
         }

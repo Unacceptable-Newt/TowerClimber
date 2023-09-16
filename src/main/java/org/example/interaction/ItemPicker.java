@@ -24,7 +24,7 @@ public class ItemPicker implements Interaction {
      */
     @Override
     public Pair<Player, Inventory> interactWithAdjacent(Inventory inventory, Maze maze) {
-                Player player = maze.getPlayer();
+        Player player = maze.getPlayer();
        Position playerPosition =  player.getPosition();
        boolean conditionofX = false;
        boolean conditionofY = false;
@@ -35,7 +35,7 @@ public class ItemPicker implements Interaction {
             /*if (Math.abs(playerPosition.getX() - position.getX()) == 1 && playerPosition.getY() == position.getY()) {
 
             }*/
-
+            conditionofY = Math.abs(playerPosition.getY() - position.getY()) == 1 && playerPosition.getX() == position.getX();
             if (Math.abs(playerPosition.getY() - position.getY()) == 1 && playerPosition.getX() == position.getX()) {
 
             }
