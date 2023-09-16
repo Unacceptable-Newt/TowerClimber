@@ -9,6 +9,8 @@ import org.example.interaction.Direction;
 public abstract class Life {
     protected int money;
     protected int health;
+    protected int attack;
+    protected int defense;
 
     protected Position position;
     protected Direction direction;
@@ -48,6 +50,14 @@ public abstract class Life {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    public int getAttack(){
+        return attack;
+    }
+
+    public int getDefense(){
+        return defense;
     }
 
     public void defense(){
