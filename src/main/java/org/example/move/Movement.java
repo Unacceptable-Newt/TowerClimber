@@ -1,7 +1,7 @@
-package org.example;
+package org.example.move;
 
-import org.example.entity.Life;
-import org.example.entity.Position;
+import org.example.belonging.Item;
+import org.example.entity.*;
 import org.example.gameLogic.Maze;
 import org.example.interaction.Direction;
 
@@ -148,4 +148,46 @@ public class Movement {
         return move(entityToMove, Direction.RIGHT, maze);
     }
 
+    /**
+     * @author Yucheng Zhu
+     * @param maze The maze where the player is in
+     * @param position The position to get the object. The object is not removed.
+     * @return Object at the position.  null if nothing is at the position.
+     */
+    public Object getObjectAtPosition(Maze maze, Position position) {
+        // Get all possible stuff on the maze
+        Item item = maze.getItemAtPosition(position);
+        Enemy enemy = maze.getEnemyAtPosition(position);
+        NPC npc = maze.getNPCAtPosition(position);
+        Player player = maze.getPlayer();
+
+        if (item != null) { // get item at the position
+            return item;
+        } else if (enemy != null) { // get enemy at the position
+            return enemy;
+        } else if (npc != null) { // get npc at the position
+            return npc;
+        } else if (maze.getExit().equals(position)) { // get exit at the position
+            return maze.getExit();
+        } else if (
+                player != null &&
+                        player.getPosition() != null &&
+                        player.getPosition().equals(position)) { // get player at the position
+
+            return player;
+        }
+
+        return null;
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * @param maze The maze where the play is in
+     * @param direction The direction the player is staring at.
+     * @return Object at the position. null if nothing is at the position.
+     */
+    public Object getFrontalObject(Maze maze, Direction direction) {
+        Position currentPosition = maze.getPlayer().getPosition();
+        return getObjectAtPosition(maze, getPosition(direction, currentPosition));
+    }
 }
