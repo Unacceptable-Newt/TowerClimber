@@ -85,6 +85,7 @@ public class Maze {
      */
     public void createNewPlayer(Position pos){
         this.player = new Player(0, 10, 1, pos);
+
     }
 
     /**
@@ -154,7 +155,7 @@ public class Maze {
      * @param pos Position to get item from
      * @return Item at location. If there is no item, it returns null
      */
-    public Item removeItemAtPosition(Position pos){
+    public Item pickItemAtPosition(Position pos){
         return Items.remove(pos);
     }
 
@@ -250,12 +251,12 @@ public class Maze {
     }
 
     /**
-     * @author Austin Zerk
+     * @author Austin Zerk & Rong Sun
      * Get money on the maze's floor.
      * @return Money's location and value
      */
-    public HashMap<Position, Integer> getMoney() {
-        return money;
+    public Integer pickMoney(Position pos) {
+        return money.remove(pos);
     }
 
     /**
@@ -266,5 +267,31 @@ public class Maze {
      */
     public void addMoney(Position position, int money){
         this.money.put(position, money);
+    }
+
+    /**
+     * @author Rong Sun
+     * a simple getter for all the money and their positions in the maze
+     */
+    public HashMap<Position, Integer> getMoney() {
+        return money;
+    }
+
+    /**
+     * @author Rong Sun
+     * a simple setter for all the money and their positions in the maze
+     * @param money the money will be shown in the maze
+     */
+    public void setMoney(HashMap<Position, Integer> money) {
+        this.money = money;
+    }
+
+    /**
+     * @author Rong Sun
+     * a simple setter for all the items and their positions in the maze
+     * @param items the items that will be shown in the maze
+     */
+    public void setItems(HashMap<Position, Item> items) {
+        Items = items;
     }
 }

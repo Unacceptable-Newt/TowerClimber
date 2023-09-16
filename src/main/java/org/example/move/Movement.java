@@ -21,7 +21,7 @@ public class Movement {
      * @return True if the entity can move into the cell, otherwise false
      */
     private boolean canMove(Position currentPosition, Direction direction, Maze maze) throws IllegalArgumentException {
-        Position nextPosition = getPosition(direction, currentPosition);
+        Position nextPosition = getFrontalPosition(direction, currentPosition);
 
         if ( // not outside the boundary
                 nextPosition.getY() < 0 ||
@@ -36,7 +36,7 @@ public class Movement {
             return false;
         } else if (maze.getNPCs().containsKey(nextPosition)) { // not an NPC
             return false;
-        } else if (maze.getItems().containsKey(nextPosition)) { // not an item
+        } else if (maze.getItems().containsKey(nextPosition)) { // not an NPC
             return false;
         } else { // not an exit
             return !maze.getExit().equals(nextPosition);
@@ -66,7 +66,7 @@ public class Movement {
         }
 
         // Change the player's position
-        Position position = getPosition(direction, currentPosition);
+        Position position = getFrontalPosition(direction, currentPosition);
 
         // Move the entity's position
         entityToMove.setPosition(position);
@@ -82,7 +82,7 @@ public class Movement {
      * @param currentPosition The position the entity is standing at before movement
      * @return The entity's new position after movement
      */
-    private Position getPosition(Direction direction, Position currentPosition) {
+    public Position getFrontalPosition(Direction direction, Position currentPosition) {
         Position position;
         switch (direction) {
             case UP ->
@@ -185,11 +185,11 @@ public class Movement {
     /**
      * @author Yucheng Zhu
      * @param maze The maze where the play is in
-     * @param direction The direction the player is staring at.
      * @return Object at the position. null if nothing is at the position.
      */
-    public Object getFrontalObject(Maze maze, Direction direction) {
+    public Object getPlayerFrontalObject(Maze maze) {
         Position currentPosition = maze.getPlayer().getPosition();
-        return getObjectAtPosition(maze, getPosition(direction, currentPosition));
+        Direction currentDirection = maze.getPlayer().getDirection();
+        return getObjectAtPosition(maze, getFrontalPosition(currentDirection, currentPosition));
     }
 }

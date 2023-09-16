@@ -11,9 +11,8 @@ import org.example.move.Movement;
  */
 public class ExitEvent {
     public static Level exit(Movement movement, Level level) {
-        Object frontalObject = movement.getFrontalObject(
-                level.getMaze(),
-                level.getMaze().getPlayer().getDirection()
+        Object frontalObject = movement.getPlayerFrontalObject(
+                level.getMaze()
         );
         if (frontalObject instanceof Position) {
             level.setLevelStates(LevelStates.EXIT);

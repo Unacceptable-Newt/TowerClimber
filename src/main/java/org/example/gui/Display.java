@@ -1,6 +1,17 @@
 package org.example.gui;
-import org.example.gameLogic.Level;
 import org.example.move.Movement;
+import org.example.belonging.Inventory;
+import org.example.belonging.Weapon;
+import org.example.entity.Enemy;
+import org.example.entity.NPC;
+import org.example.entity.Player;
+import org.example.entity.Position;
+import org.example.gameLogic.Maze;
+import org.example.interaction.ItemPicker;
+import org.example.interaction.MoneyPicker;
+import org.example.util.Pair;
+import org.example.gameLogic.Level;
+
 
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
@@ -18,6 +29,9 @@ public class Display extends JFrame {
     private Movement movement;
     private Gui gui;
     private Level level;
+    private ItemPicker itemPicker;
+    private MoneyPicker moneyPicker;
+    private Inventory inventory;
 
     // Initialise events
     MovementEvents movementEvents;
@@ -60,6 +74,8 @@ public class Display extends JFrame {
 
         // initialise the movement objects
         initialiseMovementObjects();
+        // initialise the picker objects
+        initialisePickerObjects();
         textArea.setText(gui.updateGuiString(level.getMaze(), gui));
 
         // Listen to key events
@@ -82,9 +98,9 @@ public class Display extends JFrame {
                 if (guiText != null) {
                     textArea.setText(guiText);
                 }
+                pickStuff(e);
             }
         });
-
         // Make the GUI visible
         this.setVisible(true);
     }
@@ -103,5 +119,78 @@ public class Display extends JFrame {
 
         // construct GUI
         gui = new Gui();
+    }
+
+    /**
+     * Rong Sun
+     */
+
+    public void initialisePickerObjects() {
+        this.inventory = new Inventory(5);
+        this.itemPicker  = new ItemPicker();
+        this.moneyPicker = new MoneyPicker();
+
+    }
+
+    /**
+     * Rong Sun
+     * @param e
+     */
+    public void pickStuff(KeyEvent e){
+
+        int keyCode = e.getKeyCode();
+
+        // Check if the "P" key is pressed
+        if (keyCode == KeyEvent.VK_E) {
+            int size = inventory.getItems().size();
+            // Trigger the ItemPicker operation
+            // You might call your ItemPicker method here
+            Pair<Player, Inventory> playerInventoryPair = itemPicker.interactWithAdjacent(inventory, level.getMaze());
+
+            // Update the GUI text
+            String newItemText = "You picked up an item!";
+            if(playerInventoryPair.second().getItems().size()>size){
+                if (keyCode == KeyEvent.VK_E) {
+                    //A pop-up dialog box
+                    JOptionPane.showMessageDialog(null, "picked up", "pick message", JOptionPane.INFORMATION_MESSAGE);
+
+                    // Create a timer and close the prompt after a few seconds
+                    Timer timer = new Timer(3000, new ActionListener() {
+                        public void actionPerformed(ActionEvent arg0) {
+                            // Close prompt box
+                            Window[] windows = JOptionPane.getRootFrame().getOwnedWindows();
+                            for (Window window : windows) {
+                                if (window instanceof JDialog) {
+                                    JDialog dialog = (JDialog) window;
+                                    if (dialog.getContentPane().getComponentCount() == 1
+                                            && dialog.getContentPane().getComponent(0) instanceof JOptionPane) {
+                                        dialog.dispose();
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    // Start timer, execute after 3000 milliseconds
+                    timer.setRepeats(false);
+                    timer.start();
+
+                }
+            }
+
+
+
+        }
+
+        // FIXME: Handle other events as needed
+
+        // Update the GUI char "pixels" as a string
+        // You can keep this part if it's relevant to your game
+//        String guiText = movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, maze, gui);
+        String guiText = gui.updateGuiString(level.getMaze(), gui);
+        if (guiText != null) {
+            textArea.setText(guiText);
+        }
+
     }
 }
