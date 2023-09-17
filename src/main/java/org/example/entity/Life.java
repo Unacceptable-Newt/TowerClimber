@@ -8,16 +8,18 @@ import org.example.interaction.Direction;
  */
 public abstract class Life {
     protected int money;
-    protected int health;
+    protected int maxHealth; // Full health. Cannot heal beyond that
+    protected int health; // Current health.
     protected int attack;
     protected int defense;
 
     protected Position position;
     protected Direction direction;
 
-    public Life(int money, int health, Position position,int attack){
+    public Life(int money, int maxHealth, Position position, int attack){
         this.position = position;
-        this.health = health;
+        this.maxHealth = maxHealth;
+        this.health = maxHealth;
         this.money = money;
         this.attack = attack;
         this.direction = Direction.UP;
@@ -30,12 +32,29 @@ public abstract class Life {
         this.money = money;
     }
 
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int max_health) {
+        this.maxHealth = max_health;
+    }
+
     public int getHealth() {
         return health;
     }
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Restore the life to its max health.
+     * Used in respawning.
+     */
+    public void restoreFullHealth() {
+        setHealth(maxHealth);
     }
 
     public Position getPosition() {

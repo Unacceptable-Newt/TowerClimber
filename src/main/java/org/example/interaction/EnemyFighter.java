@@ -15,9 +15,16 @@ import org.example.util.Pair;
 public class EnemyFighter implements Interaction {
 
     /**
-     * @author
+     * @author Austin Zerk, Yucheng Zhu
+     * Fights the enemy for one turn (i.e. the player hits the enemy, and then he/she/it retaliates).
+     * The enemy will lose health. And if he/she/it survives, the player will also lose health.
+     * The player can interact with the enemy repeated to complete the fight.
      *
-     * Interacts with an adjacent enemy to fight him/her/it and changes the player and his inventory in the process.
+     * If the player wins in this turn, he gains loot, and the enemy disappear.
+     * If the enemy wins in this turn, the player respawns, and the enemy regains the full health
+     *
+     * Changes the player and his inventory in the process.
+     *
      * @param inventory The player's inventory.
      * @param maze The maze.
      *
@@ -30,9 +37,10 @@ public class EnemyFighter implements Interaction {
         // Data preparation for battle.
         int playerAttack = maze.getPlayer().getAttack();
 
-        Movement movement = new Movement();
-        Position enemyPosition = movement.getFrontalPosition(maze.getPlayer().getDirection(),
-                maze.getPlayer().getPosition());
+        Position enemyPosition = Movement.getFrontalPosition(
+                maze.getPlayer().getDirection(),
+                maze.getPlayer().getPosition()
+        );
         Enemy enemy = maze.getEnemyAtPosition(enemyPosition);
 
         if (enemy != null) {
@@ -54,11 +62,14 @@ public class EnemyFighter implements Interaction {
             if (maze.getPlayer().getHealth() <= 0) {
                 // FIXME: Respawn the player
 
+                // The enemy regains the full health
+//                maze.getEnemies().get(enemyPosition).restoreFullHealth();
+
                 // You died :(
                 return new Pair<>(maze.getPlayer(), inventory);
             }
         }
 
-        return new Pair<>(maze.getPlayer(),inventory); // enemy lives
+        return new Pair<>(maze.getPlayer(), inventory); // No enemy here
     }
 }

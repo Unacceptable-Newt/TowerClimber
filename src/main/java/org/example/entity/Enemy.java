@@ -15,6 +15,9 @@ public class Enemy extends Life {
 /**
  * @author Yue Zhu, Austin Zerk, Rong Sun
  * Create a new enemy
+ * @param attack The attack value
+ * @param health The health value
+ * @param defense The defense value
  */
     public Enemy(int attack, int health, int defense) {
         super(100, health, new Position(0, 0), attack);

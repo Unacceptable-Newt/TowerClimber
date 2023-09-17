@@ -44,18 +44,19 @@ public class FightingTest {
         enemyFighter.interactWithAdjacent(inventory,maze);
         Assertions.assertNull(maze.getEnemyAtPosition(new Position(1, 5)));
         Assertions.assertNotNull(maze.getPlayer());
-        Assertions.assertEquals(100,player.getHealth());
+        Assertions.assertEquals(100, player.getHealth());
     }
     @Test
     public void NoEnemyTest(){
         EnemyFighter enemyFighter = new EnemyFighter();
         Inventory inventory = new Inventory(5);
         player.setDirection(Direction.UP);
-        enemyFighter.interactWithAdjacent(inventory,maze);
+        enemyFighter.interactWithAdjacent(inventory, maze);
+
         Assertions.assertNotNull(maze.getEnemyAtPosition(new Position(1, 5)));
-        Assertions.assertEquals(2,maze.getEnemyAtPosition(new Position(1,5)).getHealth());
+        Assertions.assertEquals(2, maze.getEnemyAtPosition(new Position(1, 5)).getHealth());
         Assertions.assertNotNull(maze.getPlayer());
-        Assertions.assertEquals(100,player.getHealth());
+        Assertions.assertEquals(100, player.getHealth());
     }
 }
 
