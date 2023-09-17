@@ -255,7 +255,7 @@ public class JsonSave{
     private void saveToNewProgress(){
         try {
             // FIXME 将current文件夹内的所有的东西都储存到新的文件夹
-            String destFolderPath = FOLDERPATH + folderName;
+            String destFolderPath = FOLDERPATH + "/" + folderName+"/";
             String curFolderPath = CURPROGRESSFILEPATH;
 
             // 创建目标文件夹，如果不存在

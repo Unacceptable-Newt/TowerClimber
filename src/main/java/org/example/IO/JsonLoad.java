@@ -164,7 +164,7 @@ public class JsonLoad {
 
 
                 // create new level object
-                Level level = new Level(levelNum); // 你可以从文件或者mazeData中获取适当的level数值
+                Level level = new Level(levelNum);
                 level.setMaze(maze);
 
                 return level;
