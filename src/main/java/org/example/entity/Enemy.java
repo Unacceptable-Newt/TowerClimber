@@ -20,16 +20,8 @@ public class Enemy extends Life {
  * 
  */
     public Enemy(int attack, int health, int defense) {
-        super(100,health,new Position(0,0)); 
+        super(100,health,new Position(0,0),attack);
         this.defense = defense;
-    }
-
-    public int getAttack() {
-        return attack;
-    }
-
-    public void setAttack(int attack) {
-        this.attack = attack;
     }
 
     public int getHealth(){
