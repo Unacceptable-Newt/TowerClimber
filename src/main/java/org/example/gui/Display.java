@@ -2,6 +2,8 @@ package org.example.gui;
 import org.example.interaction.EnemyFighter;
 import org.example.move.Movement;
 import org.example.belonging.Inventory;
+import org.example.move.Movement;
+import org.example.belonging.Inventory;
 import org.example.belonging.Weapon;
 import org.example.entity.Enemy;
 import org.example.entity.NPC;
@@ -27,15 +29,10 @@ import java.util.HashSet;
  */
 public class Display extends JFrame {
     private JTextPane textArea;
-    private Movement movement;
-    private Gui gui;
     private Level level;
     private ItemPicker itemPicker;
     private MoneyPicker moneyPicker;
     private Inventory inventory;
-
-    // Initialise events
-    MovementEvents movementEvents;
 
     private HashSet<Integer> movementKeys;
 
@@ -77,7 +74,7 @@ public class Display extends JFrame {
         initialiseMovementObjects();
         // initialise the picker objects
         initialisePickerObjects();
-        textArea.setText(gui.updateGuiString(level.getMaze(), gui));
+        textArea.setText(Gui.updateGuiString(level.getMaze()));
 
         // Listen to key events
         textArea.addKeyListener(new KeyAdapter() {
@@ -86,9 +83,9 @@ public class Display extends JFrame {
                 int keyCode = e.getKeyCode();
                 // Get the text after considering change brought by movement
                 if (isMovementKeys(keyCode)) { // Movement events
-                    movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, level.getMaze(), gui);
+                    MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, level.getMaze());
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
-                    level = ExitEvent.exit(movement, level);
+                    level = ExitEvent.exit(level);
                     //interacting with exit
                     EnemyFighter enemyFighter = new EnemyFighter();
 
@@ -102,7 +99,7 @@ public class Display extends JFrame {
                 // FIXME: add other events
 
                 // Update the GUI char "pixels" as a string
-                guiText = gui.updateGuiString(level.getMaze(), gui);
+                guiText = Gui.updateGuiString(level.getMaze());
 
                 if (guiText != null) {
                     textArea.setText(guiText);
@@ -110,6 +107,7 @@ public class Display extends JFrame {
                 pickStuff(e);
             }
         });
+
         // Make the GUI visible
         this.setVisible(true);
     }
@@ -120,14 +118,8 @@ public class Display extends JFrame {
      * TODO: replace this method from objects in the Maze when it finishes.
      */
     public void initialiseMovementObjects() {
-        movementEvents = new MovementEvents();
-
-        movement = new Movement();
 
         level = new Level(1); // FIXME: load from file instead of creating a stubbed level when load is implemented
-
-        // construct GUI
-        gui = new Gui();
     }
 
     /**
@@ -143,7 +135,7 @@ public class Display extends JFrame {
 
     /**
      * Rong Sun
-     * @param e keycode of key pressed
+     * @param e
      */
     public void pickStuff(KeyEvent e){
 
@@ -196,7 +188,7 @@ public class Display extends JFrame {
         // Update the GUI char "pixels" as a string
         // You can keep this part if it's relevant to your game
 //        String guiText = movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, maze, gui);
-        String guiText = gui.updateGuiString(level.getMaze(), gui);
+        String guiText = Gui.updateGuiString(level.getMaze());
         if (guiText != null) {
             textArea.setText(guiText);
         }

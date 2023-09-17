@@ -23,6 +23,14 @@ public class Player extends Life {
      */
     int level;
 
+    /**
+     * Constructs a new player with the specified initial money, health, level, and position.
+     * @author Rong Sun
+     * @param money    The initial amount of money the player has.
+     * @param health   The initial health points of the player.
+     * @param level    The initial level of the player.
+     * @param position The initial position of the player.
+     */
     public Player(Integer money, Integer health, Integer level, Position position) {
         super(money, health, position, 4);
         this.level = level;
