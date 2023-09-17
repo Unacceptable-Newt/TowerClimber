@@ -17,10 +17,9 @@ public class MovementEvents {
      * @param keyCode Key being pressed
      * @param movement Movement object
      * @param maze Maze object
-     * @param gui Gui object
      * @return Text to be displayed on the GUI
      */
-    public String setGuiTextOnMovementKeysPressed(int keyCode, Movement movement, Maze maze, Gui gui) {
+    public static String setGuiTextOnMovementKeysPressed(int keyCode, Movement movement, Maze maze) {
         String guiText = null; // Default value: No key pressed
 
         Direction direction = null;
@@ -32,7 +31,7 @@ public class MovementEvents {
         }
 
         if (direction != null) {
-            guiText = updateGuiStringOnMovementKeyPressed(movement, maze, gui, direction);
+            guiText = updateGuiStringOnMovementKeyPressed(movement, maze, direction);
         }
         return guiText;
     }
@@ -41,12 +40,11 @@ public class MovementEvents {
      * @author Austin Zerk, Yucheng Zhu
      * Return strings to be displayed in GUI when a movement key is pressed
      * @param maze the maze to be turned into a string
-     * @param gui gui object REMOVE AFTER MAKING CLASS STATIC
      * @param direction the direction the player is moving
      * @return a string representing the state of the maze after the move
      */
-    public String updateGuiStringOnMovementKeyPressed(Movement movement, Maze maze, Gui gui, Direction direction) {
+    public static String updateGuiStringOnMovementKeyPressed(Movement movement, Maze maze, Direction direction) {
         maze.movePlayer(movement, direction);
-        return gui.updateGuiString(maze, gui);
+        return Gui.updateGuiString(maze);
     }
 }
