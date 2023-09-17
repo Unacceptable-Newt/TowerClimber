@@ -20,7 +20,7 @@ public class Movement {
      * @param maze The maze where the entity finds him-/her-/it-self in
      * @return True if the entity can move into the cell, otherwise false
      */
-    private boolean canMove(Position currentPosition, Direction direction, Maze maze) throws IllegalArgumentException {
+    private static boolean canMove(Position currentPosition, Direction direction, Maze maze) throws IllegalArgumentException {
         Position nextPosition = getFrontalPosition(direction, currentPosition);
 
         if ( // not outside the boundary
@@ -53,7 +53,7 @@ public class Movement {
      * @param maze The maze where the entity finds him-/her-/it-self in
      * @return The entity with his/her/its new position after movement
      */
-    public Life move(Life entityToMove, Direction direction, Maze maze) throws IllegalArgumentException {
+    public static Life move(Life entityToMove, Direction direction, Maze maze) throws IllegalArgumentException {
         // Get the entity's current position and direction in the maze
         Position currentPosition = entityToMove.getPosition();
 
@@ -82,7 +82,7 @@ public class Movement {
      * @param currentPosition The position the entity is standing at before movement
      * @return The entity's new position after movement
      */
-    public Position getFrontalPosition(Direction direction, Position currentPosition) {
+    public static Position getFrontalPosition(Direction direction, Position currentPosition) {
         Position position;
         switch (direction) {
             case UP ->
@@ -107,7 +107,7 @@ public class Movement {
      * @param maze The maze where the entity finds him-/her-/it-self in
      * @return The entity with his/her/its new position after movement
      */
-    public Life up(Life entityToMove, Maze maze) throws IllegalArgumentException {
+    public static Life up(Life entityToMove, Maze maze) throws IllegalArgumentException {
         return move(entityToMove, Direction.UP, maze);
     }
 
@@ -120,7 +120,7 @@ public class Movement {
      * @param maze The maze where the entity finds him-/her-/it-self in
      * @return The entity with his/her/its new position after movement
      */
-    public Life down(Life entityToMove, Maze maze) throws IllegalArgumentException {
+    public static Life down(Life entityToMove, Maze maze) throws IllegalArgumentException {
         return move(entityToMove, Direction.DOWN, maze);
     }
 
@@ -133,7 +133,7 @@ public class Movement {
      * @param maze The maze where the entity finds him-/her-/it-self in
      * @return The entity with his/her/its new position after movement
      */
-    public Life left(Life entityToMove, Maze maze) throws IllegalArgumentException {
+    public static Life left(Life entityToMove, Maze maze) throws IllegalArgumentException {
         return move(entityToMove, Direction.LEFT, maze);
     }
 
@@ -146,7 +146,7 @@ public class Movement {
      * @param maze The maze where the entity finds him-/her-/it-self in
      * @return The entity with his/her/its new position after movement
      */
-    public Life right(Life entityToMove, Maze maze) throws IllegalArgumentException {
+    public static Life right(Life entityToMove, Maze maze) throws IllegalArgumentException {
         return move(entityToMove, Direction.RIGHT, maze);
     }
 
@@ -156,7 +156,7 @@ public class Movement {
      * @param position The position to get the object. The object is not removed.
      * @return Object at the position.  null if nothing is at the position.
      */
-    public Object getObjectAtPosition(Maze maze, Position position) {
+    public static Object getObjectAtPosition(Maze maze, Position position) {
         // Get all possible stuff on the maze
         Item item = maze.getItemAtPosition(position);
         Enemy enemy = maze.getEnemyAtPosition(position);
@@ -187,7 +187,7 @@ public class Movement {
      * @param maze The maze where the play is in
      * @return Object at the position. null if nothing is at the position.
      */
-    public Object getPlayerFrontalObject(Maze maze) {
+    public static Object getPlayerFrontalObject(Maze maze) {
         Position currentPosition = maze.getPlayer().getPosition();
         Direction currentDirection = maze.getPlayer().getDirection();
         return getObjectAtPosition(maze, getFrontalPosition(currentDirection, currentPosition));
