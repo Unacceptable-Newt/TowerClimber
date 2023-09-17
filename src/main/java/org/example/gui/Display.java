@@ -26,7 +26,6 @@ import java.util.HashSet;
  */
 public class Display extends JFrame {
     private JTextPane textArea;
-    private Movement movement;
     private Level level;
     private ItemPicker itemPicker;
     private MoneyPicker moneyPicker;
@@ -81,9 +80,9 @@ public class Display extends JFrame {
                 int keyCode = e.getKeyCode();
                 // Get the text after considering change brought by movement
                 if (isMovementKeys(keyCode)) { // Movement events
-                    MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, level.getMaze());
+                    MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, level.getMaze());
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
-                    level = ExitEvent.exit(movement, level);
+                    level = ExitEvent.exit(level);
                 }
 
                 // FIXME: add other events
@@ -107,8 +106,6 @@ public class Display extends JFrame {
      * TODO: replace this method from objects in the Maze when it finishes.
      */
     public void initialiseMovementObjects() {
-
-        movement = new Movement();
 
         level = new Level(1); // FIXME: load from file instead of creating a stubbed level when load is implemented
     }
