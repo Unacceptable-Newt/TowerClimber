@@ -1,6 +1,7 @@
 package org.example.interaction;
 
 import org.example.belonging.Inventory;
+import org.example.entity.Enemy;
 import org.example.entity.Player;
 import org.example.gameLogic.Maze;
 import org.example.util.Pair;
@@ -9,7 +10,11 @@ import org.example.util.Pair;
  * @author
  * Initialises a fight with an adjacent monster
  */
-public class EnemyFighter implements Interaction {
+public class EnemyFighter extends Enemy implements Interaction {
+    public EnemyFighter(int attack, int health, int defense) {
+        super(attack, health, defense);
+    }
+
     /**
      * @author
      *
