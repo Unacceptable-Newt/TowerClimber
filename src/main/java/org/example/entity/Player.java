@@ -24,16 +24,8 @@ public class Player extends Life {
     int level;
 
     public Player(Integer money, Integer health, Integer level, Position position) {
-        super(money, health, position);
+        super(money, health, position, 4);
         this.level = level;
-    }
-
-    /**
-     * @author Rong Sun
-     * Handles the player getting attacked by invoking the defense method.
-     */
-    public void getAttacked(){
-        defense();
     }
 
     /**

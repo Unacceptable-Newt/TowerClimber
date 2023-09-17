@@ -1,6 +1,5 @@
 package org.example.entity;
 
-import org.example.belonging.Weapon;
 import org.example.interaction.Direction;
 
 /**
@@ -15,11 +14,11 @@ public abstract class Life {
     protected Position position;
     protected Direction direction;
 
-    public Life(int money, int health, Position position){
+    public Life(int money, int health, Position position,int attack){
         this.position = position;
         this.health = health;
         this.money = money;
-
+        this.attack = attack;
         this.direction = Direction.UP;
     }
     public int getMoney() {
@@ -58,12 +57,14 @@ public abstract class Life {
         return attack;
     }
 
+    public void setAttack(int attack) {this.attack = attack;}
+
     public int getDefense(){
         return defense;
     }
 
-    public void defense(){
-
+    public void defend(int damage){
+        this.health -= damage > defense ? damage - defense : 0;
     }
 
     public void attack(){
