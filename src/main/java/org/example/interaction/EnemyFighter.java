@@ -36,13 +36,27 @@ public class EnemyFighter implements Interaction {
         Enemy enemy = maze.getEnemyAtPosition(enemyPosition);
 
         if (enemy != null) {
-            // turn 1, the player attack first
+            // The player attacks first
             enemy.defend(playerAttack);
             if (enemy.getHealth() <= 0) {
+                // The enemy dies
                 maze.getEnemies().remove(enemyPosition);
-                return null;
+
+                // Get loot
+                maze.getPlayer().addMoney(enemy.getMoney());
+
+                // You win :)
+                return new Pair<>(maze.getPlayer(), inventory);
             }
+
+            // The enemy retaliates
             maze.getPlayer().defend(enemy.getAttack());
+            if (maze.getPlayer().getHealth() <= 0) {
+                // FIXME: Respawn the player
+
+                // You died :(
+                return new Pair<>(maze.getPlayer(), inventory);
+            }
         }
 
         return new Pair<>(maze.getPlayer(),inventory); // enemy lives

@@ -10,6 +10,8 @@ package org.example.entity;
 public class Enemy extends Life {
     private int defense;
 
+    private final static int NORMAL_ENEMY_GOLD = 5;
+
 /**
  * @author Yue Zhu, Austin Zerk, Rong Sun
  * Create a new enemy
@@ -17,6 +19,7 @@ public class Enemy extends Life {
     public Enemy(int attack, int health, int defense) {
         super(100, health, new Position(0, 0), attack);
         this.defense = defense;
+        this.money = NORMAL_ENEMY_GOLD;
     }
 
     /**

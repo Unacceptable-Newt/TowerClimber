@@ -89,20 +89,20 @@ public class Player extends Life {
 
     /**
      * @author Rong Sun
-     * put extra money to the player's property
-     * @param money The extra money to add to the inventory
+     * Put extra money to the player's possession
+     * @param earnedMoney The extra money to add to the inventory
      */
-    public Integer addMoney(Integer money) {
-        return this.money+=money;
+    public int addMoney(int earnedMoney) {
+        return this.money += earnedMoney;
     }
 
     /**
      * @author Rong Sun
-     * deduct money to the player's property
-     * @param money The extra money to deduct to the inventory
+     * Deduct money from the player's property
+     * @param lostMoney The extra money to deduct to the inventory
      */
-    public Integer deductMoney(Integer money) {
-        return this.money-=money;
+    public Integer deductMoney(int lostMoney) {
+        return this.money -= lostMoney;
     }
 
 
