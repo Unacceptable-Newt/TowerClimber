@@ -1,15 +1,7 @@
 package org.example.gui;
 import org.example.interaction.EnemyFighter;
-import org.example.move.Movement;
 import org.example.belonging.Inventory;
-import org.example.move.Movement;
-import org.example.belonging.Inventory;
-import org.example.belonging.Weapon;
-import org.example.entity.Enemy;
-import org.example.entity.NPC;
 import org.example.entity.Player;
-import org.example.entity.Position;
-import org.example.gameLogic.Maze;
 import org.example.interaction.ItemPicker;
 import org.example.interaction.MoneyPicker;
 import org.example.util.Pair;
@@ -23,6 +15,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.HashSet;
 
+import static org.example.gui.MovementEvents.isInKeySet;
+import static org.example.gui.MovementEvents.setMovementKeys;
+
 /**
  * @author Austin Zerk, Yucheng Zhu
  * GUI to visualise the game
@@ -34,19 +29,8 @@ public class Display extends JFrame {
     private MoneyPicker moneyPicker;
     private Inventory inventory;
 
-    private HashSet<Integer> movementKeys;
-
-    public boolean isMovementKeys(int key) {
-        return movementKeys.contains(key);
-    }
-
-    private void setMovementKeys() {
-        this.movementKeys = new HashSet<>();
-        this.movementKeys.add(KeyEvent.VK_W);
-        this.movementKeys.add(KeyEvent.VK_S);
-        this.movementKeys.add(KeyEvent.VK_A);
-        this.movementKeys.add(KeyEvent.VK_D);
-    }
+    // WSAD keys, used to move
+    private HashSet<Integer> movementKeys = setMovementKeys();
 
     public Display(int width, int height) {
         // Set movement keys only once
@@ -82,7 +66,7 @@ public class Display extends JFrame {
                 String guiText;
                 int keyCode = e.getKeyCode();
                 // Get the text after considering change brought by movement
-                if (isMovementKeys(keyCode)) { // Movement events
+                if (isInKeySet(movementKeys, keyCode)) { // Movement events
                     MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, level.getMaze());
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
                     level = ExitEvent.exit(level);

@@ -7,8 +7,6 @@ import org.example.entity.Position;
 import org.example.gameLogic.Maze;
 import org.example.interaction.Direction;
 import org.example.interaction.EnemyFighter;
-import org.example.move.Movement;
-import org.example.util.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

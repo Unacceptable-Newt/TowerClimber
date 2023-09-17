@@ -1,16 +1,40 @@
 package org.example.gui;
 
-import org.example.move.Movement;
 import org.example.gameLogic.Maze;
 import org.example.interaction.Direction;
 
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
 
 /**
  * @author Austin Zerk, Yucheng Zhu
  * Handle all key events related to movements.
  */
 public class MovementEvents {
+    /**
+     * @author Yucheng Zhu
+     * Set a set of movement keys so that a key can be checked more easily
+     * @return All movement keys
+     */
+    public static HashSet<Integer> setMovementKeys() {
+        HashSet<Integer> movementKeys = new HashSet<>();
+        movementKeys.add(KeyEvent.VK_W);
+        movementKeys.add(KeyEvent.VK_S);
+        movementKeys.add(KeyEvent.VK_A);
+        movementKeys.add(KeyEvent.VK_D);
+
+        return movementKeys;
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Check whether a key is in a set of key (e.g. one of the WSAD movement keys)
+     * @return True if it is. Otherwise, false.
+     */
+    public static boolean isInKeySet(HashSet<Integer> keySet, int key) {
+        return keySet.contains(key);
+    }
+
     /**
      * @author Yucheng Zhu
      * Return strings to be displayed in GUI when a movement key is pressed
