@@ -9,44 +9,28 @@ import org.example.entity.Player;
  */
 
 public class Battle {
-    
-    
+
+    /**
+     * @author Yue Zhu
+     * this function handles the interaction between an enemy and a player
+     * @param player player attacking ememy
+     * @param enemy enemy being attacked
+     * @return weather or not the enemy dies
+     */
     public boolean process(Player player , Enemy enemy){
 
         // Data preparation for battle.
         int playerAttack = player.getAttack();
-        int playerHealth = player.getHealth();
-        int playerDefense = player.getDefense();
 
         int enemyAttack = enemy.getAttack();
-        int enemyHealth = enemy.getHealth();
-        int enemyDefense = enemy.getDefense();
-
 
         // turn 1, the player attack first
-        if(actualHarm(playerAttack, enemyDefense) > 0){
-            int damage = actualHarm(playerAttack, enemyDefense);
-            enemy.setHealth(damage);
-            int currentEH = enemy.getHealth();
-            if(currentEH <= 0){
-                return true;
-            }else{
-                return false; // this should be updated. Temporary settings
-            }
-        }
+        enemy.defend(playerAttack);
+        if (enemy.getHealth() <= 0)
+            return true; // enemy dies
+        player.defend(enemyAttack);
 
-        else{
-            return false; // this should be updated. Temporary settings
-        }
-    }
-
-    public int actualHarm (int attacker, int defenser){
-        if(attacker <= defenser){
-            return 0;
-        }
-        else{
-            return attacker - defenser;
-        }
+        return false; // enemy lives
     }
 
 
