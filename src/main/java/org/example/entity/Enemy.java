@@ -8,8 +8,6 @@ package org.example.entity;
  *
  */
 public class Enemy extends Life {
-    private int attack;
-    private int health;
     private int defense;
 
 /*some notes:
@@ -24,10 +22,6 @@ public class Enemy extends Life {
         this.defense = defense;
     }
 
-    public int getHealth(){
-        return health;
-    }
-
     public int getDefense() {
         return defense;
     }
@@ -36,7 +30,4 @@ public class Enemy extends Life {
         this.defense = defense;
     }
 
-    public void setHealth(int damage){
-        this.health = health - damage;
-    }
 }

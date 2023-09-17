@@ -1,4 +1,5 @@
 package org.example.gui;
+import org.example.interaction.EnemyFighter;
 import org.example.move.Movement;
 import org.example.belonging.Inventory;
 import org.example.belonging.Weapon;
@@ -88,6 +89,14 @@ public class Display extends JFrame {
                     movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, level.getMaze(), gui);
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
                     level = ExitEvent.exit(movement, level);
+                    //interacting with exit
+                    EnemyFighter enemyFighter = new EnemyFighter();
+
+                    //interacting with enemy
+                    enemyFighter.interactWithAdjacent(inventory,level.getMaze());
+                    if (level.getMaze().getPlayer().getHealth() <= 0){
+                        //TODO Player needs to die
+                    }
                 }
 
                 // FIXME: add other events
@@ -134,7 +143,7 @@ public class Display extends JFrame {
 
     /**
      * Rong Sun
-     * @param e
+     * @param e keycode of key pressed
      */
     public void pickStuff(KeyEvent e){
 
