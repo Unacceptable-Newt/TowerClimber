@@ -14,7 +14,7 @@ import java.util.HashMap;
  * Given a gameStateString, update the GUI frame on screen.
  */
 public class Gui {
-    private char[][] rasteriseBlankGUI(int rows, int columns) {
+    private static char[][] rasteriseBlankGUI(int rows, int columns) {
 
         // The char matrix to return
         char[][] charsMatrix = new char[rows][columns];
@@ -35,7 +35,7 @@ public class Gui {
      * @param gameObjects Game objects summarising all the object with game variables
      * @return A matrix of all char "pixels" to be displayed on GUI
      */
-    public char[][] rasterise(
+    public static char[][] rasterise(
             HashMap<PersistentDataNames, Object> gameObjects,
             int rows,
             int columns
@@ -109,10 +109,9 @@ public class Gui {
      * @author Austin Zerk, Yucheng Zhu
      * Return strings to be displayed in GUI when a movement key is pressed
      * @param maze the maze to be turned into a string
-     * @param gui gui object REMOVE AFTER MAKING CLASS STATIC
      * @return a string representing the state of the maze after the move
      */
-    public String updateGuiString(Maze maze, Gui gui) {
+    public static String updateGuiString(Maze maze) {
 
         HashMap<PersistentDataNames, Object> gameObjects = new HashMap<>();
         gameObjects.put(PersistentDataNames.PLAYER, maze.getPlayer());
@@ -122,17 +121,17 @@ public class Gui {
         gameObjects.put(PersistentDataNames.WALL, maze.getEncodedWalls());
         gameObjects.put(PersistentDataNames.EXIT, maze.getExit());
 
-        char[][] rasterise = gui.rasterise(gameObjects, maze.getRows(), maze.getColumns());
-        return gui.flatten(rasterise);
+        char[][] rasterise = Gui.rasterise(gameObjects, maze.getRows(), maze.getColumns());
+        return Gui.flatten(rasterise);
     }
 
     /**
      * @author Yucheng Zhu
-     * Turn a char matrix into a continuous string to be displayed in GUI.
+     * Turn a char matrix into a continuous string to be displayed in Gui.
      * @param charsPixels A char matrix for all the char "pixels" displayed on the GUI
      * @return String to be displayed in GUI
      */
-    public String flatten(char[][] charsPixels) {
+    public static String flatten(char[][] charsPixels) {
 
         StringBuilder guiString = new StringBuilder();
         for (int row = 0; row < charsPixels.length; row++) {
@@ -152,7 +151,7 @@ public class Gui {
      * Refresh the screen and display a new frame.
      * @param charsPixels A matrix of all char "pixels" to be displayed on GUI
      */
-    public void paint(char[][] charsPixels) {
+    public static void paint(char[][] charsPixels) {
         // FIXME
     }
 
@@ -163,7 +162,7 @@ public class Gui {
      * @param gameObjects All game objects containing persistent data
      * @return  gameStateString A string summarising all the current game variables
      */
-    public String generateGameStateString(Object[] gameObjects) {
+    public static String generateGameStateString(Object[] gameObjects) {
         // FIXME
         return null;
     }

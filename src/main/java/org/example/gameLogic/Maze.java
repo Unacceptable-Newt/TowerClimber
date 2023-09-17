@@ -92,11 +92,10 @@ public class Maze {
      * @author Yucheng Zhu
      * Move player. Change his location in the maze.
      *
-     * @param movement The movement object containing the method to move the player
      * @param direction The direction object used to instruct which direction the player will move
      */
-    public void movePlayer(Movement movement, Direction direction) {
-        this.player = (Player) movement.move(getPlayer(), direction, this);
+    public void movePlayer( Direction direction) {
+        this.player = (Player) Movement.move(getPlayer(), direction, this);
     }
 
     /**

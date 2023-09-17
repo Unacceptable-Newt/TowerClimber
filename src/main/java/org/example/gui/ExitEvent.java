@@ -10,8 +10,8 @@ import org.example.move.Movement;
  * Handle the movement event.
  */
 public class ExitEvent {
-    public static Level exit(Movement movement, Level level) {
-        Object frontalObject = movement.getPlayerFrontalObject(
+    public static Level exit(Level level) {
+        Object frontalObject = Movement.getPlayerFrontalObject(
                 level.getMaze()
         );
         if (frontalObject instanceof Position) {
