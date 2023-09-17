@@ -3,6 +3,7 @@ package org.example.entity;
 import org.example.interaction.Direction;
 
 /**
+ * @author Austin Zerk, Yucheng Zhu, Yue Zhu
  * An abstract superclass for all humans, monster and life-like creatures
  */
 public abstract class Life {

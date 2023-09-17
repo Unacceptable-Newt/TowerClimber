@@ -13,9 +13,9 @@ public class Battle {
     /**
      * @author Yue Zhu
      * this function handles the interaction between an enemy and a player
-     * @param player player attacking ememy
-     * @param enemy enemy being attacked
-     * @return weather or not the enemy dies
+     * @param player The player
+     * @param enemy The enemy
+     * @return True if the enemy dies. Otherwise, return false.
      */
     public boolean process(Player player , Enemy enemy){
 

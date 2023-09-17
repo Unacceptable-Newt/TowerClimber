@@ -4,9 +4,8 @@ import org.example.belonging.Inventory;
 import org.example.belonging.Weapon;
 
 /**
- * The Player class represent user's charactor, and he/she will have money, health, and player level
+ * The Player class represent user's character, and he/she will have money, health, and player level
  * if player was attacked, player's health will decrease
- * .....
  *  @author Rong Sun
  *
  */

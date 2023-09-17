@@ -90,9 +90,9 @@ public class Display extends JFrame {
                     EnemyFighter enemyFighter = new EnemyFighter();
 
                     //interacting with enemy
-                    enemyFighter.interactWithAdjacent(inventory,level.getMaze());
+                    enemyFighter.interactWithAdjacent(inventory, level.getMaze());
                     if (level.getMaze().getPlayer().getHealth() <= 0){
-                        //TODO Player needs to die
+                        //FIXME Player needs to die
                     }
                 }
 
@@ -101,9 +101,7 @@ public class Display extends JFrame {
                 // Update the GUI char "pixels" as a string
                 guiText = Gui.updateGuiString(level.getMaze());
 
-                if (guiText != null) {
-                    textArea.setText(guiText);
-                }
+                textArea.setText(guiText);
                 pickStuff(e);
             }
         });

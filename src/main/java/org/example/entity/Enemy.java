@@ -10,18 +10,20 @@ package org.example.entity;
 public class Enemy extends Life {
     private int defense;
 
-/*some notes:
- *  added a simply function, getHealth
- *  set a defualt amount of money for the enemies so that the
- *  player could be rewared by defeating the enemy
- *  added a function, setHealth.
- * 
+/**
+ * @author Yue Zhu, Austin Zerk, Rong Sun
+ * Create a new enemy
  */
     public Enemy(int attack, int health, int defense) {
-        super(100,health,new Position(0,0),attack);
+        super(100, health, new Position(0, 0), attack);
         this.defense = defense;
     }
 
+    /**
+     * @author Rong Sun
+     * Get the enemy's defence
+     * @return The enemy's defence value
+     */
     public int getDefense() {
         return defense;
     }
