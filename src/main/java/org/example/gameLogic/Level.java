@@ -1,5 +1,7 @@
 package org.example.gameLogic;
 
+import org.example.IO.JsonLoad;
+import org.example.IO.JsonSave;
 import org.example.belonging.Weapon;
 import org.example.entity.Enemy;
 import org.example.entity.NPC;
@@ -34,6 +36,10 @@ public class Level {
 
     public Maze getMaze() {
         return maze;
+    }
+
+    public void setMaze(Maze maze) {
+        this.maze = maze;
     }
 
     public LevelStates getLevelStates() {
@@ -92,6 +98,8 @@ public class Level {
      * Save the current level to the storage
      */
     public void save() {
+        JsonSave saver= new JsonSave();
+        saver.saveCurrentProgress(this);
         // FIXME
     }
 }

@@ -1,0 +1,26 @@
+OBJECT: {"name": "Jack", "age": 30, "favoriteSport": "Football"}
+ARRAY: ["APPLE"、"Banana"、"Orange]
+
+
+
+-cache
+|- progress
+||- current
+|||- level1_cur.json
+||
+||- 12_09_23_10_00
+|||- level1.json
+|||- level2_cur.json
+||
+||- 11_09_23_11_30
+|||- level1_cur.json
+|||- level2.json
+|||- level3.json
+
+
+
+
+Any change happpens with player, should be changed in other files
+Save <----> Load
+
+When loading, the current archive folder needs to be created and past archives need to be copied to the current archive folder.
