@@ -121,42 +121,45 @@ public class JsonLoad {
      * @param positionMap a hashmap with the x and y as keys and their integer values as values
      * @return Position of the hashmap
      */
-    private Position parsePosition(HashMap<String,String> positionMap){
-        int x = Integer.parseInt(positionMap.get("x"));
-        int y = Integer.parseInt(positionMap.get("y"));
+    private Position parsePosition(HashMap<String,Integer> positionMap){
+        int x = positionMap.get("x");
+        int y = positionMap.get("y");
         return new Position(x,y);
     }
 
     private Position parsePosition(String encodedPosition){
-        int xoffs  = -1;
-        int yoffs  = -1;
-        int x = 0;
-        int y = 0;
-        for (char c : encodedPosition.toCharArray()){
-            if(c == 'x')
-                xoffs = 2;
-            if(c == 'y')
-                yoffs = 2;
-            if(yoffs == 0)
-                y = Character.getNumericValue(c);
-            if (xoffs == 0)
-                x = Character.getNumericValue(c);
-            xoffs--;
-            yoffs--;
+        String posstr = encodedPosition.substring(11);
+        StringBuilder xstr = new StringBuilder();
+        StringBuilder ystr = new StringBuilder();
+        int reading = 1;
+        for (char c : posstr.toCharArray()){
+            if (c==',')
+                reading = 0;
+            if (c=='}')
+                break;
+            if (reading == 1) {
+                xstr.append(c);
+            }else if(reading == 2){
+                ystr.append(c);
+            }
+            if (c=='=')
+                reading = 2;
         }
+        int x = Integer.parseInt(xstr.toString());
+        int y = Integer.parseInt(ystr.toString());
         return new Position(x,y);
     }
 
     private Enemy parseEnemy(HashMap<String,Object> encodedEnemies, Position position){
-        int attack = Integer.parseInt((String) encodedEnemies.get("attack"));
-        int defence = Integer.parseInt((String) encodedEnemies.get("defence"));
+        int attack = (int) encodedEnemies.get("attack");
+        int defence = (int) encodedEnemies.get("defense");
         Direction dir = parseDirection((String) encodedEnemies.get("direction"));
-        int health = Integer.parseInt((String) encodedEnemies.get("health"));
-        int money = Integer.parseInt((String) encodedEnemies.get("money"));
+        int health = (int) encodedEnemies.get("health");
+        int money = (int) encodedEnemies.get("money");
         Enemy out = new Enemy(attack,health,defence);
         out.setDirection(dir);
         out.setMoney(money);
-        out.setPosition(parsePosition((HashMap<String, String>) encodedEnemies.get("Position")));
+        out.setPosition(parsePosition((HashMap<String, Integer>) encodedEnemies.get("position")));
         out.setPosition(position);
         return out;
     }
@@ -172,11 +175,11 @@ public class JsonLoad {
     }
 
     private NPC parseNPC(HashMap<String,Object> encodedEnemy, Position position){
-        int money = Integer.parseInt((String) encodedEnemy.get("money"));
-        int health = Integer.parseInt((String) encodedEnemy.get("health"));
+        int money = (int) encodedEnemy.get("money");
+        int health = (int) encodedEnemy.get("health");
         Direction direction = parseDirection((String) encodedEnemy.get("direction"));
         String name = (String) encodedEnemy.get("name");
-        ArrayList<String> dialog = (ArrayList<String>) encodedEnemy.get("dialog");
+        ArrayList<String> dialog = (ArrayList<String>) encodedEnemy.get("dialogue");
         NPC out = new NPC(name,position,dialog);
         out.setDirection(direction);
         out.setHealth(health);
@@ -186,8 +189,8 @@ public class JsonLoad {
     }
 
     private Item parseItem(HashMap<String,Object> encodedItem){
-        int price = Integer.parseInt((String) encodedItem.get("price"));
-        int weight = Integer.parseInt((String) encodedItem.get("weight"));
+        int price = (int) encodedItem.get("price");
+        int weight = (int) encodedItem.get("weight");
         String name = (String) encodedItem.get("name");
         if (encodedItem.containsKey("attackValue")){
             return new Weapon(name,price,weight, (Integer) encodedItem.get("attackValue"));
@@ -196,17 +199,17 @@ public class JsonLoad {
     }
 
     private Player parsePlayer(HashMap<String,Object> encodedPlayer){
-        int money = Integer.parseInt((String) encodedPlayer.get("money"));
-        int health = Integer.parseInt((String) encodedPlayer.get("health"));
-        Position position = parsePosition((HashMap<String, String>) encodedPlayer.get("Position"));
+        int money = (int) encodedPlayer.get("money");
+        int health = (int) encodedPlayer.get("health");
+        Position position = parsePosition((HashMap<String, Integer>) encodedPlayer.get("position"));
         Direction dir = parseDirection((String) encodedPlayer.get("direction"));
         Weapon curWeapon;
-        if (encodedPlayer.get("currentWeapon") == "null")
+        if (encodedPlayer.get("currentWeapon") == null)
             curWeapon = null;
         else
             curWeapon = (Weapon) parseItem((HashMap<String, Object>) encodedPlayer.get("currentWeapon"));
 
-        int level = Integer.parseInt((String) encodedPlayer.get("level"));
+        int level = (int) encodedPlayer.get("level");
         Player out = new Player(money,health,level,position);
         out.setDirection(dir);
         out.setCurrentWeapon(curWeapon);
@@ -214,9 +217,9 @@ public class JsonLoad {
     }
 
     private Wall parseWall(HashMap<String,Object> encodedWall){
-        int length = Integer.parseInt((String) encodedWall.get("length"));
-        boolean dir = Boolean.parseBoolean((String) encodedWall.get("up"));
-        Position pos = parsePosition((HashMap<String, String>) encodedWall.get("start"));
+        int length = (int) encodedWall.get("length");
+        boolean dir = (boolean) encodedWall.get("up");
+        Position pos = parsePosition((HashMap<String, Integer>) encodedWall.get("start"));
         return new Wall(length,pos,dir);
     }
 
@@ -237,9 +240,9 @@ public class JsonLoad {
                 });
                 // create new maze for Level
                 Map<String, Object> encodedMaze = (Map<String, Object>) mazeData.get("maze");
-                int columns = Integer.parseInt((String) encodedMaze.get("columns"));
-                int rows = Integer.parseInt((String) encodedMaze.get("rows"));
-                Position exit = parsePosition((HashMap<String, String>) encodedMaze.get("exit"));
+                int columns = (int) encodedMaze.get("columns");
+                int rows = (int) encodedMaze.get("rows");
+                Position exit = parsePosition((HashMap<String, Integer>) encodedMaze.get("exit"));
                 Maze maze = new Maze(columns,rows,exit);
 
                 ArrayList<HashMap<String,Object>> jsonWalls = (ArrayList<HashMap<String, Object>>) encodedMaze.get("encodedWalls");
@@ -260,14 +263,14 @@ public class JsonLoad {
                     maze.addItem(parsePosition(p),parseItem((HashMap<String, Object>) i));
                 });
 
-                HashMap<String,Object> encodedEnemies = (HashMap<String, Object>) encodedMaze.get("items");
+                HashMap<String,Object> encodedEnemies = (HashMap<String, Object>) encodedMaze.get("enemies");
                 encodedEnemies.forEach((p,e) -> {
-                    maze.addItem(parsePosition(p),parseItem((HashMap<String, Object>) e));
+                    maze.addEnemy(parsePosition(p),parseEnemy((HashMap<String, Object>) e,parsePosition(p)));
                 });
 
-                HashMap<String,Object> encodedNPCs = (HashMap<String, Object>) encodedMaze.get("items");
+                HashMap<String,Object> encodedNPCs = (HashMap<String, Object>) encodedMaze.get("npcs");
                 encodedNPCs.forEach((p,n) -> {
-                    maze.addItem(parsePosition(p),parseItem((HashMap<String, Object>) n));
+                    maze.addNPC(parsePosition(p),parseNPC((HashMap<String, Object>) n,parsePosition(p)));
                 });
 
 
