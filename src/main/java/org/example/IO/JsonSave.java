@@ -126,6 +126,8 @@ public class JsonSave{
      */
     private boolean checkLevelMatches(int destLevel){
         ArrayList<String> levels = loader.loadLevelList(CURPROGRESSFILEPATH);
+        if (levels.size() == 0)
+            return true;
         int curLevel = -1;
         for(String path: levels){
             // TODO: check it
@@ -186,13 +188,13 @@ public class JsonSave{
             // save data into MAP
             Map<String, Object> mazeData = new HashMap<>();
             mazeData.put("maze", maze);
-            mazeData.put("enemies", maze.getEnemies());
-            mazeData.put("player", maze.getPlayer());
-            mazeData.put("npcs", maze.getNPCs());
-            mazeData.put("exit", maze.getExit());
-            mazeData.put("walls", maze.getEncodedWalls());
-            mazeData.put("items", maze.getItems());
-            mazeData.put("money", maze.getMoney());
+            //mazeData.put("enemies", maze.getEnemies());
+            //mazeData.put("player", maze.getPlayer());
+            //mazeData.put("npcs", maze.getNPCs());
+            //mazeData.put("exit", maze.getExit());
+            //mazeData.put("walls", maze.getEncodedWalls());
+            //mazeData.put("items", maze.getItems());
+            //mazeData.put("money", maze.getMoney());
 
             // translate to string
             String jsonStr = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(mazeData);

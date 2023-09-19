@@ -5,12 +5,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.belonging.Item;
-import org.example.entity.Enemy;
-import org.example.entity.NPC;
-import org.example.entity.Player;
-import org.example.entity.Position;
+import org.example.belonging.Weapon;
+import org.example.entity.*;
 import org.example.gameLogic.Level;
 import org.example.gameLogic.Maze;
+import org.example.interaction.Direction;
 
 import java.io.File;
 import java.io.IOException;
@@ -117,6 +116,111 @@ public class JsonLoad {
     }
 
     /**
+     * @author Austin Zerk
+     * This function is used to pass the hashmap representing the position
+     * @param positionMap a hashmap with the x and y as keys and their integer values as values
+     * @return Position of the hashmap
+     */
+    private Position parsePosition(HashMap<String,String> positionMap){
+        int x = Integer.parseInt(positionMap.get("x"));
+        int y = Integer.parseInt(positionMap.get("y"));
+        return new Position(x,y);
+    }
+
+    private Position parsePosition(String encodedPosition){
+        int xoffs  = -1;
+        int yoffs  = -1;
+        int x = 0;
+        int y = 0;
+        for (char c : encodedPosition.toCharArray()){
+            if(c == 'x')
+                xoffs = 2;
+            if(c == 'y')
+                yoffs = 2;
+            if(yoffs == 0)
+                y = Character.getNumericValue(c);
+            if (xoffs == 0)
+                x = Character.getNumericValue(c);
+            xoffs--;
+            yoffs--;
+        }
+        return new Position(x,y);
+    }
+
+    private Enemy parseEnemy(HashMap<String,Object> encodedEnemies, Position position){
+        int attack = Integer.parseInt((String) encodedEnemies.get("attack"));
+        int defence = Integer.parseInt((String) encodedEnemies.get("defence"));
+        Direction dir = parseDirection((String) encodedEnemies.get("direction"));
+        int health = Integer.parseInt((String) encodedEnemies.get("health"));
+        int money = Integer.parseInt((String) encodedEnemies.get("money"));
+        Enemy out = new Enemy(attack,health,defence);
+        out.setDirection(dir);
+        out.setMoney(money);
+        out.setPosition(parsePosition((HashMap<String, String>) encodedEnemies.get("Position")));
+        out.setPosition(position);
+        return out;
+    }
+
+    private Direction parseDirection(String dir){
+        return switch (dir) {
+            case ("UP") -> Direction.UP;
+            case ("DOWN") -> Direction.DOWN;
+            case ("LEFT") -> Direction.LEFT;
+            case ("RIGHT") -> Direction.RIGHT;
+            default -> null;
+        };
+    }
+
+    private NPC parseNPC(HashMap<String,Object> encodedEnemy, Position position){
+        int money = Integer.parseInt((String) encodedEnemy.get("money"));
+        int health = Integer.parseInt((String) encodedEnemy.get("health"));
+        Direction direction = parseDirection((String) encodedEnemy.get("direction"));
+        String name = (String) encodedEnemy.get("name");
+        ArrayList<String> dialog = (ArrayList<String>) encodedEnemy.get("dialog");
+        NPC out = new NPC(name,position,dialog);
+        out.setDirection(direction);
+        out.setHealth(health);
+        out.setMoney(money);
+        out.setPosition(position);
+        return out;
+    }
+
+    private Item parseItem(HashMap<String,Object> encodedItem){
+        int price = Integer.parseInt((String) encodedItem.get("price"));
+        int weight = Integer.parseInt((String) encodedItem.get("weight"));
+        String name = (String) encodedItem.get("name");
+        if (encodedItem.containsKey("attackValue")){
+            return new Weapon(name,price,weight, (Integer) encodedItem.get("attackValue"));
+        }
+        throw new RuntimeException("Bad encoding of Item");
+    }
+
+    private Player parsePlayer(HashMap<String,Object> encodedPlayer){
+        int money = Integer.parseInt((String) encodedPlayer.get("money"));
+        int health = Integer.parseInt((String) encodedPlayer.get("health"));
+        Position position = parsePosition((HashMap<String, String>) encodedPlayer.get("Position"));
+        Direction dir = parseDirection((String) encodedPlayer.get("direction"));
+        Weapon curWeapon;
+        if (encodedPlayer.get("currentWeapon") == "null")
+            curWeapon = null;
+        else
+            curWeapon = (Weapon) parseItem((HashMap<String, Object>) encodedPlayer.get("currentWeapon"));
+
+        int level = Integer.parseInt((String) encodedPlayer.get("level"));
+        Player out = new Player(money,health,level,position);
+        out.setDirection(dir);
+        out.setCurrentWeapon(curWeapon);
+        return out;
+    }
+
+    private Wall parseWall(HashMap<String,Object> encodedWall){
+        int length = Integer.parseInt((String) encodedWall.get("length"));
+        boolean dir = Boolean.parseBoolean((String) encodedWall.get("up"));
+        Position pos = parsePosition((HashMap<String, String>) encodedWall.get("start"));
+        return new Wall(length,pos,dir);
+    }
+
+    /**
      * @author xinchen
      * load files, this should be used to update files
      * @param filePath path to the dest files
@@ -132,35 +236,39 @@ public class JsonLoad {
                 Map<String, Object> mazeData = objectMapper.readValue(new File(filePath), new TypeReference<Map<String, Object>>() {
                 });
                 // create new maze for Level
-                Position exitPosition = (Position) mazeData.get("exit");
-                Maze mazeInFile = (Maze) mazeData.get("maze");
-                Maze maze = new Maze(mazeInFile.getColumns(), mazeInFile.getRows(), exitPosition);
+                Map<String, Object> encodedMaze = (Map<String, Object>) mazeData.get("maze");
+                int columns = Integer.parseInt((String) encodedMaze.get("columns"));
+                int rows = Integer.parseInt((String) encodedMaze.get("rows"));
+                Position exit = parsePosition((HashMap<String, String>) encodedMaze.get("exit"));
+                Maze maze = new Maze(columns,rows,exit);
 
-
-                // set Attributes for maze
-                Map<Position, Enemy> enemies = (Map<Position, Enemy>) mazeData.get("enemies");
-                for (Map.Entry<Position, Enemy> entry : enemies.entrySet()) {
-                    maze.addEnemy(entry.getKey(), entry.getValue());
+                ArrayList<HashMap<String,Object>> jsonWalls = (ArrayList<HashMap<String, Object>>) encodedMaze.get("encodedWalls");
+                ArrayList<Wall> encodedWalls = new ArrayList<>();
+                for (HashMap w : jsonWalls){
+                    encodedWalls.add(parseWall(w));
                 }
+                maze.setEncodedWalls(encodedWalls);
 
-                Map<Position, NPC> npcs = (Map<Position, NPC>) mazeData.get("npcs");
-                for (Map.Entry<Position, NPC> entry : npcs.entrySet()) {
-                    maze.addNPC(entry.getKey(), entry.getValue());
-                }
+                HashMap<String,String> money = (HashMap<String, String>) encodedMaze.get("money");
+                money.forEach((pos,m) -> {
+                    maze.addMoney(parsePosition(pos),Integer.parseInt(m));
+                });
+                maze.setPlayer(parsePlayer((HashMap<String, Object>) encodedMaze.get("player")));
 
-                Map<Position, Item> items = (Map<Position, Item>) mazeData.get("items");
-                for (Map.Entry<Position, Item> entry : items.entrySet()) {
-                    maze.addItem(entry.getKey(), entry.getValue());
-                }
+                HashMap<String,Object> encodedItems = (HashMap<String, Object>) encodedMaze.get("items");
+                encodedItems.forEach((p,i) -> {
+                    maze.addItem(parsePosition(p),parseItem((HashMap<String, Object>) i));
+                });
 
-                maze.setExit((Position) mazeData.get("exit"));
-                maze.setMoney((HashMap<Position, Integer>) mazeData.get("money"));
+                HashMap<String,Object> encodedEnemies = (HashMap<String, Object>) encodedMaze.get("items");
+                encodedEnemies.forEach((p,e) -> {
+                    maze.addItem(parsePosition(p),parseItem((HashMap<String, Object>) e));
+                });
 
-                Player player = (Player) mazeData.get("player");
-
-                Position playerPos = player.getPosition();
-
-                maze.createNewPlayer(playerPos);
+                HashMap<String,Object> encodedNPCs = (HashMap<String, Object>) encodedMaze.get("items");
+                encodedNPCs.forEach((p,n) -> {
+                    maze.addItem(parsePosition(p),parseItem((HashMap<String, Object>) n));
+                });
 
 
                 // create new level object
@@ -208,8 +316,8 @@ public class JsonLoad {
         ArrayList<String> files = this.loadLevelList(CURPROGRESSFILEPATH);
         for(String fileName: files){
             if(fileName.contains(CURINDICATOR)){
-                String path = CURPROGRESSFILEPATH + fileName;
-                level = loadFile(path);
+                //String path = CURPROGRESSFILEPATH + fileName;
+                level = loadFile(fileName);
             }
         }
 

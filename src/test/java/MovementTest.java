@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 /**
  * @author Yucheng Zhu
  * Test Movement.
@@ -39,7 +41,7 @@ public class MovementTest {
 
         // Add things
         maze.addItem(new Position(1, 3), new Weapon("The Big Axe",3, 5, 4));
-        maze.addNPC(new Position(1, 4),new NPC("John", new Position(5, 5)));
+        maze.addNPC(new Position(1, 4),new NPC("John", new Position(5, 5),new ArrayList<>()));
         maze.addEnemy(new Position(1, 5),new Enemy(2, 2, 2));
     }
 
