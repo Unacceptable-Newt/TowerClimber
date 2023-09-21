@@ -1,4 +1,6 @@
 package org.example.gui;
+import org.example.belonging.Item;
+import org.example.belonging.Weapon;
 import org.example.interaction.EnemyFighter;
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
@@ -13,7 +15,9 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import javax.swing.JTextPane;
 
 import static org.example.gui.MovementEvents.isInKeySet;
 import static org.example.gui.MovementEvents.setMovementKeys;
@@ -24,9 +28,10 @@ import static org.example.gui.MovementEvents.setMovementKeys;
  */
 public class Display extends JFrame {
     private JTextPane textArea;
+    //private JTextArea inventoryTextArea;
     private Level level;
     private ItemPicker itemPicker;
-    private MoneyPicker moneyPicker;
+    //private MoneyPicker moneyPicker;
     private Inventory inventory;
 
     // WSAD keys, used to move
@@ -41,8 +46,22 @@ public class Display extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(width, height);
 
+        JPanel panel = new JPanel(new BorderLayout());
         // Add text area
         textArea = new JTextPane();
+
+        // Create and add a label for displaying the additional string
+        JLabel additionalLabel = new JLabel("Inventory");
+        additionalLabel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
+
+        // Set the preferred size to control the width of the label
+        Dimension labelSize = additionalLabel.getPreferredSize();
+        labelSize.height = 200; // Set the desired width here
+        additionalLabel.setPreferredSize(labelSize);
+
+        // revalidate and repaint
+        additionalLabel.revalidate();
+        additionalLabel.repaint();
 
         // Make all characters evenly sized
         SimpleAttributeSet spacingSet = new SimpleAttributeSet();
@@ -52,7 +71,13 @@ public class Display extends JFrame {
         textArea.setEditable(false);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
-        this.add(scrollPane);
+       // this.add(scrollPane);
+
+        // Add the scroll pane with textArea to the panel
+        panel.add(scrollPane, BorderLayout.CENTER);
+        // Add the additional label to the panel
+        panel.add(additionalLabel, BorderLayout.NORTH);
+        this.add(panel);
 
         // initialise the movement objects
         initialiseMovementObjects();
@@ -87,6 +112,9 @@ public class Display extends JFrame {
 
                 textArea.setText(guiText);
                 pickStuff(e);
+                //displayInventory(inventory);
+                additionalLabel.setText(displayInventory(inventory).toString());
+
             }
         });
 
@@ -111,7 +139,7 @@ public class Display extends JFrame {
     public void initialisePickerObjects() {
         this.inventory = new Inventory(5);
         this.itemPicker  = new ItemPicker();
-        this.moneyPicker = new MoneyPicker();
+      //  this.moneyPicker = new MoneyPicker();
 
     }
 
@@ -176,4 +204,81 @@ public class Display extends JFrame {
         }
 
     }
+
+    /**
+     * Rong Sun
+     * @param e
+     */
+    public void chooseStuff(KeyEvent e){
+
+        textArea.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                String guiText;
+                int keyCode = e.getKeyCode();
+
+                // 获取按键对应的数字
+                int selectedWeaponNumber = -1; // 默认为无效编号
+                if (keyCode >= KeyEvent.VK_1 && keyCode <= KeyEvent.VK_5) {
+                    selectedWeaponNumber = keyCode - KeyEvent.VK_1 + 1; // 1-5 映射到 0-4
+                }
+
+                // 如果按下了 1-5 键
+                if (selectedWeaponNumber >= 0 && selectedWeaponNumber < inventory.listItems().size()) {
+                    Item selectedItem = inventory.listItems().get(selectedWeaponNumber);
+
+                    // 在这里处理选择的武器，可以显示在文本区域或进行其他操作
+                    System.out.println("Selected Weapon: " + selectedItem.getName());
+                }
+
+                // 其他事件处理代码...
+
+                // 更新 GUI
+                guiText = Gui.updateGuiString(level.getMaze());
+                textArea.setText(guiText);
+            }
+        });
+            }
+
+
+
+
+
+
+
+
+
+    // add Inventory display
+    public StringBuilder displayInventory(Inventory inventory) {
+
+     /*   int itemNumber = 1;
+        StringBuilder builder = new StringBuilder("Inventory:\n");
+        for (Item item : inventory.listItems()) {
+            if(item instanceof Weapon){
+                Weapon weapon = (Weapon)item;
+                builder.append(itemNumber + ". " + weapon.getName() + "(Price:" + weapon.getPrice() + " Weight:" + weapon.getWeight() +" Attack:" + weapon.getAttackValue()+")"+ "\n");
+            }else{
+                builder.append(itemNumber + ". " + item.getName() + "(Price:" + item.getPrice() + " Weight: " + item.getWeight() +")"+ "\n");
+            }
+            itemNumber++;
+        }
+        System.out.println(builder);
+        return builder;*/
+        int itemNumber = 1;
+        StringBuilder builder = new StringBuilder("<html>Inventory:<br>");
+        for (Item item : inventory.listItems()) {
+            if (item instanceof Weapon) {
+                Weapon weapon = (Weapon) item;
+                builder.append(itemNumber + ". " + weapon.getName() + "(Price:" + weapon.getPrice() + " Weight:" + weapon.getWeight() + " Attack:" + weapon.getAttackValue() + ")<br>");
+            } else {
+                builder.append(itemNumber + ". " + item.getName() + "(Price:" + item.getPrice() + " Weight: " + item.getWeight() + ")<br>");
+            }
+            itemNumber++;
+        }
+        builder.append("</html>");
+        return builder;
+    }
+
+
+
+
 }

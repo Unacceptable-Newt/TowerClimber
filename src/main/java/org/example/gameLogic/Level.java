@@ -69,6 +69,11 @@ public class Level {
 
         // add things
         maze.addItem(new Position(30, 25), new Weapon("The Big Axe",3, 5, 4));
+        maze.addItem(new Position(31, 25), new Weapon("The Small Axe",3, 5, 4));
+        maze.addItem(new Position(32, 25), new Weapon("The medium Axe",3, 5, 4));
+        maze.addItem(new Position(33, 25), new Weapon("The crazy cat",3, 5, 4));
+        maze.addItem(new Position(28, 25), new Weapon("The ugly fly",3, 5, 4));
+        maze.addItem(new Position(29, 25), new Weapon("The dragon knife",3, 5, 4));
         maze.addNPC(new Position(5, 5),new NPC("John", new Position(5, 5)));
         maze.addEnemy(new Position(25, 20),new Enemy(2, 2, 2));
     }
