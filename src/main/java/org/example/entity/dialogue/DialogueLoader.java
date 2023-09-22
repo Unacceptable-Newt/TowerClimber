@@ -17,7 +17,6 @@ public class DialogueLoader {
         Path dialoguesTextsFilePath = Paths
                 .get(relativePath)
                 .toAbsolutePath();
-        System.out.println(dialoguesTextsFilePath);
         String content = Files.readString(dialoguesTextsFilePath);
         JSONObject json = new JSONObject(content);
         return json.get(dialogueKey.toString()).toString();

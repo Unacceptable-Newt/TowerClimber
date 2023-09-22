@@ -52,7 +52,7 @@ public class NpcTalker {
     /**
      * @author Yucheng Zhu
      * Load dialogue for the dialogue currently shown on the screen, used in the main game.
-     * Test uses a different path, so this method is not covered.
+     * Uses a default path
      */
     public static String interactWithAdjacent(
             Inventory inventory, Level level, String oldTextToDisplay
