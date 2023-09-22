@@ -2,25 +2,17 @@ package org.example.interaction;
 
 import org.example.belonging.Inventory;
 import org.example.entity.NPC;
-import org.example.entity.Player;
 import org.example.entity.Position;
 import org.example.entity.dialogue.DialogueKey;
 import org.example.entity.dialogue.DialogueLoader;
+import org.example.gameLogic.Level;
 import org.example.gameLogic.Maze;
-import org.example.util.Pair;
-
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Scanner;
 
 import static org.example.move.Movement.getFrontalPosition;
 
 /**
- * @author
+ * @author Yucheng Zhu
  * Initialises a talk with an adjacent NPC
  */
 public class NpcTalker {
@@ -29,16 +21,17 @@ public class NpcTalker {
      *
      * Interacts with an adjacent NPC to talk to him/her and changes the player and his inventory in the process.
      * @param inventory The player's inventory.
-     * @param maze The maze.
+     * @param level The current floor of the dungeon.
      *
-     * @return Modified player and inventory
+     * @return Dialogue text
      */
-    public String interactWithAdjacent(
-          Inventory inventory, Maze maze, String oldTextToDisplay
+    public static String interactWithAdjacent(
+            Inventory inventory, Level level, String oldTextToDisplay, String relativePathToJsonFile
     ) throws IOException {
-        String textToDisplay = null;
-        Position frontalPosition = getFrontalPosition(maze.getPlayer().getDirection(), maze.getPlayer().getPosition());
+        Maze maze = level.getMaze();
 
+        // Get the NPC the player is talking to
+        Position frontalPosition = getFrontalPosition(maze.getPlayer().getDirection(), maze.getPlayer().getPosition());
         NPC npc = maze.getNPCAtPosition(frontalPosition);
 
         if (npc == null ) { // no NPC at this position
@@ -47,16 +40,26 @@ public class NpcTalker {
             // load dialogue
             DialogueKey dialogueKey =
                     new DialogueKey(
-                            "King George's Chief Councillor",
-                            1,
-                            new Position(4,5)
+                            npc.getName(),
+                            level.getLevel(),
+                            frontalPosition
                     );
-            System.out.println(dialogueKey);
-            Path dialoguesTextsFilePath = Paths.get("C:\\Users\\admin\\Desktop\\Year 1 Semester 2\\Software Engineering\\Assignments\\Assignment 3\\src\\data\\dialogues.json");
-            System.out.println(dialoguesTextsFilePath);
 
-            System.out.println(DialogueLoader.loadDialogue(dialogueKey));
-            return "abc";//DialogueLoader.loadDialogue(dialogueKey);
+            return DialogueLoader.loadDialogue(dialogueKey, relativePathToJsonFile);
         }
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Load dialogue for the dialogue currently shown on the screen, used in the main game.
+     * Test uses a different path, so this method is not covered.
+     */
+    public static String interactWithAdjacent(
+            Inventory inventory, Level level, String oldTextToDisplay
+    ) throws IOException {
+        return interactWithAdjacent(
+                inventory, level, oldTextToDisplay,
+                "comp-2120-assignment-3-workshop-10-group-a/src/data/dialogues.json"
+        );
     }
 }

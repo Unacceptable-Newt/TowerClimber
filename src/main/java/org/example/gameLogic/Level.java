@@ -69,7 +69,7 @@ public class Level {
 
         // add things
         maze.addItem(new Position(10, 15), new Weapon("The Big Axe",3, 5, 4));
-        maze.addNPC(new Position(5, 5),new NPC("John", new Position(5, 5)));
+        maze.addNPC(new Position(4, 5), new NPC("King George's Chief Councillor", new Position(4, 5)));
         maze.addEnemy(new Position(5, 4),new Enemy(2, 2, 2));
     }
 

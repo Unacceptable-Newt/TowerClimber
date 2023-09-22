@@ -66,7 +66,7 @@ public class Display extends JFrame {
         // Listen to key events
         textArea.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
-                String dialogueText = "123";
+                String dialogueText = ""; // text displayed in the dialogue box
                 String guiText;
                 int keyCode = e.getKeyCode();
                 // Get the text after considering change brought by movement
@@ -85,10 +85,8 @@ public class Display extends JFrame {
                     }
 
                     // interacting with NPC
-                    NpcTalker npcTalker = new NpcTalker();
-
                     try {
-                        dialogueText = npcTalker.interactWithAdjacent(inventory, level.getMaze(), dialogueText);
+                        dialogueText = NpcTalker.interactWithAdjacent(inventory, level, dialogueText);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }

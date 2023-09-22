@@ -122,10 +122,7 @@ public class Gui {
         gameObjects.put(PersistentDataNames.EXIT, maze.getExit());
 
         char[][] rasterise = Gui.rasterise(gameObjects, maze.getRows(), maze.getColumns());
-        return Gui.flatten(rasterise); // +
-//                "\nKing George's Chief Councillor: 'Tis the fifth time that the princess was kidnapped! " +
-//                "Methinks a great mystery surrounds her. " +
-//                "Oh mighty hero, thou art the last hope of our land and ... the 5689th person to accept his majesty's missions.";
+        return Gui.flatten(rasterise);
     }
 
     /**
