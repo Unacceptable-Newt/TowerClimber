@@ -100,7 +100,11 @@ public class JsonSave{
         // create dir if it has been deleted, and save to json
         if(folderExists(CURPROGRESSFILEPATH)){
             if(checkLevel(level.getLevel())){
-                saving(path, level);
+                int levelDiff = checkLevelMatches(level.getLevel());
+                if (levelDiff != 0) {
+                    updateFileName(level.getLevel() - levelDiff,level.getLevel());
+                }
+                saving(path,level);
             }else {
                 throw new RuntimeException("Level error! Encounter at class JsonSave - saveCurrentProgress(Level level), please check input param");
             }
@@ -119,22 +123,24 @@ public class JsonSave{
     /**
      * @author xinchen
      *  check if player is still in the same level in "current" folder
+     *  assuming player only goes up levels
      * @param destLevel destLevel is the level player tend to save
-     * @return
+     * @return integer representing the size of the level increase
      */
-    private boolean checkLevelMatches(int destLevel){
+    private int checkLevelMatches(int destLevel){
         ArrayList<String> levels = loader.loadLevelList(CURPROGRESSFILEPATH);
         if (levels.size() == 0)
-            return true;
+            return -1;
         int curLevel = -1;
         for(String path: levels){
-            //if(path.contains(CURINDICATOR)) {
+            if(path.contains(CURINDICATOR)) {
                 curLevel = loader.extractLevelNumber(path);
-            //}
+                break;
+            }
         }
-        if(curLevel == -1) throw new RuntimeException();
+        //if(curLevel == -1) throw new RuntimeException();
 
-        return destLevel == curLevel;
+        return destLevel - curLevel;
     }
 
     /**
