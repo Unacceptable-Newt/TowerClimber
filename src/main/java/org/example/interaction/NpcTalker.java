@@ -59,7 +59,7 @@ public class NpcTalker {
     ) throws IOException {
         return interactWithAdjacent(
                 inventory, level, oldTextToDisplay,
-                "comp-2120-assignment-3-workshop-10-group-a/src/data/dialogues.json"
+                "src/data/dialogues.json"
         );
     }
 }

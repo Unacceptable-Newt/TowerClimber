@@ -29,6 +29,6 @@ public class DialogueLoader {
      * Test uses a different path, so this method is not covered.
      */
     public static String loadDialogue(DialogueKey dialogueKey) throws IOException {
-        return loadDialogue(dialogueKey, "comp-2120-assignment-3-workshop-10-group-a/src/data/dialogues.json");
+        return loadDialogue(dialogueKey, "src/data/dialogues.json");
     }
 }
