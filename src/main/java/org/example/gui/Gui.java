@@ -137,7 +137,7 @@ public class Gui {
      * @return a string representing the state of the maze after the move
      */
     public static String updateGuiString(Maze maze, String text) {
-        return updateGuiString(maze)+ "\n" + text;
+        return (updateGuiString(maze) + "\n" + text);
     }
 
     /**

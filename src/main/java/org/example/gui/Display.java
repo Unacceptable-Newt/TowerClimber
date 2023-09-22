@@ -14,6 +14,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.HashSet;
 
 import static org.example.gui.MovementEvents.isInKeySet;
@@ -65,6 +66,7 @@ public class Display extends JFrame {
         // Listen to key events
         textArea.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
+                String dialogueText = "123";
                 String guiText;
                 int keyCode = e.getKeyCode();
                 // Get the text after considering change brought by movement
@@ -85,13 +87,17 @@ public class Display extends JFrame {
                     // interacting with NPC
                     NpcTalker npcTalker = new NpcTalker();
 
-                    npcTalker.interactWithAdjacent(inventory, level.getMaze());
+                    try {
+                        dialogueText = npcTalker.interactWithAdjacent(inventory, level.getMaze(), dialogueText);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
 
                 // FIXME: add other events
 
                 // Update the GUI char "pixels" as a string
-                guiText = Gui.updateGuiString(level.getMaze());
+                guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
 
                 textArea.setText(guiText);
                 pickStuff(e);
@@ -178,10 +184,10 @@ public class Display extends JFrame {
         // Update the GUI char "pixels" as a string
         // You can keep this part if it's relevant to your game
 //        String guiText = movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, maze, gui);
-        String guiText = Gui.updateGuiString(level.getMaze());
-        if (guiText != null) {
-            textArea.setText(guiText);
-        }
+//        String guiText = Gui.updateGuiString(level.getMaze());
+//        if (guiText != null) {
+//            textArea.setText(guiText);
+//        }
 
     }
 }

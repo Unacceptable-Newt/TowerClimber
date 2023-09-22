@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class NPC extends Life {
     private String name;
-    private List<String> dialogue;
+//    private List<String> dialogue;
 
     public NPC(String name, Position position) {
         super(100, 100, position, 100);
@@ -27,24 +27,24 @@ public class NPC extends Life {
         this.name = name;
     }
 
-    public List<String> getDialogue() {
-        return dialogue;
-    }
-
-    public void setDialogue(List<String> dialogue) {
-        this.dialogue = dialogue;
-    }
-
-    public void loadDialogueFromFile(String filePath) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                dialogue.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public List<String> getDialogue() {
+//        return dialogue;
+//    }
+//
+//    public void setDialogue(List<String> dialogue) {
+//        this.dialogue = dialogue;
+//    }
+//
+//    public void loadDialogueFromFile(String filePath) {
+//        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                dialogue.add(line);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
 }
