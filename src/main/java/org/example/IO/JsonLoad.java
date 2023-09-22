@@ -1,8 +1,6 @@
 package org.example.IO;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
@@ -16,12 +14,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * @author xinchen
@@ -34,6 +34,7 @@ public class JsonLoad {
     private final String PREFIX = "level";
     private final String CURINDICATOR = "_cur";
     private final String SURFFIX = ".json";
+
 
     /**
      * @author xinchen
@@ -69,8 +70,11 @@ public class JsonLoad {
      * Load list of json folders that saving the
      * @return null if folder is empty, list if folder has files
      */
-    public ArrayList<String> loadProcessList(){
-        //FIXME 将所有的在FOLDERPATH中的第一级folder读出来，folder的文件格式是"dd_MM_yy_HH_mm"和"current"， 只读这些，别的不读
+    public ArrayList<String> loadProgressList(){
+        //Read out all the first level folder in FOLDERPATH,
+        // the file format of the folder is "dd_MM_yy_HH_mm" and "current",
+        // only read these, nothing else.
+
         ArrayList<String> progressList = new ArrayList<>();
         File folder = new File(FOLDERPATH);
         File[] listOfFiles = folder.listFiles();
@@ -96,7 +100,7 @@ public class JsonLoad {
      * @return a list of different level json files
      */
     public ArrayList<String> loadLevelList(String path){
-        //FIXME 读取path中有多少个文件是符合"levelX.json"或者"levelX_cur.json"
+        // Read the file in path as "levelX.json" or "levelX_cur.json".
         ArrayList<String> levelList = new ArrayList<>();
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
@@ -111,7 +115,6 @@ public class JsonLoad {
                 }
             }
         }
-
         return levelList;
     }
 
@@ -230,7 +233,7 @@ public class JsonLoad {
      * @return game state (class Level)
      */
     public Level loadFile(String filePath){
-        //FIXME 读取filepath指定的文件，并将其转换成class Level的实例
+        // Reads the file specified by filepath and converts it to an instance of class Level
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             int levelNum = extractLevelNumber(filePath);
@@ -312,9 +315,8 @@ public class JsonLoad {
      *
      * @return a level object
      */
-
     public Level loadCurLevelData(){
-        //FIXME 读取只带有"_cur"的文件内的数据，同时要将level后面的数字读取到
+        // Read the data in the file with "_cur" only, and at the same time read the number after the level
         Level level = null;
         ArrayList<String> files = this.loadLevelList(CURPROGRESSFILEPATH);
         for(String fileName: files){
@@ -337,16 +339,131 @@ public class JsonLoad {
      * if yes save the current folder to new progress then move the dest progress to "current" folder
      *
      * @param progress String: load the progress chosen from gui
+     * @param saveOrNot Boolean: check if player wants to overwrite on the current folder
      */
-    public void loadJsonFolder(String progress, boolean saveOrNot){
-        //FixME 将如果有current问player要不要保存，否则此存档全部写入current，是则将current存到当前时间的文件夹，将即将载入的progress全盘写入到current
-        if(loadProcessList().contains(progress)) {
+    public Level loadProgress(String progress, boolean saveOrNot){
+        //Will if there is a current ask the player to save it,
+        // otherwise this archive is all written to current,
+        // yes then save current to the current time folder,
+        // will be loaded into the progress of all the discs written to current
+        if(loadProgressList().contains(progress)) {
+            if(saveOrNot) { // yes
+                emptyCurFolder();
+                String folderProgressPath = FOLDERPATH + progress;
+                try {
+                    // get what current folder has
+                    Stream<Path> paths = Files.walk(Paths.get(folderProgressPath));
+                    // copy all current files to new progress
+                    paths.forEach(sourcePath -> {
+                        try {
+                            Files.copy(sourcePath, Paths.get(CURPROGRESSFILEPATH).resolve(Paths.get(CURPROGRESSFILEPATH).relativize(sourcePath)));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    paths.close();
 
+                    return loadCurLevelData();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("Cannot load correctly in loadProgress(), 1st");
+                }
+            }else { //No
+                //Save first
+                JsonSave saver = new JsonSave();
+                saver.saveToNewProgress();
+
+                // empty
+                emptyCurFolder();
+
+                //copy previous progress to current
+                String folderProgressPath = FOLDERPATH + progress;
+                try {
+                    // get what progress has
+                    Stream<Path> paths = Files.walk(Paths.get(folderProgressPath));
+
+                    // copy all progress to cur
+                    paths.forEach(sourcePath -> {
+                        try {
+                            Files.copy(sourcePath, Paths.get(CURPROGRESSFILEPATH).resolve(Paths.get(CURPROGRESSFILEPATH).relativize(sourcePath)));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    paths.close();
+                    return loadCurLevelData();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("Cannot save and load correctly in loadProgress(), 2nd");
+                }
+            }
         }else {
             throw new RuntimeException("There is no such a progress");
         }
+    }
+
+    /**
+     * @author: xinchen
+     *
+     * This function is for loading new game from preset folder
+     *
+     * @return level 1 map
+     */
+    public Level loadStartMap(){
+        try {
+            //set paths
+            Path fileToCopyPath = Paths.get("src/cache/map/" + PREFIX + "1" + SURFFIX);
+            Path destFilePath = Paths.get(CURPROGRESSFILEPATH + PREFIX + "1" + CURINDICATOR + SURFFIX);
+            // empty folder current first
+            emptyCurFolder();
+            // copy, paste and load
+            Files.copy(fileToCopyPath, destFilePath, StandardCopyOption.REPLACE_EXISTING);
+            File level1File =  new File(destFilePath.toString());
+            if(level1File.exists()){
+                return loadCurLevelData();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        throw new RuntimeException("Load start map failed, please check");
 
     }
+
+    /**
+     * @author: xinchen
+     *
+     * @param curLevel when player get into next level, should have cur level pass in
+     * @return an object level back
+     */
+    public Level loadNextLevel(int curLevel){
+        Level newLevel = null;
+        try {
+            //set paths
+            Path curFilePath = Paths.get(CURPROGRESSFILEPATH + PREFIX + curLevel + CURINDICATOR + SURFFIX);
+            Path fileToCopyPath = Paths.get("src/cache/map/" + PREFIX + (curLevel + 1) + SURFFIX);
+            Path destFilePath = Paths.get(CURPROGRESSFILEPATH + PREFIX + (curLevel + 1) + SURFFIX);
+            // load map from map then change the name to "level${destlevel}_cur.json"
+            // then update the player to the new class level
+            Files.copy(fileToCopyPath, destFilePath, StandardCopyOption.REPLACE_EXISTING);
+
+            //getMaze for reload player
+            Maze curMaze = this.loadFile(curFilePath.toString()).getMaze();
+            ArrayList<String> datalist = this.loadLevelList(curFilePath.toString());
+
+            JsonSave saver = new JsonSave();
+            saver.updateFiles(datalist, curMaze.getPlayer());
+            saver.updateFileName(curLevel,curLevel+1);
+
+            newLevel = loadCurLevelData();
+            return newLevel;
+
+        }catch (Exception e){
+            throw new RuntimeException("Check loadNextLevel()");
+        }
+    }
+
+
 
     /**
      * @author xinchen
@@ -354,7 +471,7 @@ public class JsonLoad {
      * empty everything in CURPROGRESSFILEPATH
      */
     public void emptyCurFolder(){
-        //FIXME 将"src/cache/progress/current"内的所有文档清空
+        // empty everything in "src/cache/progress/current"
         try {
             Path dir = Paths.get(CURPROGRESSFILEPATH);
             if (Files.exists(dir)) {

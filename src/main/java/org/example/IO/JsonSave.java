@@ -2,6 +2,7 @@ package org.example.IO;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.example.belonging.Item;
 import org.example.entity.*;
 import org.example.gameLogic.Level;
 import org.example.gameLogic.Maze;
@@ -13,10 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 
@@ -65,7 +63,7 @@ public class JsonSave{
      * empty everything in CURPROGRESSFILEPATH
      */
     public void emptyCurFolder(){
-        //FIXME 将"src/cache/progress/current内的所有文档清空"
+        //empty files in "src/cache/progress/current"
         try {
             Path dir = Paths.get(CURPROGRESSFILEPATH);
             if (Files.exists(dir)) {
@@ -92,12 +90,12 @@ public class JsonSave{
     public void saveCurrentProgress(Level level) {
         String path = CURPROGRESSFILEPATH + PREFIX + level.getLevel() + CURINDICATOR + SURFFIX;
 
-        //FIXME check what is the current level, if it is not the same, update
-        if(!checkLevelMatches(level.getLevel())){
-            Level oldLevel = loader.loadCurLevelData();
-            int oldLevelNum  = oldLevel.getLevel();
-            updateFileName(oldLevelNum,level.getLevel());
-        }
+//        /
+//        if(!checkLevelMatches(level.getLevel())){
+//            Level oldLevel = loader.loadCurLevelData();
+//            int oldLevelNum  = oldLevel.getLevel();
+//            updateFileName(oldLevelNum);
+//        }
 
         // create dir if it has been deleted, and save to json
         if(folderExists(CURPROGRESSFILEPATH)){
@@ -130,10 +128,9 @@ public class JsonSave{
             return true;
         int curLevel = -1;
         for(String path: levels){
-            // TODO: check it
-            if(path.contains(CURINDICATOR)) {
+            //if(path.contains(CURINDICATOR)) {
                 curLevel = loader.extractLevelNumber(path);
-            }
+            //}
         }
         if(curLevel == -1) throw new RuntimeException();
 
@@ -144,31 +141,46 @@ public class JsonSave{
      * @author xinchen
      * rename files with CURINDICATOR in CURPROGRESSFILEPATH
      * @param curLevel where player is currently at
-     * @param destLevel where player tends to go
      */
-    private void updateFileName(int curLevel, int destLevel){
-        //FIXME 如果player进入别的层，那么将会触发这个改名函数，将"level${curLevel}_cur.json" 换成 "level${curLevel}.json",将"level${destLevel}.json"换成"level${destLevel}_cur.json", 如果"level${destLevel}.json"或者"level${destLevel}_cur.json"不存在则创建"level${destLevel}_cur.json"并将"level${curLevel}_cur.json" 换成 "level${curLevel}.json"
+    protected void updateFileName(int curLevel, int destLevel){
+        // If the player goes to another level,
+        // then this function will be triggered,
+        // replacing "level${curLevel}_cur.json" with "level${curLevel}.json" and "level${destLevel}.json" with "level${destLevel}_cur.json",
+        // if "level${destLevel}.json" or "level${destLevel}_cur.json" or "level${destLevel}_cur.json" is used,
+        // then this function will be triggered, and this will be replaced by "level${destLevel}_cur.json". .json",
+        // if "level${destLevel}.json" or "level${destLevel}_cur.json" does not exist then create "level${destLevel}_cur.json" and replace "level${curLevel}_cur.json" with " level${curLevel}.json".
         try {
             //set paths
             Path curFilePath = Paths.get(CURPROGRESSFILEPATH + PREFIX + curLevel + CURINDICATOR + SURFFIX);
             Path destFilePath = Paths.get(CURPROGRESSFILEPATH + PREFIX + destLevel + SURFFIX);
             Path destFileCurPath = Paths.get(CURPROGRESSFILEPATH + PREFIX + destLevel + CURINDICATOR + SURFFIX);
 
-            // Check if dest file or dest_cur file exists, if not create it by copying cur file to dest_cur file
+            //Check if dest file or dest_cur file exists, if not create it by copying cur file to dest_cur file
             if (!Files.exists(destFilePath) && !Files.exists(destFileCurPath)) {
                 Files.copy(curFilePath, destFileCurPath, StandardCopyOption.REPLACE_EXISTING);
             }
 
-            // Rename cur file to normal
-            Path destinationPath = Paths.get(CURPROGRESSFILEPATH + PREFIX + curLevel + SURFFIX);
-            Files.move(curFilePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+            // Old concept, ignore now
+//            // Rename cur file to normal
+//            Path destinationPath = Paths.get(CURPROGRESSFILEPATH + PREFIX + curLevel + SURFFIX);
+//            Files.move(curFilePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+
+            File fileToDelete = new File(String.valueOf(curFilePath));
+            if (fileToDelete.exists()) {
+                if (fileToDelete.delete()) {
+                    System.out.println("Cur progress is deleted");
+                } else {
+                    throw new RuntimeException("Cannot delete! Check updateFileName");
+                }
+            }
 
             // Rename dest file to cur
-            if (Files.exists(destFilePath)) {
+             if (Files.exists(destFilePath)) {
                 Files.move(destFilePath, destFileCurPath, StandardCopyOption.REPLACE_EXISTING);
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
@@ -188,13 +200,6 @@ public class JsonSave{
             // save data into MAP
             Map<String, Object> mazeData = new HashMap<>();
             mazeData.put("maze", maze);
-            //mazeData.put("enemies", maze.getEnemies());
-            //mazeData.put("player", maze.getPlayer());
-            //mazeData.put("npcs", maze.getNPCs());
-            //mazeData.put("exit", maze.getExit());
-            //mazeData.put("walls", maze.getEncodedWalls());
-            //mazeData.put("items", maze.getItems());
-            //mazeData.put("money", maze.getMoney());
 
             // translate to string
             String jsonStr = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(mazeData);
@@ -202,8 +207,8 @@ public class JsonSave{
             // Save string
             Files.write(Paths.get(destPath), jsonStr.getBytes());
 
-            ArrayList<String> datalist = loader.loadLevelList(destPath);
-            updateFiles(datalist, maze.getPlayer());
+            //ArrayList<String> datalist = loader.loadLevelList(destPath);
+            //updateFiles(datalist, maze.getPlayer());
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
@@ -216,30 +221,62 @@ public class JsonSave{
      * @param datalist a list of other files
      * @param curPlayer the player that changed his/her attributes
      */
-    private void updateFiles(ArrayList<String> datalist, Player curPlayer)  {
-        // FIXME 除了带"_cur"的json文件，别的文件都需要单独将player拿出来单独重新写入新的数据
+    protected void updateFiles(ArrayList<String> datalist, Player curPlayer)  {
+        // overwrite all files, not ending with "_cur", with updated player
         for(String path: datalist){
             if (path.contains("_cur")) {
                 continue;
             }else {
                 try {
+                    // load other level to get the maze information
                     Level level = loader.loadFile(path);
-                    Maze maze = level.getMaze();
+                    Maze oldMaze = level.getMaze();
+
                     ObjectMapper objectMapper = new ObjectMapper();
 
+                    Maze newMaze = new Maze(oldMaze.getColumns(), oldMaze.getRows(), oldMaze.getExit());
+
+                    HashMap<Position, Item> itemHashMap =  oldMaze.getItems();
+                    HashMap<Position, Enemy> enemyHashMap = oldMaze.getEnemies();
+                    HashMap<Position, NPC> NPCHashMap = oldMaze.getNPCs();
+                    ArrayList<Wall> wallArrayList = oldMaze.getEncodedWalls();
+                    HashMap<Position, Integer> moneyHashMap = oldMaze.getMoney();
+
                     //update player
-                    Player newPlayer = new Player(curPlayer.getMoney(),curPlayer.getHealth(), curPlayer.getLevel(),maze.getPlayer().getPosition());
+                    //TODO double check position with other members
+                    Player newPlayer = new Player(curPlayer.getMoney(),curPlayer.getHealth(), curPlayer.getLevel(),oldMaze.getPlayer().getPosition());
+                    newPlayer.setCurrentWeapon(curPlayer.getCurrentWeapon());
+                    newMaze.setPlayer(newPlayer);
+
+                    Iterator<Position> itemIter = itemHashMap.keySet().iterator();
+                    while (itemIter.hasNext()) {
+                        Position key = itemIter.next();
+                        newMaze.addItem(key, itemHashMap.get(key));
+                    }
+
+                    Iterator<Position> enemyIter = enemyHashMap.keySet().iterator();
+                    while (enemyIter.hasNext()) {
+                        Position key = enemyIter.next();
+                        newMaze.addEnemy(key, enemyHashMap.get(key));
+                    }
+
+                    Iterator<Position> NPCiter = NPCHashMap.keySet().iterator();
+                    while (NPCiter.hasNext()) {
+                        Position key = NPCiter.next();
+                        newMaze.addNPC(key, NPCHashMap.get(key));
+                    }
+
+                    newMaze.setEncodedWalls(wallArrayList);
+
+                    Iterator<Position> moneyiter = moneyHashMap.keySet().iterator();
+                    while (moneyiter.hasNext()) {
+                        Position key = moneyiter.next();
+                        newMaze.addMoney(key, moneyHashMap.get(key));
+                    }
 
                     // save data into MAP
                     Map<String, Object> mazeData = new HashMap<>();
-                    mazeData.put("maze", maze);
-                    mazeData.put("enemies", maze.getEnemies());
-                    mazeData.put("player", newPlayer);
-                    mazeData.put("npcs", maze.getNPCs());
-                    mazeData.put("exit", maze.getExit());
-                    mazeData.put("walls", maze.getEncodedWalls());
-                    mazeData.put("items", maze.getItems());
-                    mazeData.put("money", maze.getMoney());
+                    mazeData.put("maze", newMaze);
 
                     String jsonStr = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(mazeData);
                     Files.write(Paths.get(path), jsonStr.getBytes());
@@ -254,19 +291,18 @@ public class JsonSave{
      * @author xinchen
      * save progress to new progress folder
      */
-    private void saveToNewProgress(){
+    public void saveToNewProgress(){
         try {
-            // FIXME 将current文件夹内的所有的东西都储存到新的文件夹
             String destFolderPath = FOLDERPATH + "/" + folderName+"/";
             String curFolderPath = CURPROGRESSFILEPATH;
 
-            // 创建目标文件夹，如果不存在
+            // create folder
             Files.createDirectories(Paths.get(destFolderPath));
 
-            // 获取当前文件夹内的所有文件
+            // get what current folder has
             Stream<Path> paths = Files.walk(Paths.get(curFolderPath));
 
-            // 复制所有文件到新的目标文件夹
+            // copy all current files to new progress
             paths.forEach(sourcePath -> {
                 try {
                     Files.copy(sourcePath, Paths.get(destFolderPath).resolve(Paths.get(curFolderPath).relativize(sourcePath)));

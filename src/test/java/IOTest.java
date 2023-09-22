@@ -6,10 +6,12 @@ import org.example.entity.NPC;
 import org.example.entity.Position;
 import org.example.gameLogic.Level;
 import org.example.gameLogic.Maze;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +58,8 @@ public class IOTest {
     void loadTest(){
         JsonLoad loader = new JsonLoad();
         Level loaded = loader.loadFile("src/cache/progress/current/level1_cur.json");
+        Level loaded2 = loader.loadCurLevelData();
+        System.out.println(loaded2.toString());
         assert (true);
     }
 
