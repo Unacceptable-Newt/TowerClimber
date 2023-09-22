@@ -122,10 +122,22 @@ public class Gui {
         gameObjects.put(PersistentDataNames.EXIT, maze.getExit());
 
         char[][] rasterise = Gui.rasterise(gameObjects, maze.getRows(), maze.getColumns());
-        return Gui.flatten(rasterise) +
-                "\nKing George's Chief Councillor: 'Tis the fifth time that the princess was kidnapped! " +
-                "Methinks a great mystery surrounds her. " +
-                "Oh mighty hero, thou art the last hope of our land and ... the 5689th person to accept his majesty's missions.";
+        return Gui.flatten(rasterise); // +
+//                "\nKing George's Chief Councillor: 'Tis the fifth time that the princess was kidnapped! " +
+//                "Methinks a great mystery surrounds her. " +
+//                "Oh mighty hero, thou art the last hope of our land and ... the 5689th person to accept his majesty's missions.";
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Return strings to be displayed in GUI when a movement key is pressed.
+     * With a text field below.
+     * @param maze The maze to be turned into a string
+     * @param text The text field displayed below
+     * @return a string representing the state of the maze after the move
+     */
+    public static String updateGuiString(Maze maze, String text) {
+        return updateGuiString(maze)+ "\n" + text;
     }
 
     /**

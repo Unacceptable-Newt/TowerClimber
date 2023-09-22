@@ -8,11 +8,11 @@ public class DialogueKeyTest {
 
     @BeforeEach
     public void testCreateDialogueText() {
-        dialogueKey = new DialogueKey("Alice", 1, 5);
+        dialogueKey = new DialogueKey("Alice", 1, "Alice's speech");
     }
 
     @Test
     public void testToString() {
-        Assertions.assertEquals("Alice,1,5", dialogueKey.toString());
+        Assertions.assertEquals("Alice,1,Alice's speech", dialogueKey.toString());
     }
 }

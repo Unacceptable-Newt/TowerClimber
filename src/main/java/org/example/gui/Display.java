@@ -4,6 +4,7 @@ import org.example.belonging.Inventory;
 import org.example.entity.Player;
 import org.example.interaction.ItemPicker;
 import org.example.interaction.MoneyPicker;
+import org.example.interaction.NpcTalker;
 import org.example.util.Pair;
 import org.example.gameLogic.Level;
 
@@ -70,15 +71,21 @@ public class Display extends JFrame {
                 if (isInKeySet(movementKeys, keyCode)) { // Movement events
                     MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, level.getMaze());
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
-                    level = ExitEvent.exit(level);
                     //interacting with exit
-                    EnemyFighter enemyFighter = new EnemyFighter();
+                    level = ExitEvent.exit(level);
 
                     //interacting with enemy
+                    EnemyFighter enemyFighter = new EnemyFighter();
+
                     enemyFighter.interactWithAdjacent(inventory, level.getMaze());
                     if (level.getMaze().getPlayer().getHealth() <= 0){
                         //FIXME Player needs to die
                     }
+
+                    // interacting with NPC
+                    NpcTalker npcTalker = new NpcTalker();
+
+                    npcTalker.interactWithAdjacent(inventory, level.getMaze());
                 }
 
                 // FIXME: add other events

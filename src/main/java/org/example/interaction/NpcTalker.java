@@ -9,7 +9,7 @@ import org.example.util.Pair;
  * @author
  * Initialises a talk with an adjacent NPC
  */
-public class NpcTalker implements Interaction{
+public class NpcTalker {
     /**
      * @author
      *
@@ -19,11 +19,13 @@ public class NpcTalker implements Interaction{
      *
      * @return Modified player and inventory
      */
-    @Override
-    public Pair<Player, Inventory> interactWithAdjacent(
+    public String interactWithAdjacent(
           Inventory inventory, Maze maze
     ) {
-        // FIXME
-        return null;
+        String textToDisplay;
+
+
+
+        return textToDisplay;
     }
 }
