@@ -26,7 +26,7 @@ public class NpcTalker {
      * @return Dialogue text
      */
     public static String interactWithAdjacent(
-            Inventory inventory, Level level, String oldTextToDisplay, String relativePathToJsonFile
+            Inventory inventory, Level level, String oldTextToDisplay
     ) throws IOException {
         Maze maze = level.getMaze();
 
@@ -45,21 +45,7 @@ public class NpcTalker {
                             frontalPosition
                     );
 
-            return DialogueLoader.loadDialogue(dialogueKey, relativePathToJsonFile);
+            return DialogueLoader.loadDialogue(dialogueKey);
         }
-    }
-
-    /**
-     * @author Yucheng Zhu
-     * Load dialogue for the dialogue currently shown on the screen, used in the main game.
-     * Uses a default path
-     */
-    public static String interactWithAdjacent(
-            Inventory inventory, Level level, String oldTextToDisplay
-    ) throws IOException {
-        return interactWithAdjacent(
-                inventory, level, oldTextToDisplay,
-                "src/data/dialogues.json"
-        );
     }
 }

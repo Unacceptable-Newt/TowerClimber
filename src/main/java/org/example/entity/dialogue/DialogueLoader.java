@@ -13,21 +13,12 @@ import java.nio.file.Paths;
  */
 public class DialogueLoader {
 
-    public static String loadDialogue(DialogueKey dialogueKey, String relativePath) throws IOException {
+    public static String loadDialogue(DialogueKey dialogueKey) throws IOException {
         Path dialoguesTextsFilePath = Paths
-                .get(relativePath)
+                .get("src/data/dialogues.json")
                 .toAbsolutePath();
         String content = Files.readString(dialoguesTextsFilePath);
         JSONObject json = new JSONObject(content);
         return json.get(dialogueKey.toString()).toString();
-    }
-
-    /**
-     * @author Yucheng Zhu
-     * Load dialogue for the dialogue currently shown on the screen, used in NpcTalker.
-     * Test uses a different path, so this method is not covered.
-     */
-    public static String loadDialogue(DialogueKey dialogueKey) throws IOException {
-        return loadDialogue(dialogueKey, "src/data/dialogues.json");
     }
 }

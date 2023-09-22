@@ -37,14 +37,14 @@ public class NpcTalkerTest {
 
         Assertions.assertEquals(
                 "King George's Chief Councillor: 'Tis the fifth time that the princess was kidnapped! Methinks a great mystery surrounds her. Oh mighty hero, thou art the last hope of our land and ... the 5689th person to accept his majesty's missions.",
-                NpcTalker.interactWithAdjacent(inventory, level, "", "src/data/dialogues.json")
+                NpcTalker.interactWithAdjacent(inventory, level, "")
         );
 
         // no conversation in a different direction:
         level.getMaze().getPlayer().setDirection(Direction.UP);
         Assertions.assertEquals(
                 "",
-                NpcTalker.interactWithAdjacent(inventory, level, "", "src/data/dialogues.json")
+                NpcTalker.interactWithAdjacent(inventory, level, "")
         );
     }
 }

@@ -28,7 +28,7 @@ public class DialogueLoaderTest {
 
         Assertions.assertEquals(
                 "King George's Chief Councillor: 'Tis the fifth time that the princess was kidnapped! Methinks a great mystery surrounds her. Oh mighty hero, thou art the last hope of our land and ... the 5689th person to accept his majesty's missions.",
-                DialogueLoader.loadDialogue(dialogueKey, "src/data/dialogues.json")
+                DialogueLoader.loadDialogue(dialogueKey)
         );
     }
 
