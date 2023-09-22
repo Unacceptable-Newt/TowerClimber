@@ -1,3 +1,4 @@
+import org.example.entity.Position;
 import org.example.entity.dialogue.DialogueLoader;
 import org.example.entity.dialogue.DialogueKey;
 import org.junit.jupiter.api.Assertions;
@@ -13,7 +14,7 @@ public class DialogueLoaderTest {
                 new DialogueKey(
                         "King George's Chief Councillor",
                         1,
-                        "Councillor on kidnapping"
+                        new Position(4,5)
                 );
 
         Assertions.assertEquals(

@@ -22,7 +22,7 @@ public class NpcTalker {
     public String interactWithAdjacent(
           Inventory inventory, Maze maze
     ) {
-        String textToDisplay;
+        String textToDisplay = null;
 
 
 

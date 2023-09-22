@@ -1,3 +1,4 @@
+import org.example.entity.Position;
 import org.example.entity.dialogue.DialogueKey;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,11 +9,11 @@ public class DialogueKeyTest {
 
     @BeforeEach
     public void testCreateDialogueText() {
-        dialogueKey = new DialogueKey("Alice", 1, "Alice's speech");
+        dialogueKey = new DialogueKey("Alice", 1, new Position(2,3));
     }
 
     @Test
     public void testToString() {
-        Assertions.assertEquals("Alice,1,Alice's speech", dialogueKey.toString());
+        Assertions.assertEquals("Alice,1,(2,3)", dialogueKey.toString());
     }
 }
