@@ -38,7 +38,7 @@ gradle-deploy:
   image: docker:24.0.6
   stage: build
   script:
-    - docker build -t yaboibo/TowerCrawler
+    - docker build -t yaboibo/TowerCrawler .
     - docker push yaboibo/TwowerCrawler
   tags:
     - comp2100
