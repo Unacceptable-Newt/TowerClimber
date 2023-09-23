@@ -19,10 +19,10 @@ import java.util.stream.Stream;
 
 
 /**
- * @author xinchen
+ * @author Xin Chen
  * JSON saver
  */
-public class JsonSave{
+public class JsonSave {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yy_HH_mm");
     private Date currentDate = new Date();
     private String folderName = dateFormat.format(currentDate);
@@ -36,34 +36,34 @@ public class JsonSave{
     private JsonLoad loader = new JsonLoad();
 
     /**
-     * @author xinchen
+     * @author Xin Chen
      * @return True if folder exists, False if not
      */
-    private boolean folderExists(String filePath){
+    private boolean folderExists(String filePath) {
         try {
             File folder = new File(filePath);
             return folder.exists() && folder.isDirectory();
-        }catch (Exception e){
+        }catch (Exception e) {
             return false;
         }
     }
 
     /**
-     * @author xinchen
-     * check level num is valid or not
-     * @param level it should be the level number reading from loader or game
+     * @author Xin Chen
+     * Check level num is valid or not
+     * @param level It should be the level number reading from loader or game
      * @return Boolean, true if it is between 1-3
      */
-    private boolean checkLevel(int level){
+    private boolean checkLevel(int level) {
         return level > 0 && level <= 3;
     }
 
     /**
-     * @author xinchen
-     * empty everything in CURPROGRESSFILEPATH
+     * @author Xin Chen
+     * Empty everything in CURPROGRESSFILEPATH
      */
-    public void emptyCurFolder(){
-        //empty files in "src/cache/progress/current"
+    public void emptyCurFolder() {
+        // Empty files in "src/cache/progress/current"
         try {
             Path dir = Paths.get(CURPROGRESSFILEPATH);
             if (Files.exists(dir)) {
@@ -83,28 +83,32 @@ public class JsonSave{
     }
 
     /**
-     * @author xinchen
+     * @author Xin Chen
      * Save current progress to json
-     * @param level should be current level
+     * @param level Should be the current level
      */
     public void saveCurrentProgress(Level level) {
         String path = CURPROGRESSFILEPATH + PREFIX + level.getLevel() + CURINDICATOR + SURFFIX;
 
 //        /
-//        if(!checkLevelMatches(level.getLevel())){
+//        if(!checkLevelMatches(level.getLevel())) {
 //            Level oldLevel = loader.loadCurLevelData();
 //            int oldLevelNum  = oldLevel.getLevel();
 //            updateFileName(oldLevelNum);
 //        }
 
         // create dir if it has been deleted, and save to json
-        if(folderExists(CURPROGRESSFILEPATH)){
-            if(checkLevel(level.getLevel())){
-                saving(path, level);
-            }else {
+        if(folderExists(CURPROGRESSFILEPATH)) {
+            if(checkLevel(level.getLevel())) {
+                int levelDiff = checkLevelMatches(level.getLevel());
+                if (levelDiff != 0) {
+                    updateFileName(level.getLevel() - levelDiff,level.getLevel());
+                }
+                saving(path,level);
+            } else {
                 throw new RuntimeException("Level error! Encounter at class JsonSave - saveCurrentProgress(Level level), please check input param");
             }
-        }else {
+        } else {
             try {
                 //create dir
                 Files.createDirectories(Paths.get(CURPROGRESSFILEPATH));
@@ -117,32 +121,34 @@ public class JsonSave{
     }
 
     /**
-     * @author xinchen
-     *  check if player is still in the same level in "current" folder
+     * @author Xin Chen
+     * Check if player is still in the same level in "current" folder
+     * Assuming player only goes up levels
      * @param destLevel destLevel is the level player tend to save
-     * @return
+     * @return integer Representing the size of the level increase
      */
-    private boolean checkLevelMatches(int destLevel){
+    private int checkLevelMatches(int destLevel) {
         ArrayList<String> levels = loader.loadLevelList(CURPROGRESSFILEPATH);
         if (levels.size() == 0)
-            return true;
+            return -1;
         int curLevel = -1;
-        for(String path: levels){
-            //if(path.contains(CURINDICATOR)) {
+        for (String path: levels) {
+            if(path.contains(CURINDICATOR)) {
                 curLevel = loader.extractLevelNumber(path);
-            //}
+                break;
+            }
         }
-        if(curLevel == -1) throw new RuntimeException();
+        //if(curLevel == -1) throw new RuntimeException();
 
-        return destLevel == curLevel;
+        return destLevel - curLevel;
     }
 
     /**
-     * @author xinchen
-     * rename files with CURINDICATOR in CURPROGRESSFILEPATH
-     * @param curLevel where player is currently at
+     * @author Xin Chen
+     * Rename files with CURINDICATOR in CURPROGRESSFILEPATH
+     * @param curLevel Where player is currently at
      */
-    protected void updateFileName(int curLevel, int destLevel){
+    protected void updateFileName(int curLevel, int destLevel) {
         // If the player goes to another level,
         // then this function will be triggered,
         // replacing "level${curLevel}_cur.json" with "level${curLevel}.json" and "level${destLevel}.json" with "level${destLevel}_cur.json",
@@ -150,12 +156,12 @@ public class JsonSave{
         // then this function will be triggered, and this will be replaced by "level${destLevel}_cur.json". .json",
         // if "level${destLevel}.json" or "level${destLevel}_cur.json" does not exist then create "level${destLevel}_cur.json" and replace "level${curLevel}_cur.json" with " level${curLevel}.json".
         try {
-            //set paths
+            // set paths
             Path curFilePath = Paths.get(CURPROGRESSFILEPATH + PREFIX + curLevel + CURINDICATOR + SURFFIX);
             Path destFilePath = Paths.get(CURPROGRESSFILEPATH + PREFIX + destLevel + SURFFIX);
             Path destFileCurPath = Paths.get(CURPROGRESSFILEPATH + PREFIX + destLevel + CURINDICATOR + SURFFIX);
 
-            //Check if dest file or dest_cur file exists, if not create it by copying cur file to dest_cur file
+            // Check if dest file or dest_cur file exists, if not create it by copying cur file to dest_cur file
             if (!Files.exists(destFilePath) && !Files.exists(destFileCurPath)) {
                 Files.copy(curFilePath, destFileCurPath, StandardCopyOption.REPLACE_EXISTING);
             }
@@ -187,12 +193,12 @@ public class JsonSave{
     }
 
     /**
-     * @author xinchen
-     * save level data to json
-     * @param destPath the destination path that should be saved to
-     * @param level class Level
+     * @author Xin Chen
+     * Save level data to json
+     * @param destPath The destination path that should be saved to
+     * @param level Class Level
      */
-    private void saving(String destPath, Level level){
+    private void saving(String destPath, Level level) {
         Maze maze = level.getMaze();
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -216,17 +222,17 @@ public class JsonSave{
     }
 
     /**
-     * @author xinchen
-     *  update player info to other levels, excluding the position info
-     * @param datalist a list of other files
-     * @param curPlayer the player that changed his/her attributes
+     * @author Xin Chen
+     * Update player info to other levels, excluding the position info
+     * @param datalist A list of other files
+     * @param curPlayer The player that changed his/her attributes
      */
     protected void updateFiles(ArrayList<String> datalist, Player curPlayer)  {
         // overwrite all files, not ending with "_cur", with updated player
-        for(String path: datalist){
+        for (String path: datalist) {
             if (path.contains("_cur")) {
                 continue;
-            }else {
+            } else {
                 try {
                     // load other level to get the maze information
                     Level level = loader.loadFile(path);
@@ -236,7 +242,7 @@ public class JsonSave{
 
                     Maze newMaze = new Maze(oldMaze.getColumns(), oldMaze.getRows(), oldMaze.getExit());
 
-                    HashMap<Position, Item> itemHashMap =  oldMaze.getItems();
+                    HashMap<Position, Item> itemHashMap = oldMaze.getItems();
                     HashMap<Position, Enemy> enemyHashMap = oldMaze.getEnemies();
                     HashMap<Position, NPC> NPCHashMap = oldMaze.getNPCs();
                     ArrayList<Wall> wallArrayList = oldMaze.getEncodedWalls();
@@ -244,7 +250,12 @@ public class JsonSave{
 
                     //update player
                     //TODO double check position with other members
-                    Player newPlayer = new Player(curPlayer.getMoney(),curPlayer.getHealth(), curPlayer.getLevel(),oldMaze.getPlayer().getPosition());
+                    Player newPlayer = new Player(
+                            curPlayer.getMoney(),
+                            curPlayer.getHealth(),
+                            curPlayer.getLevel(),
+                            oldMaze.getPlayer().getPosition()
+                    );
                     newPlayer.setCurrentWeapon(curPlayer.getCurrentWeapon());
                     newMaze.setPlayer(newPlayer);
 
@@ -288,10 +299,10 @@ public class JsonSave{
     }
 
     /**
-     * @author xinchen
-     * save progress to new progress folder
+     * @author Xin Chen
+     * Save progress to new progress folder
      */
-    public void saveToNewProgress(){
+    public void saveToNewProgress() {
         try {
             String destFolderPath = FOLDERPATH + "/" + folderName+"/";
             String curFolderPath = CURPROGRESSFILEPATH;
@@ -305,7 +316,10 @@ public class JsonSave{
             // copy all current files to new progress
             paths.forEach(sourcePath -> {
                 try {
-                    Files.copy(sourcePath, Paths.get(destFolderPath).resolve(Paths.get(curFolderPath).relativize(sourcePath)));
+                    Files.copy(
+                            sourcePath,
+                            Paths.get(destFolderPath).resolve(Paths.get(curFolderPath).relativize(sourcePath))
+                    );
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
