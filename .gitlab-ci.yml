@@ -40,8 +40,8 @@ gradle-deploy:
   services:
     - docker:24.0.6-dind
   script:
-    - docker build -t yaboibo/TowerCrawler .
-    - docker push yaboibo/TwowerCrawler
+    - docker build -t yaboibo/towercrawler .
+    - docker push yaboibo/towercrawler
   tags:
     - comp2100
     - docker
