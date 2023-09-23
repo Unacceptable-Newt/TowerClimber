@@ -33,4 +33,12 @@ gradle-test:   # This job runs in the test stage.
     - ./gradlew test
   tags:
     - comp2100
-    
+
+gradle-deploy:
+  stage: build
+  script:
+    - docker build -t yaboibo/TowerCrawler
+    - docker push yaboibo/TwowerCrawler
+  tags:
+    - comp2100
+  allow_failure: true
