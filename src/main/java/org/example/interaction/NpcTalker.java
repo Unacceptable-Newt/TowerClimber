@@ -42,10 +42,12 @@ public class NpcTalker {
                     new DialogueKey(
                             npc.getName(),
                             level.getLevel(),
-                            frontalPosition
+                            npc.getDialogueCount()
                     );
 
-            return DialogueLoader.loadDialogue(dialogueKey);
+            // increment the dialogue count by 1
+
+            return DialogueLoader.loadDialogue(npc, dialogueKey);
         }
     }
 }

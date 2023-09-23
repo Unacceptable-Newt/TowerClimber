@@ -9,11 +9,11 @@ public class DialogueKeyTest {
 
     @BeforeEach
     public void testCreateDialogueText() {
-        dialogueKey = new DialogueKey("Alice", 1, new Position(2,3));
+        dialogueKey = new DialogueKey("Alice", 1, 1);
     }
 
     @Test
     public void testToString() {
-        Assertions.assertEquals("Alice,1,(2,3)", dialogueKey.toString());
+        Assertions.assertEquals("Alice,1,1", dialogueKey.toString());
     }
 }

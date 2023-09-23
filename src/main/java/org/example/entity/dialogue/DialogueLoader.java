@@ -1,5 +1,6 @@
 package org.example.entity.dialogue;
 
+import org.example.entity.NPC;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -13,12 +14,20 @@ import java.nio.file.Paths;
  */
 public class DialogueLoader {
 
-    public static String loadDialogue(DialogueKey dialogueKey) throws IOException {
+    public static String loadDialogue(NPC npc, DialogueKey dialogueKey) throws IOException {
         Path dialoguesTextsFilePath = Paths
                 .get("src/data/dialogues.json")
                 .toAbsolutePath();
         String content = Files.readString(dialoguesTextsFilePath);
         JSONObject json = new JSONObject(content);
-        return json.get(dialogueKey.toString()).toString();
+
+        // Reset the dialogue count to 1. Allowing an NPC to repeat his lines.
+        if (!json.has(dialogueKey.toString())) {
+            npc.resetDialogueCount();
+            dialogueKey.resetCount();
+        }
+        String dialogueText = json.get(dialogueKey.toString()).toString();
+        npc.incrementDialogueCount(); // Prepare for the next line. Will be spoken in the next interaction
+        return dialogueText;
     }
 }
