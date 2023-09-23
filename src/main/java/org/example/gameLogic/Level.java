@@ -1,11 +1,14 @@
 package org.example.gameLogic;
 
+import org.example.IO.JsonLoad;
+import org.example.IO.JsonSave;
 import org.example.belonging.Weapon;
 import org.example.entity.Enemy;
 import org.example.entity.NPC;
 import org.example.entity.Position;
 import org.example.move.LevelStates;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -34,6 +37,10 @@ public class Level {
 
     public Maze getMaze() {
         return maze;
+    }
+
+    public void setMaze(Maze maze) {
+        this.maze = maze;
     }
 
     public LevelStates getLevelStates() {
@@ -68,9 +75,16 @@ public class Level {
         maze.addWall(new Position(0, mazeY - 1), mazeX, false);
 
         // add things
-        maze.addItem(new Position(10, 15), new Weapon("The Big Axe",3, 5, 4));
+        maze.addItem(new Position(30, 25), new Weapon("The Big Axe",3, 5, 4));
+        maze.addItem(new Position(31, 25), new Weapon("The Small Axe",3, 5, 4));
+        maze.addItem(new Position(32, 25), new Weapon("The medium Axe",3, 5, 4));
+        maze.addItem(new Position(33, 25), new Weapon("The crazy cat",3, 5, 4));
+        maze.addItem(new Position(28, 25), new Weapon("The ugly fly",3, 5, 4));
+        maze.addItem(new Position(29, 25), new Weapon("The dragon knife",3, 5, 4));
         maze.addNPC(new Position(4, 5), new NPC("King George's Chief Councillor", new Position(4, 5)));
-        maze.addEnemy(new Position(5, 4),new Enemy(2, 2, 2));
+        maze.addEnemy(new Position(25, 20),new Enemy(2, 2, 2));
+         maze.addEnemy(new Position(5, 4),new Enemy(2, 2, 2));
+
     }
 
 
@@ -92,6 +106,8 @@ public class Level {
      * Save the current level to the storage
      */
     public void save() {
+        JsonSave saver= new JsonSave();
+        saver.saveCurrentProgress(this);
         // FIXME
     }
 }

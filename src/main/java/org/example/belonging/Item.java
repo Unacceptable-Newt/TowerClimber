@@ -2,8 +2,7 @@ package org.example.belonging;
 
 /**
  * @author Rong Sun
- * An abstract class for all kinds of items,
- * such as weapons
+ * An abstract class for all kinds of items include weapon
  */
 public abstract class Item {
     // Name of the item
