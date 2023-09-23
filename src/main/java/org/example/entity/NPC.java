@@ -20,6 +20,11 @@ public class NPC extends Life {
         this.name = name;
         this.dialogue = dialogue;
     }
+    public NPC(String name, Position position) {
+        super(100,100,position, 100);
+        this.name = name;
+        this.dialogue = dialogue;
+    }
 
     public String getName() {
         return name;
@@ -37,6 +42,10 @@ public class NPC extends Life {
         this.dialogue = dialogue;
     }
 
+    /**
+     * It can load all the dialogue from the json file
+     * @param filePath the json file's path
+     */
     public void loadDialogueFromFile(String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;

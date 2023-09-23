@@ -1,33 +1,24 @@
 package org.example.belonging;
 
 /**
- * The `Weapon` class represents a weapon object in the game.
- * It tells  about the weapon's name, price, and attack value.
- *
+ * Represents a weapon object in the game.
+ * It has weapon's name, price, and attack value.
  * @author Rong Sun
  *
  */
 public class Weapon extends Item {
 
     /**@author Rong Sun
-     * The attack value of the weapon, indicating the damage it can deal.
+     * The attack value of the weapon, indicating the damage it can make.
      */
     private int attackValue;
 
-    /**
-     * @author Rong Sun
-     * Gets the attack value of the weapon.
-     * @return The attack value of the weapon.
-     */
+
     public int getAttackValue() {
         return attackValue;
     }
 
-    /**
-     * @author Rong Sun
-     * Sets the attack value of the weapon.
-     * @param attackValue The new attack value to set.
-     */
+
     public void setAttackValue(Integer attackValue) {
         this.attackValue = attackValue;
     }
