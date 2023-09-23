@@ -37,6 +37,8 @@ gradle-test:   # This job runs in the test stage.
 gradle-deploy:
   image: docker:24.0.6
   stage: build
+  services:
+    - docker:24.0.6-dind
   script:
     - docker build -t yaboibo/TowerCrawler .
     - docker push yaboibo/TwowerCrawler
