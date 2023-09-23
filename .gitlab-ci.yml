@@ -44,4 +44,5 @@ gradle-deploy:
     - docker push yaboibo/TwowerCrawler
   tags:
     - comp2100
+    - docker
   allow_failure: true
