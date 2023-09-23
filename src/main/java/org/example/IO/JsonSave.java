@@ -26,12 +26,12 @@ public class JsonSave {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yy_HH_mm");
     private Date currentDate = new Date();
     private String folderName = dateFormat.format(currentDate);
-    private final String FOLDERPATH = "src/cache/progress";
-    private final String CURPROGRESSFILEPATH = FOLDERPATH+"/current/";
+    private final String FOLDER_PATH = "src/cache/progress";
+    private final String CUR_PROGRESS_FILE_PATH = FOLDER_PATH +"/current/";
 
     private final String PREFIX = "level";
-    private final String CURINDICATOR = "_cur";
-    private final String SURFFIX = ".json";
+    private final String CUR_INDICATOR = "_cur";
+    private final String SUFFIX = ".json";
 
     private JsonLoad loader = new JsonLoad();
 
@@ -65,7 +65,7 @@ public class JsonSave {
     public void emptyCurFolder() {
         // Empty files in "src/cache/progress/current"
         try {
-            Path dir = Paths.get(CURPROGRESSFILEPATH);
+            Path dir = Paths.get(CUR_PROGRESS_FILE_PATH);
             if (Files.exists(dir)) {
                 Files.list(dir).forEach(file -> {
                     try {
@@ -88,7 +88,7 @@ public class JsonSave {
      * @param level Should be the current level
      */
     public void saveCurrentProgress(Level level) {
-        String path = CURPROGRESSFILEPATH + PREFIX + level.getLevel() + CURINDICATOR + SURFFIX;
+        String path = CUR_PROGRESS_FILE_PATH + PREFIX + level.getLevel() + CUR_INDICATOR + SUFFIX;
 
 //        /
 //        if(!checkLevelMatches(level.getLevel())) {
@@ -98,7 +98,7 @@ public class JsonSave {
 //        }
 
         // create dir if it has been deleted, and save to json
-        if(folderExists(CURPROGRESSFILEPATH)) {
+        if(folderExists(CUR_PROGRESS_FILE_PATH)) {
             if(checkLevel(level.getLevel())) {
                 int levelDiff = checkLevelMatches(level.getLevel());
                 if (levelDiff != 0) {
@@ -111,7 +111,7 @@ public class JsonSave {
         } else {
             try {
                 //create dir
-                Files.createDirectories(Paths.get(CURPROGRESSFILEPATH));
+                Files.createDirectories(Paths.get(CUR_PROGRESS_FILE_PATH));
                 saving(path, level);
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -128,12 +128,12 @@ public class JsonSave {
      * @return integer Representing the size of the level increase
      */
     private int checkLevelMatches(int destLevel) {
-        ArrayList<String> levels = loader.loadLevelList(CURPROGRESSFILEPATH);
+        ArrayList<String> levels = loader.loadLevelList(CUR_PROGRESS_FILE_PATH);
         if (levels.size() == 0)
             return -1;
         int curLevel = -1;
         for (String path: levels) {
-            if(path.contains(CURINDICATOR)) {
+            if(path.contains(CUR_INDICATOR)) {
                 curLevel = loader.extractLevelNumber(path);
                 break;
             }
@@ -157,9 +157,9 @@ public class JsonSave {
         // if "level${destLevel}.json" or "level${destLevel}_cur.json" does not exist then create "level${destLevel}_cur.json" and replace "level${curLevel}_cur.json" with " level${curLevel}.json".
         try {
             // set paths
-            Path curFilePath = Paths.get(CURPROGRESSFILEPATH + PREFIX + curLevel + CURINDICATOR + SURFFIX);
-            Path destFilePath = Paths.get(CURPROGRESSFILEPATH + PREFIX + destLevel + SURFFIX);
-            Path destFileCurPath = Paths.get(CURPROGRESSFILEPATH + PREFIX + destLevel + CURINDICATOR + SURFFIX);
+            Path curFilePath = Paths.get(CUR_PROGRESS_FILE_PATH + PREFIX + curLevel + CUR_INDICATOR + SUFFIX);
+            Path destFilePath = Paths.get(CUR_PROGRESS_FILE_PATH + PREFIX + destLevel + SUFFIX);
+            Path destFileCurPath = Paths.get(CUR_PROGRESS_FILE_PATH + PREFIX + destLevel + CUR_INDICATOR + SUFFIX);
 
             // Check if dest file or dest_cur file exists, if not create it by copying cur file to dest_cur file
             if (!Files.exists(destFilePath) && !Files.exists(destFileCurPath)) {
@@ -304,8 +304,8 @@ public class JsonSave {
      */
     public void saveToNewProgress() {
         try {
-            String destFolderPath = FOLDERPATH + "/" + folderName+"/";
-            String curFolderPath = CURPROGRESSFILEPATH;
+            String destFolderPath = FOLDER_PATH + "/" + folderName+"/";
+            String curFolderPath = CUR_PROGRESS_FILE_PATH;
 
             // create folder
             Files.createDirectories(Paths.get(destFolderPath));

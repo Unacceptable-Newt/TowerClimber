@@ -48,7 +48,10 @@
     "money" : { },
     "player" : {
       "money" : 0,
+      "maxHealth" : 10,
       "health" : 10,
+      "attack" : 4,
+      "defense" : 0,
       "position" : {
         "x" : 10,
         "y" : 10
@@ -60,6 +63,36 @@
     "exit" : {
       "x" : 1,
       "y" : 1
+    },
+    "npcs" : {
+      "Position{x=1, y=2}" : {
+        "money" : 100,
+        "maxHealth" : 100,
+        "health" : 100,
+        "attack" : 100,
+        "defense" : 0,
+        "position" : {
+          "x" : 1,
+          "y" : 2
+        },
+        "direction" : "UP",
+        "name" : "JASON",
+        "dialogue" : [ "Why Hello there", "a fine day we are having" ]
+      }
+    },
+    "enemies" : {
+      "Position{x=30, y=10}" : {
+        "money" : 5,
+        "maxHealth" : 6,
+        "health" : 6,
+        "attack" : 4,
+        "defense" : 2,
+        "position" : {
+          "x" : 0,
+          "y" : 0
+        },
+        "direction" : "UP"
+      }
     },
     "items" : {
       "Position{x=18, y=7}" : {
@@ -73,32 +106,6 @@
         "price" : 2,
         "weight" : 7,
         "attackValue" : 2
-      }
-    },
-    "npcs" : {
-      "Position{x=1, y=2}" : {
-        "money" : 100,
-        "health" : 100,
-        "position" : {
-          "x" : 1,
-          "y" : 2
-        },
-        "direction" : "UP",
-        "name" : "JASON",
-        "dialogue" : [ "Why Hello there", "a fine day we are having" ]
-      }
-    },
-    "enemies" : {
-      "Position{x=30, y=10}" : {
-        "money" : 0,
-        "health" : 6,
-        "position" : {
-          "x" : 0,
-          "y" : 0
-        },
-        "direction" : "UP",
-        "attack" : 4,
-        "defense" : 2
       }
     }
   }
