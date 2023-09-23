@@ -7,9 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * The NPC class represent user's charactor, and he/she will have money, health, and player level
- * if player was attacked, player's health will decrease
- * .....
+ * The NPC class represents an NPC. The player can talk to him/her
  *  @author Rong Sun
  *
  */
@@ -18,7 +16,7 @@ public class NPC extends Life {
     private List<String> dialogue;
 
     public NPC(String name, Position position,List<String> dialogue) {
-        super(100,100,position);
+        super(100,100,position, 100);
         this.name = name;
         this.dialogue = dialogue;
     }
