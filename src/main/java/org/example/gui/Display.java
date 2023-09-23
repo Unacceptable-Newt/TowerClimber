@@ -5,6 +5,7 @@ import org.example.interaction.EnemyFighter;
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
 import org.example.interaction.ItemPicker;
+import org.example.interaction.NpcTalker;
 import org.example.util.Pair;
 import org.example.gameLogic.Level;
 
@@ -57,7 +58,7 @@ public class Display extends JFrame {
 
         // Set the preferred size to control the width of the label
         Dimension labelSize = additionalLabel.getPreferredSize();
-        labelSize.height = 200; // Set the desired width here
+        labelSize.height = 100; // Set the desired width here
         additionalLabel.setPreferredSize(labelSize);
 
         // revalidate and repaint

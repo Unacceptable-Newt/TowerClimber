@@ -183,7 +183,7 @@ public class JsonLoad {
         Direction direction = parseDirection((String) encodedEnemy.get("direction"));
         String name = (String) encodedEnemy.get("name");
         ArrayList<String> dialog = (ArrayList<String>) encodedEnemy.get("dialogue");
-        NPC out = new NPC(name, position, dialog);
+        NPC out = new NPC(name, position);
         out.setDirection(direction);
         out.setHealth(health);
         out.setMoney(money);
