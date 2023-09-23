@@ -1,11 +1,14 @@
 package org.example.gameLogic;
 
+import org.example.IO.JsonLoad;
+import org.example.IO.JsonSave;
 import org.example.belonging.Weapon;
 import org.example.entity.Enemy;
 import org.example.entity.NPC;
 import org.example.entity.Position;
 import org.example.move.LevelStates;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -34,6 +37,10 @@ public class Level {
 
     public Maze getMaze() {
         return maze;
+    }
+
+    public void setMaze(Maze maze) {
+        this.maze = maze;
     }
 
     public LevelStates getLevelStates() {
@@ -69,7 +76,7 @@ public class Level {
 
         // add things
         maze.addItem(new Position(30, 25), new Weapon("The Big Axe",3, 5, 4));
-        maze.addNPC(new Position(5, 5),new NPC("John", new Position(5, 5)));
+        maze.addNPC(new Position(5, 5),new NPC("John", new Position(5, 5),new ArrayList<>()));
         maze.addEnemy(new Position(25, 20),new Enemy(2, 2, 2));
     }
 
@@ -92,6 +99,8 @@ public class Level {
      * Save the current level to the storage
      */
     public void save() {
+        JsonSave saver= new JsonSave();
+        saver.saveCurrentProgress(this);
         // FIXME
     }
 }
