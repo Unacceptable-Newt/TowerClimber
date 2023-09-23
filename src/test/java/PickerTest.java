@@ -59,24 +59,6 @@ public class PickerTest {
 
     }
 
-/*    *//**
-     * Test case to check if money picker works as expected when picking up money.
-     *//*
-    @Test
-    public void testPickMoney() {
-        // Ensure there's money at the player's current position
-        Assertions.assertTrue(maze.getMoney().containsKey(new Position(1, 1)));
-
-        // Interact with adjacent money
-        Player updatedPlayer = moneyPicker.interactWithAdjacent(maze);
-
-        // Check that the player's money has been updated correctly
-        Assertions.assertEquals(100, updatedPlayer.getMoney());
-
-        // Ensure that the money has been removed from the maze
-        Assertions.assertFalse(maze.getMoney().containsKey(new Position(1, 1)));
-    }*/
-
     /**
      * Test case to check if the item picker handles a scenario where the player's inventory is already full.
      */
