@@ -1,0 +1,112 @@
+{
+  "maze" : {
+    "encodedWalls" : [ {
+      "length" : 19,
+      "start" : {
+        "x" : 1,
+        "y" : 0
+      },
+      "up" : true
+    }, {
+      "length" : 20,
+      "start" : {
+        "x" : 39,
+        "y" : 0
+      },
+      "up" : true
+    }, {
+      "length" : 40,
+      "start" : {
+        "x" : 0,
+        "y" : 19
+      },
+      "up" : false
+    }, {
+      "length" : 40,
+      "start" : {
+        "x" : 0,
+        "y" : 0
+      },
+      "up" : false
+    }, {
+      "length" : 8,
+      "start" : {
+        "x" : 3,
+        "y" : 0
+      },
+      "up" : true
+    }, {
+      "length" : 10,
+      "start" : {
+        "x" : 3,
+        "y" : 10
+      },
+      "up" : true
+    } ],
+    "columns" : 40,
+    "rows" : 20,
+    "money" : { },
+    "player" : {
+      "money" : 0,
+      "maxHealth" : 10,
+      "health" : 10,
+      "attack" : 4,
+      "defense" : 0,
+      "position" : {
+        "x" : 10,
+        "y" : 10
+      },
+      "direction" : "UP",
+      "currentWeapon" : null,
+      "level" : 1
+    },
+    "exit" : {
+      "x" : 1,
+      "y" : 1
+    },
+    "npcs" : {
+      "Position{x=1, y=2}" : {
+        "money" : 100,
+        "maxHealth" : 100,
+        "health" : 100,
+        "attack" : 100,
+        "defense" : 0,
+        "position" : {
+          "x" : 1,
+          "y" : 2
+        },
+        "direction" : "UP",
+        "name" : "JASON",
+        "dialogue" : [ "Why Hello there", "a fine day we are having" ]
+      }
+    },
+    "enemies" : {
+      "Position{x=30, y=10}" : {
+        "money" : 5,
+        "maxHealth" : 6,
+        "health" : 6,
+        "attack" : 4,
+        "defense" : 2,
+        "position" : {
+          "x" : 0,
+          "y" : 0
+        },
+        "direction" : "UP"
+      }
+    },
+    "items" : {
+      "Position{x=18, y=7}" : {
+        "name" : "Gramps",
+        "price" : 4,
+        "weight" : 2,
+        "attackValue" : 9
+      },
+      "Position{x=18, y=10}" : {
+        "name" : "Fring",
+        "price" : 2,
+        "weight" : 7,
+        "attackValue" : 2
+      }
+    }
+  }
+}

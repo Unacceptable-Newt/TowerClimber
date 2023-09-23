@@ -293,4 +293,13 @@ public class Maze {
     public void setItems(HashMap<Position, Item> items) {
         Items = items;
     }
+
+    /**
+     * @author xinchen
+     * @param encodedWalls encoded walls to set in maze
+     */
+
+    public void setEncodedWalls(ArrayList<Wall> encodedWalls){
+        this.encodedWalls = encodedWalls;
+    }
 }
