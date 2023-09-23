@@ -10,10 +10,9 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.List;
 /**
- * This class contains a set of test cases to evaluate the functionality of the `Inventory` class.
- * It tests various aspects of the inventory system, including adding and removing items,
- * checking capacity constraints, and verifying item-related operations.
- * The tests are authored by the test developer Rong Sun.
+ * To evaluate the functionality of the `Inventory` class, including adding and removing items,
+ * also the capacity constraints, and item-related operations.
+ * @author Rong Sun.
  */
 public class InventoryTest {
 
@@ -42,8 +41,8 @@ public class InventoryTest {
     }
 
     /**
-     * Test method by Rong Sun to ensure that the inventory functions as expected.
-     * It verifies the correct addition of items to the inventory and checks their attributes.
+     * @Author Rong Sun
+     * test to put weapon in the in the inventory
      */
     @Test
     void testInventory() {
@@ -63,7 +62,8 @@ public class InventoryTest {
     }
 
     /**
-     * Test method by Rong Sun to ensure that players can choose items from the inventory and change equipped weapons.
+     * ensure that players can choose items
+     * make sure they can change current weapons.
      * It checks if the player can correctly select and switch between inventory items.
      */
     @Test
@@ -84,8 +84,8 @@ public class InventoryTest {
     }
 
     /**
-     * Test method by Rong Sun to ensure that items can be correctly dropped from the inventory.
-     * It adds items to the inventory, removes one, and checks if it's successfully removed.
+     * Ensure that items can be choosed and dropped by users
+     * @Author Rong Sun
      */
     @Test
     public void dropInventory() {
@@ -104,32 +104,20 @@ public class InventoryTest {
     }
 
     /**
-     * Test method by Rong Sun to verify that money can be correctly deducted from the player's wallet.
-     * It sets the player's money, deducts an amount, and checks if the player's money is updated as expected.
+     * Ensure that money can be  dropped by users
+     * @Author Rong Sun
      */
     @Test
-    public void deductMoney() {
+    public void dropMoney() {
         Player player = maze.getPlayer();
         player.setMoney(15);
         player.deductMoney(14);
         Assertions.assertEquals(1, maze.getPlayer().getMoney());
     }
 
-    /**
-     * Test method by Rong Sun to ensure that the inventory capacity functions correctly.
-     * It tests the behavior of adding items to a full inventory and verifies if it handles capacity correctly.
-     */
-    @Test
-    public void testInventoryCapacity() {
-        // Test adding items to a full inventory and ensure it handles capacity correctly.
-        // For example, add more items than the inventory capacity and verify the behavior.
-        inventory.setItems(items);
-        inventory.addItem(new Weapon("E", 1, 1, 1));
-    }
 
     /**
-     * Test method by Rong Sun to check if listing items in the inventory works as expected.
-     * It adds items to the inventory and verifies if listing the items returns the correct number and items.
+     * Check if listing items in the inventory works as expected.
      */
     @Test
     void testListItems() {
@@ -147,8 +135,7 @@ public class InventoryTest {
     }
 
     /**
-     * Test method by Rong Sun to verify if the inventory correctly checks for the existence of an item.
-     * It adds an item to the inventory and checks if the inventory correctly identifies its presence.
+     * Verify if the inventory  checks for the existence of an item.
      */
     @Test
     void testHasItem() {
@@ -161,8 +148,7 @@ public class InventoryTest {
     }
 
     /**
-     * Test method by Rong Sun to ensure that items can be added to the inventory.
-     * It adds an item to the inventory and checks if the item is present in the inventory.
+     * test single items can be added to the inventory.
      */
     @Test
     void testAddItem() {
@@ -173,14 +159,17 @@ public class InventoryTest {
         Assertions.assertTrue(inventory.hasItem("Item1"));
     }
 
+    /**
+     * test the capacity by full
+     */
     @Test
     void testAddItemWithFullCapacity() {
         // Fill the inventory to its capacity
-        Item item1 = new Weapon("Item1", 10, 1,12);
+        Item item1 = new Weapon("Item1", 9, 1,12);
         Item item2 = new Weapon("Item2", 15, 2,13);
         Item item3 = new Weapon("Item3", 20, 3,14);
-        Item item4 = new Weapon("Item4", 25, 4,15);
-        Item item5 = new Weapon("Item5", 30, 5,16);
+        Item item4 = new Weapon("Item4", 26, 4,15);
+        Item item5 = new Weapon("Item5", 32, 5,16);
 
         inventory.addItem(item1);
         inventory.addItem(item2);
@@ -188,7 +177,7 @@ public class InventoryTest {
         inventory.addItem(item4);
         inventory.addItem(item5);
 
-        // Attempt to add another item, which should not be possible
+        //add the not allowed 6th item
         Item newItem = new Weapon("NewItem", 5, 1,14);
         inventory.addItem(newItem);
 
@@ -198,36 +187,34 @@ public class InventoryTest {
 
 
     /**
-     * Test method by Rong Sun to verify that attempting to remove an item that doesn't exist in the inventory
-     * returns false, indicating that the item was not removed.
+     * Remove an item that doesn't exist in the inventory
      */
     @Test
     void testRemoveNonExistentItem() {
         // Attempt to remove an item that doesn't exist in the inventory
-        boolean removed = inventory.removeItem("NonExistentItem");
+        boolean removed = inventory.removeItem("XXX");
 
         Assertions.assertFalse(removed);
     }
 
     /**
-     * Test method by Rong Sun to check if updating the inventory capacity with a positive increment
-     * changes the capacity as expected.
+     *  check if updating the inventory capacity with a positive increment
      */
     @Test
     void testUpdateCapacity() {
-        // Update the inventory capacity and check if it's updated correctly
+
         inventory.updateCapacity(3);
 
         Assertions.assertEquals(8, inventory.getCapacity());
     }
 
     /**
-     * Test method by Rong Sun to ensure that updating the inventory capacity with a negative increment
+     *  updating the inventory capacity with a negative increment
      * (which should not change it) is handled correctly.
      */
     @Test
     void testUpdateCapacityWithNegativeIncrement() {
-        // Attempt to update the capacity with a negative increment (should not change)
+        // update with neagtive number
         inventory.updateCapacity(-5);
 
         Assertions.assertEquals(0, inventory.getCapacity());

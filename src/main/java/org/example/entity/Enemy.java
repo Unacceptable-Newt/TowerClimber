@@ -4,7 +4,7 @@ package org.example.entity;
  * The Enemy class represent the enemy that player can fight with.
  * Enemy can attack player and player's health will reduce the value of attack
  * player can attack Enemy and Enemy's health will reduce the value of attack
- *  @author Rong Sun, Yue Zhu 
+ *  @author Rong Sun, Yue Zhu
  *
  */
 public class Enemy extends Life {
@@ -25,11 +25,7 @@ public class Enemy extends Life {
         this.money = NORMAL_ENEMY_GOLD;
     }
 
-    /**
-     * @author Rong Sun
-     * Get the enemy's defence
-     * @return The enemy's defence value
-     */
+
     public int getDefense() {
         return defense;
     }

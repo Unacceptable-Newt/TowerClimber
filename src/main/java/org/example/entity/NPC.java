@@ -35,6 +35,10 @@ public class NPC extends Life {
         this.dialogue = dialogue;
     }
 
+    /**
+     * It can load all the dialogue from the json file
+     * @param filePath the json file's path
+     */
     public void loadDialogueFromFile(String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
