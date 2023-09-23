@@ -20,6 +20,11 @@ public class NPC extends Life {
         this.name = name;
         this.dialogue = dialogue;
     }
+    public NPC(String name, Position position) {
+        super(100,100,position, 100);
+        this.name = name;
+        this.dialogue = dialogue;
+    }
 
     public String getName() {
         return name;
