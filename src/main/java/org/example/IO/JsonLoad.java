@@ -439,10 +439,14 @@ public class JsonLoad {
     public Level loadNextLevel(int curLevel){
         Level newLevel = null;
         try {
+            int nextLevel = curLevel + 1;
+            if(nextLevel >3){
+                throw new RuntimeException("Reach the max level.");
+            }
             // Set paths
             Path curFilePath = Paths.get(CUR_PROGRESS_FILE_PATH + PREFIX + curLevel + CUR_INDICATOR + SUFFIX);
-            Path fileToCopyPath = Paths.get("src/cache/map/" + PREFIX + (curLevel + 1) + SUFFIX);
-            Path destFilePath = Paths.get(CUR_PROGRESS_FILE_PATH + PREFIX + (curLevel + 1) + SUFFIX);
+            Path fileToCopyPath = Paths.get("src/cache/map/" + PREFIX + nextLevel + SUFFIX);
+            Path destFilePath = Paths.get(CUR_PROGRESS_FILE_PATH + PREFIX + nextLevel + SUFFIX);
             // Load map from map then change the name to "level${destlevel}_cur.json"
             // Then update the player to the new class level
             Files.copy(fileToCopyPath, destFilePath, StandardCopyOption.REPLACE_EXISTING);
