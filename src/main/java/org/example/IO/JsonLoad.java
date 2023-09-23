@@ -24,59 +24,59 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 /**
- * @author xinchen
+ * @author Xin Chen
  * JSON loader
  */
 public class JsonLoad {
 
-    private final String FOLDERPATH = "src/cache/progress";
-    private final String CURPROGRESSFILEPATH = FOLDERPATH+"/current/";
+    private final String FOLDER_PATH = "src/cache/progress";
+    private final String CUR_PROGRESS_FILE_PATH = FOLDER_PATH +"/current/";
     private final String PREFIX = "level";
-    private final String CURINDICATOR = "_cur";
-    private final String SURFFIX = ".json";
+    private final String CUR_INDICATOR = "_cur";
+    private final String SUFFIX = ".json";
 
 
     /**
-     * @author xinchen
-     * @param progress the progress from gui
+     * @author Xin Chen
+     * @param progress The progress from gui
      * @return True if folder exists, False if not
      */
-    private boolean folderExists(String progress){
+    private boolean folderExists(String progress) {
         try {
-            String folderPath = FOLDERPATH;
-            if(Objects.equals(progress, "")){
-                folderPath = FOLDERPATH + "/" +progress;
+            String folderPath = FOLDER_PATH;
+            if (Objects.equals(progress, "")) {
+                folderPath = FOLDER_PATH + "/" + progress;
             }
 
             File folder = new File(folderPath);
             return folder.exists() && folder.isDirectory();
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
     /**
-     *  @author xinchen
-     * check level num is valid or not
-     * @param level it should be the level number reading from loader or game
+     * @author Xin Chen
+     * Check level num is valid or not
+     * @param level It should be the level number reading from loader or game
      * @return Boolean, true if it is between 1-3
      */
-    private boolean checkLevel(int level){
+    private boolean checkLevel(int level) {
         return level >= 0 && level <= 2;
     }
 
     /**
-     * @author xinchen
+     * @author Xin Chen
      * Load list of json folders that saving the
      * @return null if folder is empty, list if folder has files
      */
-    public ArrayList<String> loadProgressList(){
-        //Read out all the first level folder in FOLDERPATH,
+    public ArrayList<String> loadProgressList() {
+        // Read out all the first level folder in FOLDERPATH,
         // the file format of the folder is "dd_MM_yy_HH_mm" and "current",
         // only read these, nothing else.
 
         ArrayList<String> progressList = new ArrayList<>();
-        File folder = new File(FOLDERPATH);
+        File folder = new File(FOLDER_PATH);
         File[] listOfFiles = folder.listFiles();
 
         if (listOfFiles != null) {
@@ -94,10 +94,10 @@ public class JsonLoad {
     }
 
     /**
-     * @author xinchen
-     * check "levelX.json" and "levelX_cur.json", where X is num
-     * @param path should be dir path to progress folder
-     * @return a list of different level json files
+     * @author Xin Chen
+     * Check "levelX.json" and "levelX_cur.json", where X is num
+     * @param path Should be dir path to progress folder
+     * @return A list of different level json files
      */
     public ArrayList<String> loadLevelList(String path){
         // Read the file in path as "levelX.json" or "levelX_cur.json".
@@ -110,7 +110,7 @@ public class JsonLoad {
                 if (file.isFile()) {
                     String fileName = file.getName();
                     if (fileName.matches("level\\d+\\.json") || fileName.matches("level\\d+_cur\\.json")) {
-                        levelList.add(path+fileName);
+                        levelList.add(path + fileName);
                     }
                 }
             }
@@ -124,42 +124,42 @@ public class JsonLoad {
      * @param positionMap a hashmap with the x and y as keys and their integer values as values
      * @return Position of the hashmap
      */
-    private Position parsePosition(HashMap<String,Integer> positionMap){
+    private Position parsePosition(HashMap<String, Integer> positionMap) {
         int x = positionMap.get("x");
         int y = positionMap.get("y");
-        return new Position(x,y);
+        return new Position(x, y);
     }
 
-    private Position parsePosition(String encodedPosition){
-        String posstr = encodedPosition.substring(11);
-        StringBuilder xstr = new StringBuilder();
-        StringBuilder ystr = new StringBuilder();
+    private Position parsePosition(String encodedPosition) {
+        String posStr = encodedPosition.substring(11);
+        StringBuilder xStr = new StringBuilder();
+        StringBuilder yStr = new StringBuilder();
         int reading = 1;
-        for (char c : posstr.toCharArray()){
-            if (c==',')
+        for (char c : posStr.toCharArray()) {
+            if (c == ',')
                 reading = 0;
-            if (c=='}')
+            if (c == '}')
                 break;
             if (reading == 1) {
-                xstr.append(c);
-            }else if(reading == 2){
-                ystr.append(c);
+                xStr.append(c);
+            } else if(reading == 2) {
+                yStr.append(c);
             }
-            if (c=='=')
+            if (c == '=')
                 reading = 2;
         }
-        int x = Integer.parseInt(xstr.toString());
-        int y = Integer.parseInt(ystr.toString());
-        return new Position(x,y);
+        int x = Integer.parseInt(xStr.toString());
+        int y = Integer.parseInt(yStr.toString());
+        return new Position(x, y);
     }
 
-    private Enemy parseEnemy(HashMap<String,Object> encodedEnemies, Position position){
+    private Enemy parseEnemy(HashMap<String, Object> encodedEnemies, Position position) {
         int attack = (int) encodedEnemies.get("attack");
         int defence = (int) encodedEnemies.get("defense");
         Direction dir = parseDirection((String) encodedEnemies.get("direction"));
         int health = (int) encodedEnemies.get("health");
         int money = (int) encodedEnemies.get("money");
-        Enemy out = new Enemy(attack,health,defence);
+        Enemy out = new Enemy(attack, health, defence);
         out.setDirection(dir);
         out.setMoney(money);
         out.setPosition(parsePosition((HashMap<String, Integer>) encodedEnemies.get("position")));
@@ -167,7 +167,7 @@ public class JsonLoad {
         return out;
     }
 
-    private Direction parseDirection(String dir){
+    private Direction parseDirection(String dir) {
         return switch (dir) {
             case ("UP") -> Direction.UP;
             case ("DOWN") -> Direction.DOWN;
@@ -177,13 +177,13 @@ public class JsonLoad {
         };
     }
 
-    private NPC parseNPC(HashMap<String,Object> encodedEnemy, Position position){
+    private NPC parseNPC(HashMap<String, Object> encodedEnemy, Position position) {
         int money = (int) encodedEnemy.get("money");
         int health = (int) encodedEnemy.get("health");
         Direction direction = parseDirection((String) encodedEnemy.get("direction"));
         String name = (String) encodedEnemy.get("name");
         ArrayList<String> dialog = (ArrayList<String>) encodedEnemy.get("dialogue");
-        NPC out = new NPC(name,position,dialog);
+        NPC out = new NPC(name, position, dialog);
         out.setDirection(direction);
         out.setHealth(health);
         out.setMoney(money);
@@ -191,17 +191,17 @@ public class JsonLoad {
         return out;
     }
 
-    private Item parseItem(HashMap<String,Object> encodedItem){
+    private Item parseItem(HashMap<String, Object> encodedItem) {
         int price = (int) encodedItem.get("price");
         int weight = (int) encodedItem.get("weight");
         String name = (String) encodedItem.get("name");
         if (encodedItem.containsKey("attackValue")){
-            return new Weapon(name,price,weight, (Integer) encodedItem.get("attackValue"));
+            return new Weapon(name, price, weight, (Integer) encodedItem.get("attackValue"));
         }
         throw new RuntimeException("Bad encoding of Item");
     }
 
-    private Player parsePlayer(HashMap<String,Object> encodedPlayer){
+    private Player parsePlayer(HashMap<String, Object> encodedPlayer) {
         int money = (int) encodedPlayer.get("money");
         int health = (int) encodedPlayer.get("health");
         Position position = parsePosition((HashMap<String, Integer>) encodedPlayer.get("position"));
@@ -213,24 +213,24 @@ public class JsonLoad {
             curWeapon = (Weapon) parseItem((HashMap<String, Object>) encodedPlayer.get("currentWeapon"));
 
         int level = (int) encodedPlayer.get("level");
-        Player out = new Player(money,health,level,position);
+        Player out = new Player(money, health, level, position);
         out.setDirection(dir);
         out.setCurrentWeapon(curWeapon);
         return out;
     }
 
-    private Wall parseWall(HashMap<String,Object> encodedWall){
+    private Wall parseWall(HashMap<String, Object> encodedWall){
         int length = (int) encodedWall.get("length");
         boolean dir = (boolean) encodedWall.get("up");
         Position pos = parsePosition((HashMap<String, Integer>) encodedWall.get("start"));
-        return new Wall(length,pos,dir);
+        return new Wall(length, pos, dir);
     }
 
     /**
-     * @author xinchen
-     * load files, this should be used to update files
-     * @param filePath path to the dest files
-     * @return game state (class Level)
+     * @author Xin Chen
+     * Load files, this should be used to update files
+     * @param filePath Path to the dest files
+     * @return Game state (class Level)
      */
     public Level loadFile(String filePath){
         // Reads the file specified by filepath and converts it to an instance of class Level
@@ -238,17 +238,17 @@ public class JsonLoad {
         try {
             int levelNum = extractLevelNumber(filePath);
             if (checkLevel(levelNum)) {
-                // read as Map
+                // Read as Map
                 Map<String, Object> mazeData = objectMapper.readValue(new File(filePath), new TypeReference<Map<String, Object>>() {
                 });
-                // create new maze for Level
+                // Create new maze for Level
                 Map<String, Object> encodedMaze = (Map<String, Object>) mazeData.get("maze");
                 int columns = (int) encodedMaze.get("columns");
                 int rows = (int) encodedMaze.get("rows");
                 Position exit = parsePosition((HashMap<String, Integer>) encodedMaze.get("exit"));
-                Maze maze = new Maze(columns,rows,exit);
+                Maze maze = new Maze(columns, rows, exit);
 
-                ArrayList<HashMap<String,Object>> jsonWalls = (ArrayList<HashMap<String, Object>>) encodedMaze.get("encodedWalls");
+                ArrayList<HashMap<String, Object>> jsonWalls = (ArrayList<HashMap<String, Object>>) encodedMaze.get("encodedWalls");
                 ArrayList<Wall> encodedWalls = new ArrayList<>();
                 for (HashMap w : jsonWalls){
                     encodedWalls.add(parseWall(w));
@@ -256,46 +256,46 @@ public class JsonLoad {
                 maze.setEncodedWalls(encodedWalls);
 
                 HashMap<String,String> money = (HashMap<String, String>) encodedMaze.get("money");
-                money.forEach((pos,m) -> {
-                    maze.addMoney(parsePosition(pos),Integer.parseInt(m));
+                money.forEach((pos, m) -> {
+                    maze.addMoney(parsePosition(pos), Integer.parseInt(m));
                 });
                 maze.setPlayer(parsePlayer((HashMap<String, Object>) encodedMaze.get("player")));
 
-                HashMap<String,Object> encodedItems = (HashMap<String, Object>) encodedMaze.get("items");
-                encodedItems.forEach((p,i) -> {
-                    maze.addItem(parsePosition(p),parseItem((HashMap<String, Object>) i));
+                HashMap<String, Object> encodedItems = (HashMap<String, Object>) encodedMaze.get("items");
+                encodedItems.forEach((p, i) -> {
+                    maze.addItem(parsePosition(p), parseItem((HashMap<String, Object>) i));
                 });
 
-                HashMap<String,Object> encodedEnemies = (HashMap<String, Object>) encodedMaze.get("enemies");
-                encodedEnemies.forEach((p,e) -> {
-                    maze.addEnemy(parsePosition(p),parseEnemy((HashMap<String, Object>) e,parsePosition(p)));
+                HashMap<String, Object> encodedEnemies = (HashMap<String, Object>) encodedMaze.get("enemies");
+                encodedEnemies.forEach((p, e) -> {
+                    maze.addEnemy(parsePosition(p), parseEnemy((HashMap<String, Object>) e, parsePosition(p)));
                 });
 
-                HashMap<String,Object> encodedNPCs = (HashMap<String, Object>) encodedMaze.get("npcs");
-                encodedNPCs.forEach((p,n) -> {
-                    maze.addNPC(parsePosition(p),parseNPC((HashMap<String, Object>) n,parsePosition(p)));
+                HashMap<String, Object> encodedNPCs = (HashMap<String, Object>) encodedMaze.get("npcs");
+                encodedNPCs.forEach((p, n) -> {
+                    maze.addNPC(parsePosition(p), parseNPC((HashMap<String, Object>) n, parsePosition(p)));
                 });
 
 
-                // create new level object
+                // Create new level object
                 Level level = new Level(levelNum);
                 level.setMaze(maze);
 
                 return level;
-            }else{
+            } else {
                 throw new RuntimeException("wrong level number, please check filename");
             }
-        }catch(Exception e){
+        } catch(Exception e){
             throw new RuntimeException(e.getMessage());
         }
 
     }
 
     /**
-     * @author xinchen
-     * extract level number from file name
-     * @param filePath exactly path to the file
-     * @return level num in the path
+     * @author Xin Chen
+     * Extract level number from file name
+     * @param filePath Exactly path to the file
+     * @return Level num in the path
      */
     protected int extractLevelNumber(String filePath) {
         Pattern pattern = Pattern.compile("level(\\d+)(_cur)?\\.json");
@@ -309,54 +309,54 @@ public class JsonLoad {
     }
 
     /**
-     * @author xinchen
+     * @author Xin Chen
      *
-     * load cur progress
+     * Load cur progress
      *
-     * @return a level object
+     * @return A level object
      */
-    public Level loadCurLevelData(){
+    public Level loadCurLevelData() {
         // Read the data in the file with "_cur" only, and at the same time read the number after the level
         Level level = null;
-        ArrayList<String> files = this.loadLevelList(CURPROGRESSFILEPATH);
-        for(String fileName: files){
-            if(fileName.contains(CURINDICATOR)){
-                //String path = CURPROGRESSFILEPATH + fileName;
+        ArrayList<String> files = this.loadLevelList(CUR_PROGRESS_FILE_PATH);
+        for (String fileName: files) {
+            if (fileName.contains(CUR_INDICATOR)) {
+                // String path = CURPROGRESSFILEPATH + fileName;
                 level = loadFile(fileName);
             }
         }
 
-        if(level.equals(null)){
+        if (level == null) {
             throw new RuntimeException("Error when loading cur file, please check loadCurLevelData() in JsonLoad");
         }
         return level;
     }
 
     /**
-     * @author xinchen
+     * @author Xin Chen
      *
-     * ask player if he/she would like to save the previous game, if not empty everything in the "current" folder,
-     * if yes save the current folder to new progress then move the dest progress to "current" folder
+     * Ask player if he/she would like to save the previous game, if not empty everything in the "current" folder,
+     * If yes save the current folder to new progress then move the dest progress to "current" folder
      *
-     * @param progress String: load the progress chosen from gui
-     * @param saveOrNot Boolean: check if player wants to overwrite on the current folder
+     * @param progress String: Load the progress chosen from gui
+     * @param saveOrNot Boolean: Check if player wants to overwrite on the current folder
      */
-    public Level loadProgress(String progress, boolean saveOrNot){
-        //Will if there is a current ask the player to save it,
+    public Level loadProgress(String progress, boolean saveOrNot) {
+        // Will if there is a current ask the player to save it,
         // otherwise this archive is all written to current,
         // yes then save current to the current time folder,
         // will be loaded into the progress of all the discs written to current
-        if(loadProgressList().contains(progress)) {
-            if(saveOrNot) { // yes
+        if (loadProgressList().contains(progress)) {
+            if (saveOrNot) { // yes
                 emptyCurFolder();
-                String folderProgressPath = FOLDERPATH + progress;
+                String folderProgressPath = FOLDER_PATH + progress;
                 try {
-                    // get what current folder has
+                    // Get what current folder has
                     Stream<Path> paths = Files.walk(Paths.get(folderProgressPath));
-                    // copy all current files to new progress
+                    // Copy all current files to new progress
                     paths.forEach(sourcePath -> {
                         try {
-                            Files.copy(sourcePath, Paths.get(CURPROGRESSFILEPATH).resolve(Paths.get(CURPROGRESSFILEPATH).relativize(sourcePath)));
+                            Files.copy(sourcePath, Paths.get(CUR_PROGRESS_FILE_PATH).resolve(Paths.get(CUR_PROGRESS_FILE_PATH).relativize(sourcePath)));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -368,24 +368,24 @@ public class JsonLoad {
                     e.printStackTrace();
                     throw new RuntimeException("Cannot load correctly in loadProgress(), 1st");
                 }
-            }else { //No
-                //Save first
+            } else { // No
+                // Save first
                 JsonSave saver = new JsonSave();
                 saver.saveToNewProgress();
 
-                // empty
+                // Empty
                 emptyCurFolder();
 
-                //copy previous progress to current
-                String folderProgressPath = FOLDERPATH + progress;
+                // Copy previous progress to current
+                String folderProgressPath = FOLDER_PATH + progress;
                 try {
                     // get what progress has
                     Stream<Path> paths = Files.walk(Paths.get(folderProgressPath));
 
-                    // copy all progress to cur
+                    // Copy all progress to cur
                     paths.forEach(sourcePath -> {
                         try {
-                            Files.copy(sourcePath, Paths.get(CURPROGRESSFILEPATH).resolve(Paths.get(CURPROGRESSFILEPATH).relativize(sourcePath)));
+                            Files.copy(sourcePath, Paths.get(CUR_PROGRESS_FILE_PATH).resolve(Paths.get(CUR_PROGRESS_FILE_PATH).relativize(sourcePath)));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -397,26 +397,26 @@ public class JsonLoad {
                     throw new RuntimeException("Cannot save and load correctly in loadProgress(), 2nd");
                 }
             }
-        }else {
+        } else {
             throw new RuntimeException("There is no such a progress");
         }
     }
 
     /**
-     * @author: xinchen
+     * @author: Xin Chen
      *
      * This function is for loading new game from preset folder
      *
-     * @return level 1 map
+     * @return Level 1 map
      */
     public Level loadStartMap(){
         try {
-            //set paths
-            Path fileToCopyPath = Paths.get("src/cache/map/" + PREFIX + "1" + SURFFIX);
-            Path destFilePath = Paths.get(CURPROGRESSFILEPATH + PREFIX + "1" + CURINDICATOR + SURFFIX);
-            // empty folder current first
+            // Set paths
+            Path fileToCopyPath = Paths.get("src/cache/map/" + PREFIX + "1" + SUFFIX);
+            Path destFilePath = Paths.get(CUR_PROGRESS_FILE_PATH + PREFIX + "1" + CUR_INDICATOR + SUFFIX);
+            // Empty folder current first
             emptyCurFolder();
-            // copy, paste and load
+            // Copy, paste and load
             Files.copy(fileToCopyPath, destFilePath, StandardCopyOption.REPLACE_EXISTING);
             File level1File =  new File(destFilePath.toString());
             if(level1File.exists()){
@@ -431,23 +431,23 @@ public class JsonLoad {
     }
 
     /**
-     * @author: xinchen
+     * @author: Xin Chen
      *
-     * @param curLevel when player get into next level, should have cur level pass in
-     * @return an object level back
+     * @param curLevel When player get into next level, should have cur level pass in
+     * @return An object level back
      */
     public Level loadNextLevel(int curLevel){
         Level newLevel = null;
         try {
-            //set paths
-            Path curFilePath = Paths.get(CURPROGRESSFILEPATH + PREFIX + curLevel + CURINDICATOR + SURFFIX);
-            Path fileToCopyPath = Paths.get("src/cache/map/" + PREFIX + (curLevel + 1) + SURFFIX);
-            Path destFilePath = Paths.get(CURPROGRESSFILEPATH + PREFIX + (curLevel + 1) + SURFFIX);
-            // load map from map then change the name to "level${destlevel}_cur.json"
-            // then update the player to the new class level
+            // Set paths
+            Path curFilePath = Paths.get(CUR_PROGRESS_FILE_PATH + PREFIX + curLevel + CUR_INDICATOR + SUFFIX);
+            Path fileToCopyPath = Paths.get("src/cache/map/" + PREFIX + (curLevel + 1) + SUFFIX);
+            Path destFilePath = Paths.get(CUR_PROGRESS_FILE_PATH + PREFIX + (curLevel + 1) + SUFFIX);
+            // Load map from map then change the name to "level${destlevel}_cur.json"
+            // Then update the player to the new class level
             Files.copy(fileToCopyPath, destFilePath, StandardCopyOption.REPLACE_EXISTING);
 
-            //getMaze for reload player
+            // GetMaze for reload player
             Maze curMaze = this.loadFile(curFilePath.toString()).getMaze();
             ArrayList<String> datalist = this.loadLevelList(curFilePath.toString());
 
@@ -458,7 +458,7 @@ public class JsonLoad {
             newLevel = loadCurLevelData();
             return newLevel;
 
-        }catch (Exception e){
+        } catch (Exception e){
             throw new RuntimeException("Check loadNextLevel()");
         }
     }
@@ -466,14 +466,14 @@ public class JsonLoad {
 
 
     /**
-     * @author xinchen
+     * @author Xin Chen
      *
-     * empty everything in CURPROGRESSFILEPATH
+     * Empty everything in CURPROGRESSFILEPATH
      */
-    public void emptyCurFolder(){
-        // empty everything in "src/cache/progress/current"
+    public void emptyCurFolder() {
+        // Empty everything in "src/cache/progress/current"
         try {
-            Path dir = Paths.get(CURPROGRESSFILEPATH);
+            Path dir = Paths.get(CUR_PROGRESS_FILE_PATH);
             if (Files.exists(dir)) {
                 Files.list(dir).forEach(file -> {
                     try {
