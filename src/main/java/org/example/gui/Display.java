@@ -1,6 +1,7 @@
 package org.example.gui;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
+import org.example.gameLogic.Maze;
 import org.example.interaction.EnemyFighter;
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
@@ -33,6 +34,7 @@ public class Display extends JFrame {
     private ItemPicker itemPicker;
     //private MoneyPicker moneyPicker;
     private Inventory inventory;
+    private JLabel additionalLabel;
 
     // WSAD keys, used to move
     private HashSet<Integer> movementKeys = setMovementKeys();
@@ -51,7 +53,7 @@ public class Display extends JFrame {
         textArea = new JTextPane();
 
         // Create and add a label for displaying the additional string
-        JLabel additionalLabel = new JLabel("Inventory");
+        additionalLabel = new JLabel("Inventory");
         additionalLabel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
 
         // Set the preferred size to control the width of the label
@@ -112,11 +114,12 @@ public class Display extends JFrame {
 
                 textArea.setText(guiText);
                 pickStuff(e);
-                //displayInventory(inventory);
                 additionalLabel.setText(displayInventory(inventory).toString());
 
             }
         });
+
+        chooseStuff();
 
         // Make the GUI visible
         this.setVisible(true);
@@ -206,10 +209,10 @@ public class Display extends JFrame {
     }
 
     /**
-     * Rong Sun
-     * @param e
+     * @author Rong Sun
+     * adds a listener to the text area that updates the selected weapon of the player
      */
-    public void chooseStuff(KeyEvent e){
+    public void chooseStuff(){
 
         textArea.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -219,12 +222,14 @@ public class Display extends JFrame {
                 // 获取按键对应的数字
                 int selectedWeaponNumber = -1; // 默认为无效编号
                 if (keyCode >= KeyEvent.VK_1 && keyCode <= KeyEvent.VK_5) {
-                    selectedWeaponNumber = keyCode - KeyEvent.VK_1 + 1; // 1-5 映射到 0-4
+                    selectedWeaponNumber = keyCode - KeyEvent.VK_1; // 1-5 映射到 0-4
                 }
 
                 // 如果按下了 1-5 键
                 if (selectedWeaponNumber >= 0 && selectedWeaponNumber < inventory.listItems().size()) {
                     Item selectedItem = inventory.listItems().get(selectedWeaponNumber);
+                    if (selectedItem instanceof Weapon)
+                        level.getMaze().getPlayer().setCurrentWeapon((Weapon) selectedItem);
 
                     // 在这里处理选择的武器，可以显示在文本区域或进行其他操作
                     System.out.println("Selected Weapon: " + selectedItem.getName());
@@ -235,17 +240,10 @@ public class Display extends JFrame {
                 // 更新 GUI
                 guiText = Gui.updateGuiString(level.getMaze());
                 textArea.setText(guiText);
+                additionalLabel.setText(displayInventory(inventory).toString());
             }
         });
-            }
-
-
-
-
-
-
-
-
+    }
 
     // add Inventory display
     public StringBuilder displayInventory(Inventory inventory) {
@@ -266,9 +264,13 @@ public class Display extends JFrame {
         int itemNumber = 1;
         StringBuilder builder = new StringBuilder("<html>Inventory:<br>");
         for (Item item : inventory.listItems()) {
-            if (item instanceof Weapon) {
-                Weapon weapon = (Weapon) item;
-                builder.append(itemNumber + ". " + weapon.getName() + "(Price:" + weapon.getPrice() + " Weight:" + weapon.getWeight() + " Attack:" + weapon.getAttackValue() + ")<br>");
+            if (item instanceof Weapon weapon) {
+                if (level.getMaze().getPlayer().getCurrentWeapon() == weapon)
+                    builder.append("-- ");
+                builder.append(itemNumber + ". " + weapon.getName() + "(Price:" + weapon.getPrice() + " Weight:" + weapon.getWeight() + " Attack:" + weapon.getAttackValue() + ")");
+                if (level.getMaze().getPlayer().getCurrentWeapon() == weapon)
+                    builder.append(" --");
+                builder.append("<br>");
             } else {
                 builder.append(itemNumber + ". " + item.getName() + "(Price:" + item.getPrice() + " Weight: " + item.getWeight() + ")<br>");
             }
