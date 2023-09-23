@@ -43,7 +43,7 @@ public class IOTest {
                 new NPC("JASON",new Position(1,2),dialog));
         testMaze.addItem(new Position(18,7),new Weapon("Gramps", 4,2,9));
         testMaze.addItem(new Position(18,10),new Weapon("Fring", 2,7,2));
-        testLevel = new Level(2);
+        testLevel = new Level(1);
         testLevel.setMaze(testMaze);
     }
 
