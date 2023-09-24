@@ -302,6 +302,12 @@ public class Maze {
     public Position getRespawnPosition(){return respawnPosition;}
 
     /**
+     * @author Austin Zerk
+     * @param position the position to set to the respawn position
+     */
+    public void setRespawnPosition(Position position) {respawnPosition = position;}
+
+    /**
      * @author xinchen
      * @param encodedWalls encoded walls to set in maze
      */
@@ -309,4 +315,5 @@ public class Maze {
     public void setEncodedWalls(ArrayList<Wall> encodedWalls){
         this.encodedWalls = encodedWalls;
     }
+
 }
