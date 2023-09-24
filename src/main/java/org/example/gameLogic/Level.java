@@ -81,7 +81,7 @@ public class Level {
         maze.addItem(new Position(9, 15), new Weapon("The crazy cat",3, 5, 4));
         maze.addItem(new Position(12, 15), new Weapon("The ugly fly",3, 5, 4));
         maze.addItem(new Position(13, 15), new Weapon("The dragon knife",3, 5, 4));
-        maze.addNPC(new Position(16, 15), new NPC("King George's Chief Councillor", new Position(4, 5)));
+        maze.addNPC(new Position(4, 5), new NPC("King George's Chief Councillor", new Position(4, 5)));
 //        maze.addEnemy(new Position(25, 20),new Enemy(2, 2, 2));
         maze.addEnemy(new Position(5, 4),new Enemy(2, 2, 2));
 

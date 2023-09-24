@@ -35,13 +35,9 @@ public class FightingTest {
         // Add walls at the top boundary
         maze.addWall(new Position(0, 0),mazeX, false);
 
-        //dialog for NPC whill be changed in future versions
-        List<String> dialog = new ArrayList<>();
-        dialog.add("Why Hello There");
-
         // Add things
         maze.addItem(new Position(1, 3), new Weapon("The Big Axe",3, 5, 4));
-        maze.addNPC(new Position(1, 4),new NPC("John", new Position(5, 5),dialog));
+        maze.addNPC(new Position(1, 4),new NPC("John", new Position(1, 4)));
         maze.addEnemy(new Position(1, 5),new Enemy(2, 2, 2));
     }
     @Test
