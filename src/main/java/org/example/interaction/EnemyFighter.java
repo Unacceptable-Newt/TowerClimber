@@ -4,12 +4,13 @@ import org.example.belonging.Inventory;
 import org.example.entity.Enemy;
 import org.example.entity.Player;
 import org.example.entity.Position;
+import org.example.gameLogic.Battle;
 import org.example.gameLogic.Maze;
 import org.example.move.Movement;
 import org.example.util.Pair;
 
 /**
- * @author
+ * @author Yue Zhu, Yuecheng Zhu
  * Initialises a fight with an adjacent monster
  */
 public class EnemyFighter implements Interaction {
@@ -31,45 +32,46 @@ public class EnemyFighter implements Interaction {
      * @return Modified player and inventory
      */
     @Override
-    public Pair<Player, Inventory> interactWithAdjacent(
-            Inventory inventory, Maze maze
-    ) {
+    public Pair<Player, Inventory> interactWithAdjacent(Inventory inventory, Maze maze) {
         // Data preparation for battle.
-        int playerAttack = maze.getPlayer().getAttack();
+    
 
         Position enemyPosition = Movement.getFrontalPosition(
                 maze.getPlayer().getDirection(),
-                maze.getPlayer().getPosition()
-        );
+                maze.getPlayer().getPosition());
+       
         Enemy enemy = maze.getEnemyAtPosition(enemyPosition);
+        Player player = maze.getPlayer();
 
-        if (enemy != null) {
-            // The player attacks first
-            enemy.defend(playerAttack);
-            if (enemy.getHealth() <= 0) {
-                // The enemy dies
-                maze.getEnemies().remove(enemyPosition);
+        if(enemy != null){
+           boolean winOrLoss = Battle.processFights(player, enemy);
+           
+           
+           if(winOrLoss){ 
+            
+            // In this case, the player win
+            maze.getEnemies().remove(enemyPosition); //remove defeated enemy
 
-                // Get loot
-                maze.getPlayer().addMoney(enemy.getMoney());
+            maze.getPlayer().addMoney(enemy.getMoney()); // get loot
 
-                // You win :)
-                return new Pair<>(maze.getPlayer(), inventory);
-            }
+            return new Pair<>(maze.getPlayer(), inventory); // update the player and the inventory
 
-            // The enemy retaliates
-            maze.getPlayer().defend(enemy.getAttack());
-            if (maze.getPlayer().getHealth() <= 0) {
-                // FIXME: Respawn the player
+           }
+           
+           else{  // The player will die and respawn
+           Position  defualtPosition = new Position(0, 0);
 
-                // The enemy regains the full health
-//                maze.getEnemies().get(enemyPosition).restoreFullHealth();
+           Player respwanedPlayer = new Player(0, 10, 1, defualtPosition); 
 
-                // You died :(
-                return new Pair<>(maze.getPlayer(), inventory);
-            }
+           maze.setPlayer(respwanedPlayer); // back to the start position 
+
+           return new Pair<>(maze.getPlayer(), inventory);  // the inventory system remains unchanged.
+           }
+        }
+        else{
+            return new Pair<>(maze.getPlayer(), inventory); 
         }
 
-        return new Pair<>(maze.getPlayer(), inventory); // No enemy here
+       
     }
 }
