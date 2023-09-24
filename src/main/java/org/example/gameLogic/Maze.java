@@ -190,11 +190,10 @@ public class Maze {
     /**
      * @author Austin Zerk
      * Adds a NPC on the map.
-     * @param position The position NPC is at
      * @param npc NPC to put at location
      */
-    public void addNPC(Position position, NPC npc){
-        NPCs.put(position, npc);
+    public void addNPC(NPC npc){
+        NPCs.put(npc.getPosition(), npc);
     }
 
     /**
