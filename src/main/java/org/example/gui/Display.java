@@ -54,7 +54,7 @@ public class Display extends JFrame {
 
         // Create and add a label for displaying the additional string
         additionalLabel = new JLabel("Inventory");
-        additionalLabel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
+        additionalLabel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 10));
 
         // Set the preferred size to control the width of the label
         Dimension labelSize = additionalLabel.getPreferredSize();
