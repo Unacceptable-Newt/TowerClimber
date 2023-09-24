@@ -70,7 +70,7 @@ public class Level {
         // add things
         maze.addItem(new Position(30, 25), new Weapon("The Big Axe",3, 5, 4));
         maze.addNPC(new Position(5, 5),new NPC("John", new Position(5, 5)));
-        maze.addEnemy(new Position(25, 20),new Enemy(2, 2, 2));
+        maze.addEnemy(new Position(25, 20),new Enemy(20, 24, 2));
     }
 
 
