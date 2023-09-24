@@ -300,4 +300,13 @@ public class Maze {
      * @return position for the player to respawn at
      */
     public Position getRespawnPosition(){return respawnPosition;}
+
+    /**
+     * @author xinchen
+     * @param encodedWalls encoded walls to set in maze
+     */
+
+    public void setEncodedWalls(ArrayList<Wall> encodedWalls){
+        this.encodedWalls = encodedWalls;
+    }
 }
