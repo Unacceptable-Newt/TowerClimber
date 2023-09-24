@@ -129,7 +129,19 @@ public class Gui {
 
     /**
      * @author Yucheng Zhu
-     * Turn a char matrix into a continuous string to be displayed in Gui.
+     * Return strings to be displayed in GUI when a movement key is pressed.
+     * With a text field below.
+     * @param maze The maze to be turned into a string
+     * @param text The text field displayed below
+     * @return a string representing the state of the maze after the move
+     */
+    public static String updateGuiString(Maze maze, String text) {
+        return (updateGuiString(maze) + "\n" + text);
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Turn a char matrix into a continuous string to be displayed in the GUI.
      * @param charsPixels A char matrix for all the char "pixels" displayed on the GUI
      * @return String to be displayed in GUI
      */

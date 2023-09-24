@@ -183,7 +183,7 @@ public class JsonLoad {
         Direction direction = parseDirection((String) encodedEnemy.get("direction"));
         String name = (String) encodedEnemy.get("name");
         ArrayList<String> dialog = (ArrayList<String>) encodedEnemy.get("dialogue");
-        NPC out = new NPC(name, position, dialog);
+        NPC out = new NPC(name, position);
         out.setDirection(direction);
         out.setHealth(health);
         out.setMoney(money);
@@ -274,7 +274,7 @@ public class JsonLoad {
 
                 HashMap<String, Object> encodedNPCs = (HashMap<String, Object>) encodedMaze.get("npcs");
                 encodedNPCs.forEach((p, n) -> {
-                    maze.addNPC(parsePosition(p), parseNPC((HashMap<String, Object>) n, parsePosition(p)));
+                    maze.addNPC(parseNPC((HashMap<String, Object>) n, parsePosition(p)));
                 });
 
 

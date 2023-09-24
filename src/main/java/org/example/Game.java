@@ -13,8 +13,8 @@ public class Game {
     private final static int MAX_GAME_LEVEL = 3;
 
     // Game GUI size
-    private static int WIDTH = 560;
-    private static int HEIGHT = 970;
+    private static int WIDTH = 1024;
+    private static int HEIGHT = 800;
 
     /**
      * @author

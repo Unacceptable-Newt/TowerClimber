@@ -5,6 +5,7 @@ import org.example.interaction.EnemyFighter;
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
 import org.example.interaction.ItemPicker;
+import org.example.interaction.NpcTalker;
 import org.example.util.Pair;
 import org.example.gameLogic.Level;
 
@@ -14,6 +15,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.HashSet;
 import javax.swing.JTextPane;
 
@@ -44,6 +46,7 @@ public class Display extends JFrame {
         this.setTitle("The Secret of the Princess");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(width, height);
+        this.setResizable(false);
 
         JPanel panel = new JPanel(new BorderLayout());
         // Add text area
@@ -51,11 +54,11 @@ public class Display extends JFrame {
 
         // Create and add a label for displaying the additional string
         additionalLabel = new JLabel("Inventory");
-        additionalLabel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
+        additionalLabel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 10));
 
         // Set the preferred size to control the width of the label
         Dimension labelSize = additionalLabel.getPreferredSize();
-        labelSize.height = 200; // Set the desired width here
+        labelSize.height = 100; // Set the desired width here
         additionalLabel.setPreferredSize(labelSize);
 
         // revalidate and repaint
@@ -87,37 +90,49 @@ public class Display extends JFrame {
         // Listen to key events
         textArea.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
+                String dialogueText = ""; // text displayed in the dialogue box
                 String guiText;
                 int keyCode = e.getKeyCode();
                 // Get the text after considering change brought by movement
                 if (isInKeySet(movementKeys, keyCode)) { // Movement events
                     MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, level.getMaze());
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
-                    level = ExitEvent.exit(level);
                     //interacting with exit
-                    EnemyFighter enemyFighter = new EnemyFighter();
+                    level = ExitEvent.exit(level);
 
                     //interacting with enemy
+                    EnemyFighter enemyFighter = new EnemyFighter();
+
                     enemyFighter.interactWithAdjacent(inventory, level.getMaze());
                     if (level.getMaze().getPlayer().getHealth() <= 0){
                         //FIXME Player needs to die
+                    }
+
+                    // interacting with NPC
+                    try {
+                        dialogueText = NpcTalker.interactWithAdjacent(inventory, level, dialogueText);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
                     }
                 }
 
                 // FIXME: add other events
 
                 // Update the GUI char "pixels" as a string
-                guiText = Gui.updateGuiString(level.getMaze());
+                guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
 
-                textArea.setText(guiText);
                 //call pick stuff function and put the picked stuff in the inventory system
                 pickStuff(e);
                 additionalLabel.setText(displayInventory(inventory).toString());
+                //call the press 1-5 key, and choose the item
+                chooseStuff();
+
+                textArea.setText(guiText);
+
 
             }
         });
-        //call the press 1-5 key, and choose the item
-        chooseStuff();
+
 
         // Make the GUI visible
         this.setVisible(true);
@@ -161,9 +176,7 @@ public class Display extends JFrame {
         }
 
         String guiText = Gui.updateGuiString(level.getMaze());
-        if (guiText != null) {
-            textArea.setText(guiText);
-        }
+        textArea.setText(guiText);
 
     }
 
@@ -194,7 +207,7 @@ public class Display extends JFrame {
 
                 // update the GUI
                 text = Gui.updateGuiString(level.getMaze());
-                textArea.setText(text);
+//                textArea.setText(text);
                 additionalLabel.setText(displayInventory(inventory).toString());
             }
         });
