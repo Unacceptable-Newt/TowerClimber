@@ -20,7 +20,7 @@ public class Enemy extends Life {
  * @param defense The defense value
  */
     public Enemy(int attack, int health, int defense) {
-        super(100, health, new Position(0, 0), attack);
+        super(100, health, new Position(0, 0), attack, defense);
         this.defense = defense;
         this.money = NORMAL_ENEMY_GOLD;
     }

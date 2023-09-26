@@ -23,17 +23,27 @@ public class Battle {
         // Data preparation for battle.
         int playerAttack = player.getAttack();
 
+        int weaponAttack = player.getCurrentWeapon().getAttackValue();
+
+        int actualAttack = playerAttack + weaponAttack; //use the current weapon to defeat enemy
+
         int enemyAttack = enemy.getAttack();
 
         // turn 1, the player attack first
-        enemy.defend(playerAttack);
+        enemy.defend(actualAttack);
         
-        if (enemy.getHealth() <= 0)
-            return true; // enemy dies
+        if (enemy.getHealth() <= 0){
+             return true; // enemy dies
+        }
+        else{
         
-            player.defend(enemyAttack);
+        player.defend(enemyAttack);
 
         return false; // enemy lives
+
+        }
+           
+           
     }
 
 

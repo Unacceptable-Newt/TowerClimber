@@ -15,7 +15,7 @@ public class NPC extends Life {
     private List<String> dialogue;
 
     public NPC(String name, Position position) {
-        super(100, 100, position, 100);
+        super(100, 100, position, 10, 10);
         this.name = name;
     }
 
