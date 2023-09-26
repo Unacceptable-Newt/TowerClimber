@@ -9,7 +9,9 @@ import org.example.move.Movement;
 import org.example.util.Pair;
 
 /**
- * @author
+ * @author Yue Zhu
+ * @author Austin Zerk
+ * @author Yucheng Zhu
  * Initialises a fight with an adjacent monster
  */
 public class EnemyFighter implements Interaction {

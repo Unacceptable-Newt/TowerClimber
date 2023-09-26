@@ -1,15 +1,10 @@
 package org.example.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
 /**
  * @author Jolene Sun, Austin Zerk, Yucheng Zhu
  * The NPC class represents an NPC. The player can talk to him/her
- *  @author Rong Sun
+ * @author Rong Sun
+ * @author Yucheng Zhu
  *
  */
 public class NPC extends Life {
@@ -17,7 +12,7 @@ public class NPC extends Life {
     private int dialogueCount = 1;
 
     public NPC(String name, Position position) {
-        super(100,100,position, 100);
+        super(100, 100, position, 100);
         this.name = name;
     }
     public String getName() {

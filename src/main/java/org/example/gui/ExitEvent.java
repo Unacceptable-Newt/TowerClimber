@@ -7,6 +7,8 @@ import org.example.move.Movement;
 
 /**
  * @author Yucheng Zhu
+ * @author Austin Zerk
+ * @author Rong Sun
  * Handle the movement event.
  */
 public class ExitEvent {

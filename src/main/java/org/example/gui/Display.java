@@ -23,8 +23,11 @@ import static org.example.gui.MovementEvents.isInKeySet;
 import static org.example.gui.MovementEvents.setMovementKeys;
 
 /**
- * @author Austin Zerk, Yucheng Zhu, Rong Sun
- * GUI to visualise the game
+ * @author Austin Zerk
+ * @author Yucheng Zhu
+ * @author Rong Sun
+ * GUI to visualise the game.
+ * Also defines the keys triggering the events
  */
 public class Display extends JFrame {
     private JTextPane textArea;
@@ -38,6 +41,12 @@ public class Display extends JFrame {
     // WSAD keys, used to move
     private HashSet<Integer> movementKeys = setMovementKeys();
 
+    /**
+     * @author Austin Zerk
+     * @author Yucheng Zhu
+     * @author Rong Sun
+     * GUI to visualise the game
+     */
     public Display(int width, int height) {
         // Set movement keys only once
         setMovementKeys();
@@ -136,7 +145,8 @@ public class Display extends JFrame {
     }
 
     /**
-     * @author Austin Zerk, Yucheng Zhu
+     * @author Austin Zerk
+     * @author Yucheng Zhu
      * Stubbing player's data to test movement.
      * TODO: replace this method from objects in the Maze when it finishes.
      */
