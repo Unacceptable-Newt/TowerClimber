@@ -24,6 +24,7 @@ public class FightingTest {
         Position currentPosition = new Position(2, 5);
         player = new Player(10, 100, 1, currentPosition);
         player.setDirection(Direction.LEFT);
+        player.setCurrentWeapon(new Weapon("The Destroyer",7,7,12));
 
         // Set up maze
         int mazeX = 6;
