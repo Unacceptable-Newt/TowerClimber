@@ -126,6 +126,7 @@ public class Display extends JFrame {
                 // Update the GUI char "pixels" as a string
                 guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
                 textArea.setText(guiText);
+                // DON'T CHANGE OR SET `guiText` BELOW
             }
         });
 
