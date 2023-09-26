@@ -32,7 +32,7 @@ public class EnemyFighter implements Interaction {
      * @return Modified player and inventory
      */
     @Override
-    public Pair<Player, Inventory> interactWithAdjacent(Inventory inventory, Maze maze) {
+    public Pair<Player, Inventory> interactWithAdjacent(Inventory inventory, Maze maze){ 
         // Data preparation for battle.
     
 
@@ -61,7 +61,7 @@ public class EnemyFighter implements Interaction {
            else{  // The player will die and respawn
            Position respawnPosition = maze.getRespawnPosition();
 
-           Player respwanedPlayer = new Player(0, 10, 1, respawnPosition);
+           Player respwanedPlayer = respwanFunction(respawnPosition);
 
            maze.setPlayer(respwanedPlayer); // back to the start position 
 
@@ -73,5 +73,10 @@ public class EnemyFighter implements Interaction {
         }
 
        
+    }
+
+    public static Player respwanFunction(Position respawnPosition){
+        Player respwanedPlayer = new Player(0, 10, 1, respawnPosition);
+        return respwanedPlayer;
     }
 }

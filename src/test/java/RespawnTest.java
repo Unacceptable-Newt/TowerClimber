@@ -2,6 +2,8 @@
 import org.example.entity.Enemy;
 import org.example.belonging.Weapon;
 import org.example.entity.Player;
+import org.example.entity.Position;
+import org.example.interaction.EnemyFighter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -34,6 +36,20 @@ public class RespawnTest {
       boolean defeatOrNot = org.example.gameLogic.Battle.processFights(player,enemy);
       Assertions.assertEquals(true ,defeatOrNot);
      }
+// test the data of a respawned player
+@Test
+    public void respwanOrNot() {
+      player.setCurrentWeapon(nullWeapon); 
+      boolean defeatedOrNot = org.example.gameLogic.Battle.processFights(player,enemy);
+      // the player will be defeated by enemy, the respwan function will be invoked.
+      Position testRespawnePosition = new Position(1, 1);
+      Player respawnedPlayer =  EnemyFighter.respwanFunction(testRespawnePosition);
+      Assertions.assertEquals(1, respawnedPlayer.getLevel());
+      Assertions.assertEquals(testRespawnePosition, respawnedPlayer.getPosition());
+      Assertions.assertEquals(0, respawnedPlayer.getMoney());
+     }
+
+
 
   
 
