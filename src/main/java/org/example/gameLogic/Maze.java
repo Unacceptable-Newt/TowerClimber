@@ -23,6 +23,7 @@ public class Maze {
     private HashMap<Position, Item> Items = new HashMap<>();
     private HashMap<Position, NPC> NPCs = new HashMap<>();
     private HashMap<Position, Enemy> Enemies = new HashMap<>();
+    private Position respawnPosition = new Position(2,2);
 
     /**
      * @author Austin Zerk
@@ -190,11 +191,10 @@ public class Maze {
     /**
      * @author Austin Zerk
      * Adds a NPC on the map.
-     * @param position The position NPC is at
      * @param npc NPC to put at location
      */
-    public void addNPC(Position position, NPC npc){
-        NPCs.put(position, npc);
+    public void addNPC(NPC npc){
+        NPCs.put(npc.getPosition(), npc);
     }
 
     /**
@@ -293,4 +293,26 @@ public class Maze {
     public void setItems(HashMap<Position, Item> items) {
         Items = items;
     }
+
+    /**
+     * @author Austin Zerk
+     * @return position for the player to respawn at
+     */
+    public Position getRespawnPosition(){return respawnPosition;}
+
+    /**
+     * @author Austin Zerk
+     * @param position the position to set to the respawn position
+     */
+    public void setRespawnPosition(Position position) {respawnPosition = position;}
+
+    /**
+     * @author xinchen
+     * @param encodedWalls encoded walls to set in maze
+     */
+
+    public void setEncodedWalls(ArrayList<Wall> encodedWalls){
+        this.encodedWalls = encodedWalls;
+    }
+
 }

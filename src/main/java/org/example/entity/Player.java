@@ -45,29 +45,17 @@ public class Player extends Life {
         return currentWeapon;
     }
 
-    /**
-     * Sets the current weapon equipped by the player.
-     * @author Rong Sun
-     * @param currentWeapon The new weapon to equip.
-     */
+
     public void setCurrentWeapon(Weapon currentWeapon) {
         this.currentWeapon = currentWeapon;
     }
 
-    /**
-     * Gets the level of the player.
-     * @author Rong Sun
-     * @return The level of the player.
-     */
+
     public int getLevel() {
         return level;
     }
 
-    /**
-     * Sets the level of the player.
-     * @author Rong Sun
-     * @param level The new level to set for the player.
-     */
+
     public void setLevel(int level) {
         this.level = level;
     }
@@ -85,7 +73,7 @@ public class Player extends Life {
      * @author Rong Sun
      * once player choose an item from the inventory, player's current item will changed
      * @param itemName chosen item's name
-     * @return true if the newItem can be used, which means it is in the inventory system
+     * @return true if the newItem can be choose
      */
     public boolean changeItem(String itemName, Inventory inventory){
         if(inventory.hasItem(itemName )){
@@ -98,8 +86,8 @@ public class Player extends Life {
 
     /**
      * @author Rong Sun
-     * Put extra money to the player's possession
-     * @param earnedMoney The extra money to add to the inventory
+     * Put new earned money to the player's purse
+     * @param earnedMoney The new added money to add to the inventory
      */
     public int addMoney(int earnedMoney) {
         return this.money += earnedMoney;

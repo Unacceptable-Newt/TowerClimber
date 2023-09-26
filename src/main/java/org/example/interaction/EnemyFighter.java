@@ -59,9 +59,9 @@ public class EnemyFighter implements Interaction {
            }
            
            else{  // The player will die and respawn
-           Position  defualtPosition = new Position(0, 0);
+           Position respawnPosition = maze.getRespawnPosition();
 
-           Player respwanedPlayer = new Player(0, 10, 1, defualtPosition); 
+           Player respwanedPlayer = new Player(0, 10, 1, respawnPosition);
 
            maze.setPlayer(respwanedPlayer); // back to the start position 
 
