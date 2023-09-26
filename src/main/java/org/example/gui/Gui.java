@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author Austin Zerk, Yucheng Zhu
+ * @author Austin Zerk
+ * @author Yucheng Zhu
  *
  * Given a gameStateString, update the GUI frame on screen.
  */
@@ -32,7 +33,8 @@ public class Gui {
     }
 
     /**
-     * @author Austin Zerk, Yucheng Zhu
+     * @author Austin Zerk
+     * @author Yucheng Zhu
      * Given all game objects, update the char "pixels" for the GUI.
      * @param gameObjects Game objects summarising all the object with game variables
      * @return A matrix of all char "pixels" to be displayed on GUI
@@ -108,7 +110,8 @@ public class Gui {
     }
 
     /**
-     * @author Austin Zerk, Yucheng Zhu
+     * @author Austin Zerk
+     * @author Yucheng Zhu
      * Return strings to be displayed in GUI when a movement key is pressed
      * @param maze the maze to be turned into a string
      * @return a string representing the state of the maze after the move
@@ -141,6 +144,7 @@ public class Gui {
 
     /**
      * @author Yucheng Zhu
+     * @author Austin Zerk
      * Turn a char matrix into a continuous string to be displayed in the GUI.
      * @param charsPixels A char matrix for all the char "pixels" displayed on the GUI
      * @return String to be displayed in GUI
@@ -159,27 +163,4 @@ public class Gui {
         }
         return guiString.toString();
     }
-
-    /**
-     * @author
-     * Refresh the screen and display a new frame.
-     * @param charsPixels A matrix of all char "pixels" to be displayed on GUI
-     */
-    public static void paint(char[][] charsPixels) {
-        // FIXME
-    }
-
-    /**
-     * @author
-     * Generate a gameStateString for the GUI.
-     * gameStateString can also be used for tests.
-     * @param gameObjects All game objects containing persistent data
-     * @return  gameStateString A string summarising all the current game variables
-     */
-    public static String generateGameStateString(Object[] gameObjects) {
-        // FIXME
-        return null;
-    }
-
-
 }

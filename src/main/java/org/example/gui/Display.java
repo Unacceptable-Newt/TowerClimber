@@ -23,8 +23,11 @@ import static org.example.gui.MovementEvents.isInKeySet;
 import static org.example.gui.MovementEvents.setMovementKeys;
 
 /**
- * @author Austin Zerk, Yucheng Zhu, Rong Sun
- * GUI to visualise the game
+ * @author Austin Zerk
+ * @author Yucheng Zhu
+ * @author Rong Sun
+ * GUI to visualise the game.
+ * Also defines the keys triggering the events
  */
 public class Display extends JFrame {
     private JTextPane textArea;
@@ -38,6 +41,12 @@ public class Display extends JFrame {
     // WSAD keys, used to move
     private HashSet<Integer> movementKeys = setMovementKeys();
 
+    /**
+     * @author Austin Zerk
+     * @author Yucheng Zhu
+     * @author Rong Sun
+     * GUI to visualise the game
+     */
     public Display(int width, int height) {
         // Set movement keys only once
         setMovementKeys();
@@ -116,20 +125,17 @@ public class Display extends JFrame {
                     }
                 }
 
-                // FIXME: add other events
+                // interacting with items on map
+                // Call pick stuff function and put the picked stuff in the inventory system
+                pickStuff(e);
+                additionalLabel.setText(displayInventory(inventory).toString());
+                // Call the press 1-5 key, and choose the item
+                chooseStuff();
 
                 // Update the GUI char "pixels" as a string
                 guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
-
-                //call pick stuff function and put the picked stuff in the inventory system
-                pickStuff(e);
-                additionalLabel.setText(displayInventory(inventory).toString());
-                //call the press 1-5 key, and choose the item
-                chooseStuff();
-
                 textArea.setText(guiText);
-
-
+                // DON'T CHANGE OR SET `guiText` BELOW
             }
         });
 
@@ -139,7 +145,8 @@ public class Display extends JFrame {
     }
 
     /**
-     * @author Austin Zerk, Yucheng Zhu
+     * @author Austin Zerk
+     * @author Yucheng Zhu
      * Stubbing player's data to test movement.
      * TODO: replace this method from objects in the Maze when it finishes.
      */
@@ -207,7 +214,6 @@ public class Display extends JFrame {
 
                 // update the GUI
                 text = Gui.updateGuiString(level.getMaze());
-//                textArea.setText(text);
                 additionalLabel.setText(displayInventory(inventory).toString());
             }
         });

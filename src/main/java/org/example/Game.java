@@ -4,7 +4,7 @@ import org.example.gameLogic.Level;
 import org.example.gui.Display;
 
 /**
- * @author
+ * @author Yucheng Zhu
  * Runs the game
  */
 public class Game {
