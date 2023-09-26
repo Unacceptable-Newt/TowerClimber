@@ -116,20 +116,16 @@ public class Display extends JFrame {
                     }
                 }
 
-                // FIXME: add other events
+                // interacting with items on map
+                // Call pick stuff function and put the picked stuff in the inventory system
+                pickStuff(e);
+                additionalLabel.setText(displayInventory(inventory).toString());
+                // Call the press 1-5 key, and choose the item
+                chooseStuff();
 
                 // Update the GUI char "pixels" as a string
                 guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
-
-                //call pick stuff function and put the picked stuff in the inventory system
-                pickStuff(e);
-                additionalLabel.setText(displayInventory(inventory).toString());
-                //call the press 1-5 key, and choose the item
-                chooseStuff();
-
                 textArea.setText(guiText);
-
-
             }
         });
 
@@ -207,7 +203,6 @@ public class Display extends JFrame {
 
                 // update the GUI
                 text = Gui.updateGuiString(level.getMaze());
-//                textArea.setText(text);
                 additionalLabel.setText(displayInventory(inventory).toString());
             }
         });
