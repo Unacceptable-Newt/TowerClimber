@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,39 +26,82 @@ import java.util.List;
 public class IOTest {
     static Maze testMaze;
     static Level testLevel;
+
+    static JsonLoad loader = new JsonLoad();
+    static JsonSave saver = new JsonSave();
     @BeforeAll
     static void before(){
-        testMaze = new Maze(40,20,new Position(1,1));
-        testMaze.createNewPlayer(new Position(10,10));
-        testMaze.addEnemy(new Position( 30,10),
-                new Enemy(4,6, 2));
-        testMaze.addWall(new Position(1,0),19,true);
-        testMaze.addWall(new Position(39,0),20,true);
-        testMaze.addWall(new Position(0,19),40,false);
-        testMaze.addWall(new Position(0,0),40,false);
-        testMaze.addWall(new Position(3,0),8,true);
-        testMaze.addWall(new Position(3,10),10,true);
-        testMaze.addNPC(new NPC("JASON",new Position(1,2)));
-        testMaze.addItem(new Position(18,7),new Weapon("Gramps", 4,2,9));
-        testMaze.addItem(new Position(18,10),new Weapon("Fring", 2,7,2));
         testLevel = new Level(1);
+
+        int mazeX = 65;
+        int mazeY = 20;
+        testMaze = new Maze(mazeX, mazeY, new Position(1, 1));
+        testMaze.createNewPlayer(new Position(10, 10));
+
+        // add walls at the boundary
+        testMaze.addWall(new Position(0, 0),mazeX, false);
+        testMaze.addWall(new Position(0, 0),mazeY, true);
+        testMaze.addWall(new Position(mazeX - 1, 0), mazeY, true);
+        testMaze.addWall(new Position(0, mazeY - 1), mazeX, false);
+
+        // add things
+        testMaze.addItem(new Position(10, 15), new Weapon("The Big Axe",3, 5, 4));
+        testMaze.addItem(new Position(11, 15), new Weapon("The Small Axe",3, 5, 4));
+        // maze.addItem(new Position(32, 25), new Weapon("The medium Axe",3, 5, 4));
+        testMaze.addItem(new Position(9, 15), new Weapon("The crazy cat",3, 5, 4));
+        testMaze.addItem(new Position(12, 15), new Weapon("The ugly fly",3, 5, 4));
+        testMaze.addItem(new Position(13, 15), new Weapon("The dragon knife",3, 5, 4));
+        testMaze.addNPC(new Position(4, 5), new NPC("King George's Chief Councillor", new Position(4, 5)));
+//        maze.addEnemy(new Position(25, 20),new Enemy(2, 2, 2));
+        testMaze.addEnemy(new Position(5, 4),new Enemy(2, 2, 2));
+
         testLevel.setMaze(testMaze);
     }
 
     @Test
     void saveTest(){
-        JsonSave saver = new JsonSave();
+
         saver.saveCurrentProgress(testLevel);
-        assert (true);
+        String targetFileName = "level1_cur.json";
+        String currentDirectory = "src/cache/progress/current/";
+        String fullPath = currentDirectory + targetFileName;
+        Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
+
+        loader.emptyCurFolder();
+
+        loader.loadStartMap();
+        Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
     }
 
     @Test
-    void loadTest(){
-        JsonLoad loader = new JsonLoad();
+    void loadTest() {
+
         Level loaded = loader.loadFile("src/cache/progress/current/level1_cur.json");
         Level loaded2 = loader.loadCurLevelData();
-        System.out.println(loaded2.toString());
-        assert (true);
+
+        Assertions.assertEquals(loaded.getLevel(), loaded2.getLevel());
+        Assertions.assertEquals(loaded.getMaze().getPlayer().getLevel(), loaded2.getMaze().getPlayer().getLevel());
+        Assertions.assertEquals(loaded.getMaze().getPlayer().getHealth(), loaded2.getMaze().getPlayer().getHealth());
+
+        loader.loadNextLevel(loaded2.getLevel());
+        Assertions.assertEquals(loader.loadCurLevelData().getLevel(), 2);
+
+        loader.emptyCurFolder();
+        Level loaded3 = loader.loadStartMap();
+        String targetFileName = "level1_cur.json";
+        String currentDirectory = "src/cache/progress/current/";
+        String fullPath = currentDirectory + targetFileName;
+        Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
+        Level nextLevel = loader.loadNextLevel(loaded3.getLevel());
+        targetFileName = "level2_cur.json";
+        fullPath = currentDirectory + targetFileName;
+        Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
+        Level finalLevel = loader.loadNextLevel(nextLevel.getLevel());
+        targetFileName = "level3_cur.json";
+        fullPath = currentDirectory + targetFileName;
+        Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
+
+        loader.emptyCurFolder();
     }
 
 }

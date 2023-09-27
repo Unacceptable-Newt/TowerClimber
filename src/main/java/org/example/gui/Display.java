@@ -1,4 +1,5 @@
 package org.example.gui;
+import org.example.IO.JsonLoad;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
 import org.example.interaction.EnemyFighter;
@@ -152,7 +153,9 @@ public class Display extends JFrame {
      */
     public void initialiseMovementObjects() {
 
-        level = new Level(1); // FIXME: load from file instead of creating a stubbed level when load is implemented
+       // FIXME: load from file instead of creating a stubbed level when load is implemented
+        JsonLoad loader = new JsonLoad();
+        level = loader.loadStartMap();
     }
 
     /**
