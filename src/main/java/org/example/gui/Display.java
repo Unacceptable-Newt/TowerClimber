@@ -73,16 +73,19 @@ public class Display extends JFrame {
                 else if (ch == 'd') MovementEvents.setGuiTextOnMovementKeysPressed(68,level.getMaze());
                 // interaction events
                 else if (ch == 'e') {
-                    ExitEvent.exit(level);
+                    level = ExitEvent.exit(level);
                     pickStuff(69, true);
                 }
 
                 //update the maze string
                 displayMaze = Gui.updateGuiString(level.getMaze());
 
+                //print the display
                 //System.out.println(Inventory);
                 System.out.println(displayMaze);
                 //System.out.println(dialog);
+
+            // if getting the input fails inform the user but do not stop the program
             } catch (IOException e){
                 System.err.println("Failed to get character from input");
             }
