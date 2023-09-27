@@ -102,6 +102,8 @@ public class IOTest {
         Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
 
         loader.emptyCurFolder();
+
+        saver.saveCurrentProgress(testLevel);
     }
 
 }
