@@ -12,7 +12,7 @@ public class NPC extends Life {
     private int dialogueCount = 1;
 
     public NPC(String name, Position position) {
-        super(100, 100, position, 100);
+        super(100, 100, position, 10, 10);
         this.name = name;
     }
     public String getName() {

@@ -27,12 +27,13 @@ public abstract class Life {
      * @param position The life's current position on the map
      * @param attack Each life has an inborn attack value. The player's attack value is also modified by his weapon
      */
-    public Life(int money, int maxHealth, Position position, int attack){
+    public Life(int money, int maxHealth, Position position, int attack, int defense){
+        this.money = money;
         this.position = position;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
-        this.money = money;
         this.attack = attack;
+        this.defense = defense;
         this.direction = Direction.UP;
     }
     public int getMoney() {

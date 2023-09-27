@@ -31,11 +31,16 @@ public class Player extends Life {
      * @param position The initial position of the player.
      */
     public Player(int money, int maxHealth, int level, Position position) {
-        super(money, maxHealth, position, 4);
+        super(money, maxHealth, position, 1, 1);
         this.level = level;
     }
 
-
+  
+    /**
+     * Gets the current weapon equipped by the player.
+     * @author Rong Sun
+     * @return The current weapon equipped by the player.
+     */
     public Weapon getCurrentWeapon() {
         return currentWeapon;
     }
@@ -54,7 +59,15 @@ public class Player extends Life {
     public void setLevel(int level) {
         this.level = level;
     }
-
+    
+    /*
+     * @author Yue Zhu
+     * The outcome of the test does not mathch the expected one
+     * use this to make sure the player attack is fixed
+     */
+    public void setAttack(int attack){
+        this.attack=attack;
+    }
 
     /**
      * @author Rong Sun
@@ -88,6 +101,7 @@ public class Player extends Life {
     public Integer deductMoney(int lostMoney) {
         return this.money -= lostMoney;
     }
+
 
 
 }
