@@ -273,7 +273,7 @@ public class JsonLoad {
 
                 HashMap<String, Object> encodedNPCs = (HashMap<String, Object>) encodedMaze.get("npcs");
                 encodedNPCs.forEach((p, n) -> {
-                    maze.addNPC(parsePosition(p), parseNPC( (HashMap<String, Object>) n, parsePosition(p)));
+                    maze.addNPC(parseNPC( (HashMap<String, Object>) n, parsePosition(p)));
                 });
 
 
