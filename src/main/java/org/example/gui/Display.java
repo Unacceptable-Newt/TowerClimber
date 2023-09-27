@@ -77,6 +77,8 @@ public class Display extends JFrame {
         while (true){
             try {
                 ch = (char) sin.read();
+                dialog = "";
+                if (ch == '\n') continue;
                 if (ch == 'q') break;
                 //move the player if movement keys are pressed passing the keycode for jPane compatibility
                 else if (ch == 'w') MovementEvents.setGuiTextOnMovementKeysPressed(87,level.getMaze());
@@ -88,7 +90,7 @@ public class Display extends JFrame {
                     level = ExitEvent.exit(level);
                     pickStuff(69);
                     try {
-                        NpcTalker.interactWithAdjacent(inventory, level, dialog);
+                        dialog = NpcTalker.interactWithAdjacent(inventory, level, dialog);
                     } catch (IOException e){
                         System.err.println("failed to find dialog from adjacent NPC");
                     }
@@ -107,7 +109,7 @@ public class Display extends JFrame {
                 //print the display
                 System.out.println(inventoryString);
                 System.out.println(displayMaze);
-                //System.out.println(dialog);
+                System.out.println(dialog);
 
             // if getting the input fails inform the user but do not stop the program
             } catch (IOException e){
