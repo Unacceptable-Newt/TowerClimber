@@ -14,10 +14,19 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Tests for enemy fighting
+ * @author Austin Zerk
+ */
 public class FightingTest {
 
     private Player player;
     private Maze maze;
+
+    /**
+     * sets up the maze and contents before every test
+     * @author Austin Zerk
+     */
     @BeforeEach
     private void init() {
 
@@ -40,6 +49,12 @@ public class FightingTest {
         maze.addNPC(new NPC("John", new Position(1, 4)));
         maze.addEnemy(new Position(1, 5),new Enemy("Cerberus",2, 2, 2));
     }
+
+    /**
+     * tests that enemy is removed from maze if player kills it
+     * also tests that player does not take damage if they kill enemy
+     * @author Austin Zerk
+     */
     @Test
     public void killEnemyTest(){
         EnemyFighter enemyFighter = new EnemyFighter();
@@ -49,6 +64,10 @@ public class FightingTest {
         Assertions.assertNotNull(maze.getPlayer());
         Assertions.assertEquals(100, player.getHealth());
     }
+
+    /**
+     * tests that when no enemy is in front of the player nothing happens
+     */
     @Test
     public void NoEnemyTest(){
         EnemyFighter enemyFighter = new EnemyFighter();
