@@ -23,7 +23,9 @@ public class Battle {
         // Data preparation for battle.
         int playerAttack = player.getAttack();
 
-        int weaponAttack = player.getCurrentWeapon().getAttackValue();
+         int weaponAttack;
+        if (player.getCurrentWeapon() != null) weaponAttack = player.getCurrentWeapon().getAttackValue();
+        else weaponAttack = 0;
 
         int actualAttack = playerAttack + weaponAttack; //use the current weapon to defeat enemy
 
