@@ -29,7 +29,7 @@ public class IOTest {
         testMaze = new Maze(40,20,new Position(1,1));
         testMaze.createNewPlayer(new Position(10,10));
         testMaze.addEnemy(new Position( 30,10),
-                new Enemy("Cerberus",4,6, 2));
+                new Enemy("Yernt",4,6, 2));
         testMaze.addWall(new Position(1,0),19,true);
         testMaze.addWall(new Position(39,0),20,true);
         testMaze.addWall(new Position(0,19),40,false);
