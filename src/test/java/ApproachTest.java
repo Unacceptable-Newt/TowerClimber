@@ -1,7 +1,7 @@
 import org.example.entity.Enemy;
 import org.example.entity.Player;
 import org.example.entity.Position;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class ApproachTest {
