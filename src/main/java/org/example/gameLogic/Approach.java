@@ -12,9 +12,9 @@ import org.example.entity.Position;
 * @return True if the player is nearby the enemy.
 */
 
-public class Approch {
+public class Approach {
 
-    public boolean isNearby (Player player, Enemy enemy){
+    public static boolean isNearby (Player player, Enemy enemy){
         //data preparation:
         Position positionPlayer = player.getPosition();
         Position positionEnemy= enemy.getPosition();
@@ -29,7 +29,7 @@ public class Approch {
 
     }
 
-    public double calculateDistance (Position p1, Position p2){
+    public static double calculateDistance (Position p1, Position p2){
         int x1 = p1.getX();
         int y1 = p1.getY();
         int x2 = p2.getX();
