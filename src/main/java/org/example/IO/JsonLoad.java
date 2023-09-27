@@ -159,7 +159,8 @@ public class JsonLoad {
         Direction dir = parseDirection((String) encodedEnemies.get("direction"));
         int health = (int) encodedEnemies.get("health");
         int money = (int) encodedEnemies.get("money");
-        Enemy out = new Enemy(attack, health, defence);
+        String name = (String) encodedEnemies.get("name"); //since Yue added a string name attribute to the enemy obejct, I did some tiny modifications here.
+        Enemy out = new Enemy(name,attack, health, defence);
         out.setDirection(dir);
         out.setMoney(money);
         out.setPosition(parsePosition((HashMap<String, Integer>) encodedEnemies.get("position")));

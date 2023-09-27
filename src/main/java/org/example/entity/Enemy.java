@@ -9,7 +9,7 @@ package org.example.entity;
  */
 public class Enemy extends Life {
     private int defense;
-
+    private String name;
     private final static int NORMAL_ENEMY_GOLD = 5;
 
 /**
@@ -19,12 +19,26 @@ public class Enemy extends Life {
  * @param health The health value
  * @param defense The defense value
  */
-    public Enemy(int attack, int health, int defense) {
+    public Enemy(String name ,int attack, int health, int defense) {
         super(100, health, new Position(0, 0), attack);
+        this.name =name;
+        this.attack =attack;
         this.defense = defense;
         this.money = NORMAL_ENEMY_GOLD;
     }
 
+    public String getName(){
+        return name;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+
+    public int getAttack() {
+        return attack;
+    }
 
     public int getDefense() {
         return defense;
@@ -33,5 +47,14 @@ public class Enemy extends Life {
     public void setDefense(Integer defense) {
         this.defense = defense;
     }
+
+   
+
+    public String enemyStatistics (Enemy enemy){
+     String outPutString = "The Enemy you are facing is called " + getName() + ". The attack of the enemy is " + getAttack() + ". The Dfense of the enemy is " + getDefense()+ ". Its health is " + getHealth() + "." ;
+     return outPutString;
+    }
+
+
 
 }
