@@ -64,20 +64,6 @@
       "x" : 1,
       "y" : 1
     },
-    "enemies" : {
-      "Position{x=30, y=10}" : {
-        "money" : 5,
-        "maxHealth" : 6,
-        "health" : 6,
-        "attack" : 4,
-        "defense" : 2,
-        "position" : {
-          "x" : 0,
-          "y" : 0
-        },
-        "direction" : "UP"
-      }
-    },
     "items" : {
       "Position{x=18, y=7}" : {
         "name" : "Gramps",
@@ -106,6 +92,20 @@
         "direction" : "UP",
         "name" : "JASON",
         "dialogueCount" : 1
+      }
+    },
+    "enemies" : {
+      "Position{x=30, y=10}" : {
+        "money" : 5,
+        "maxHealth" : 6,
+        "health" : 6,
+        "attack" : 4,
+        "defense" : 2,
+        "position" : {
+          "x" : 0,
+          "y" : 0
+        },
+        "direction" : "UP"
       }
     }
   }

@@ -17,6 +17,6 @@ public class PositionTest {
         position.setX(5);
         position.setY(7);
         Assertions.assertEquals(5, position.getX());
-        Assertions.assertEquals(5, position.getY());
+        Assertions.assertEquals(7, position.getY());
     }
 }
