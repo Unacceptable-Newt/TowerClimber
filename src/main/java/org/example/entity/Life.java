@@ -1,23 +1,29 @@
 package org.example.entity;
 
-import org.example.belonging.Weapon;
 import org.example.interaction.Direction;
 
 /**
+ * @author Austin Zerk, Yucheng Zhu, Yue Zhu
  * An abstract superclass for all humans, monster and life-like creatures
  */
 public abstract class Life {
     protected int money;
-    protected int health;
+    protected int maxHealth; // Full health. Cannot heal beyond that
+    protected int health; // Current health.
+    protected int attack;
+    protected int defense;
+    
 
     protected Position position;
     protected Direction direction;
 
-    public Life(int money, int health, Position position){
-        this.position = position;
-        this.health = health;
+    public Life(int money, int maxHealth, Position position, int attack,int defense){
         this.money = money;
-
+        this.position = position;
+        this.maxHealth = maxHealth;
+        this.health = maxHealth;
+        this.attack = attack;
+        this.defense = defense;
         this.direction = Direction.UP;
     }
     public int getMoney() {
@@ -28,12 +34,29 @@ public abstract class Life {
         this.money = money;
     }
 
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int max_health) {
+        this.maxHealth = max_health;
+    }
+
     public int getHealth() {
         return health;
     }
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    /**
+     * @author Yucheng Zhu
+     * Restore the life to its max health.
+     * Used in respawning.
+     */
+    public void restoreFullHealth() {
+        setHealth(maxHealth);
     }
 
     public Position getPosition() {
@@ -52,8 +75,18 @@ public abstract class Life {
         this.direction = direction;
     }
 
-    public void defense(){
+    public int getAttack(){
+        return attack;
+    }
 
+    public void setAttack(int attack) {this.attack = attack;}
+
+    public int getDefense(){
+        return defense;
+    }
+
+    public void defend(int damage){
+        this.health -= damage > defense ? damage - defense : 0;
     }
 
     public void attack(){

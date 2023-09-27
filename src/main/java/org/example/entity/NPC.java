@@ -1,28 +1,20 @@
 package org.example.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
 /**
- * The NPC class represent user's charactor, and he/she will have money, health, and player level
- * if player was attacked, player's health will decrease
- * .....
- *  @author Rong Sun
+ * @author Jolene Sun, Austin Zerk, Yucheng Zhu
+ * The NPC class represents an NPC. The player can talk to him/her
+ * @author Rong Sun
+ * @author Yucheng Zhu
  *
  */
 public class NPC extends Life {
     private String name;
-    private List<String> dialogue;
+    private int dialogueCount = 1;
 
-    public NPC(String name, Position position,List<String> dialogue) {
-        super(100,100,position);
+    public NPC(String name, Position position) {
+        super(100, 100, position, 10, 10);
         this.name = name;
-        this.dialogue = dialogue;
     }
-
     public String getName() {
         return name;
     }
@@ -31,24 +23,23 @@ public class NPC extends Life {
         this.name = name;
     }
 
-    public List<String> getDialogue() {
-        return dialogue;
+    public int getDialogueCount() {
+        return dialogueCount;
     }
 
-    public void setDialogue(List<String> dialogue) {
-        this.dialogue = dialogue;
+    /**
+     * @author Yucheng Zhu
+     * Reset the dialogue count to 1. Allowing an NPC to repeat his lines.
+     */
+    public void resetDialogueCount() {
+        this.dialogueCount = 1;
     }
 
-    public void loadDialogueFromFile(String filePath) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                dialogue.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    /**
+     * @author Yucheng Zhu
+     * Add dialogue count by 1. Used to load the next dialogue
+     */
+    public void incrementDialogueCount() {
+        this.dialogueCount++;
     }
-
-
 }

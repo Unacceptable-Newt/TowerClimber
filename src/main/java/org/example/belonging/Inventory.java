@@ -6,12 +6,12 @@ import java.util.List;
 
 /**
  * @author Rong Sun
- * The Inventory class states
- * the max number of items and
+ * represent the Inventory System
+ * has the max number of items and
  * details the precise items objects
  */
 public class Inventory {
-    // Store items
+    // Store items by their name
     private HashMap<String, Item> items = new HashMap<>();
 
     // Max number of weight a player can carry
@@ -21,8 +21,8 @@ public class Inventory {
 
     /**
      * @author Rong Sun
-     * Constructs a new inventory with the specified capacity.
-     * @param capacity The maximum number of items the inventory can hold.
+     * Constructs a new inventory with the capacity.
+     * @param capacity The maximum number of items
      */
     public Inventory(int capacity) {
 
@@ -32,7 +32,7 @@ public class Inventory {
 
     /**
      * @author Rong Sun
-     * List all items in the inventory
+     * show all items in the inventory
      * @return All items in the inventory
      */
     public List<Item> listItems() {
@@ -41,9 +41,9 @@ public class Inventory {
     }
 
     /**
-     *  @author Rong Sun
-     * check whether an item contains in the inventory
-     * @param item item want to be checked
+     * @author Rong Sun
+     * check whether an item is in the inventory
+     * @param item item's name want to be checked
      * @return true if the inventory has that item
      */
     public boolean hasItem(String item){
@@ -55,7 +55,7 @@ public class Inventory {
 
     /**
      * @author Rong Sun
-     * Add an item to the inventory
+     * Add an item to the inventory system
      * @param itemToAdd The item to add to the inventory
      */
     public void addItem(Item itemToAdd) {
@@ -74,9 +74,10 @@ public class Inventory {
 
     /**
      * @author Rong Sun
-     * Remove an item from the inventory
-     * @param itemToRemove The item to remove from the inventory
-     * @return The removed item. Can be used in another task such as calculate the sell price in shopping.
+     * Remove an item
+     * @param itemToRemove The name of the item to remove
+     * @return The removed item.
+     * Can be used in another task
      */
     public Boolean removeItem(String itemToRemove) {
         // FIXME
@@ -109,26 +110,17 @@ public class Inventory {
         this.capacity = Math.max(0, this.capacity + capacityIncrement);
     }
 
-    /**@author Rong Sun
-     * Retrieves a reference to the internal HashMap containing items in the inventory.
-     * @return A reference to the HashMap of items.
-     */
+
     public HashMap<String, Item> getItems() {
         return items;
     }
 
-    /**@author Rong Sun
-     * Sets the capacity of the inventory to the specified value.
-     * @param capacity The new capacity of the inventory.
-     */
+
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
-    /**@author Rong Sun
-     * Sets the items in the inventory to the provided HashMap of items.
-     * @param items The HashMap of items to set in the inventory.
-     */
+
     public void setItems(HashMap<String, Item> items) {
         this.items = items;
     }

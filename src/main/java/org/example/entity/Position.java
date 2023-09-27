@@ -33,6 +33,11 @@ public class Position {
     }
 
 
+    /**
+     * check if o is equal to the this position,
+     * @param o is the object(most of times' position)
+     * @return true if two positions are equal
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,6 +51,7 @@ public class Position {
         return Objects.hash(x, y);
     }
 
+    // For testing see if the item are placed in right position
     @Override
     public String toString() {
         return "Position{" +

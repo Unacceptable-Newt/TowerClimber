@@ -2,20 +2,55 @@ OBJECT: {"name": "Jack", "age": 30, "favoriteSport": "Football"}
 ARRAY: ["APPLE"、"Banana"、"Orange]
 
 
-
+// previous
 -cache
+|- presetmap
+||-
+|
+|
+|- dialogue
+||-
+|
+|
+|
+|- progress
+||- current
+|||- level1_cur.json
+|||- level2.json
+|||- level3.json
+||
+||- 12_09_23_10_00
+|||- level1.json
+|||- level2_cur.json
+|||- level3.json
+||
+||- 11_09_23_11_30
+|||- level1.json
+|||- level2.json
+|||- level3_cur.json
+
+
+// now
+-cache
+|- map
+||- level1.json
+||- level2.json
+||- level3.json
+|
+|
+|- dialogue
+||-
+|
+|
 |- progress
 ||- current
 |||- level1_cur.json
 ||
 ||- 12_09_23_10_00
-|||- level1.json
 |||- level2_cur.json
 ||
 ||- 11_09_23_11_30
-|||- level1_cur.json
-|||- level2.json
-|||- level3.json
+|||- level3_cur.json
 
 
 

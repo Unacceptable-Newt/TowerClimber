@@ -6,13 +6,14 @@ import org.example.gameLogic.Maze;
 import org.example.interaction.Direction;
 
 /**
- * @author
+ * @author Yucheng Zhu
  * Changes how player's positions change
  */
 public class Movement {
 
     /**
      * @author Yucheng Zhu
+     * @author Rong Sun
      * Changes if the entity can move to an adjacent cell in the given direction.
      *
      * @param currentPosition Entity's current position
@@ -36,7 +37,7 @@ public class Movement {
             return false;
         } else if (maze.getNPCs().containsKey(nextPosition)) { // not an NPC
             return false;
-        } else if (maze.getItems().containsKey(nextPosition)) { // not an NPC
+        } else if (maze.getItems().containsKey(nextPosition)) { // not an item
             return false;
         } else { // not an exit
             return !maze.getExit().equals(nextPosition);
@@ -45,6 +46,8 @@ public class Movement {
 
     /**
      * @author Yucheng Zhu
+     * @author Austin Zerk
+     * @author Rong Sun
      * Changes the entity's position after having moved to an adjacent cell in the given direction.
      * Return the current position if the entity cannot move.
      *
@@ -184,6 +187,8 @@ public class Movement {
 
     /**
      * @author Yucheng Zhu
+     * @author Austin Zerk
+     * @author Rong Sun
      * @param maze The maze where the play is in
      * @return Object at the position. null if nothing is at the position.
      */
