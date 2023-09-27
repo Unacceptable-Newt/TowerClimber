@@ -281,7 +281,7 @@ public class JsonSave {
                     Iterator<Position> NPCiter = NPCHashMap.keySet().iterator();
                     while (NPCiter.hasNext()) {
                         Position key = NPCiter.next();
-                        newMaze.addNPC(key, NPCHashMap.get(key));
+                        newMaze.addNPC(NPCHashMap.get(key));
                     }
 
                     newMaze.setEncodedWalls(wallArrayList);
