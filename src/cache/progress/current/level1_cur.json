@@ -51,7 +51,7 @@
       "maxHealth" : 10,
       "health" : 10,
       "attack" : 4,
-      "defense" : 0,
+      "defence" : 0,
       "position" : {
         "x" : 10,
         "y" : 10
@@ -78,27 +78,13 @@
         "attackValue" : 2
       }
     },
-    "enemies" : {
-      "Position{x=30, y=10}" : {
-        "money" : 5,
-        "maxHealth" : 6,
-        "health" : 6,
-        "attack" : 4,
-        "defense" : 2,
-        "position" : {
-          "x" : 0,
-          "y" : 0
-        },
-        "direction" : "UP"
-      }
-    },
     "npcs" : {
       "Position{x=1, y=2}" : {
         "money" : 100,
         "maxHealth" : 100,
         "health" : 100,
         "attack" : 100,
-        "defense" : 0,
+        "defence" : 0,
         "position" : {
           "x" : 1,
           "y" : 2
@@ -106,6 +92,20 @@
         "direction" : "UP",
         "name" : "JASON",
         "dialogueCount" : 1
+      }
+    },
+    "enemies" : {
+      "Position{x=30, y=10}" : {
+        "money" : 5,
+        "maxHealth" : 6,
+        "health" : 6,
+        "attack" : 4,
+        "defence" : 2,
+        "position" : {
+          "x" : 0,
+          "y" : 0
+        },
+        "direction" : "UP"
       }
     }
   }
