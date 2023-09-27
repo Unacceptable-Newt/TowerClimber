@@ -64,20 +64,18 @@
       "x" : 1,
       "y" : 1
     },
-    "npcs" : {
-      "Position{x=1, y=2}" : {
-        "money" : 100,
-        "maxHealth" : 100,
-        "health" : 100,
-        "attack" : 100,
-        "defense" : 0,
-        "position" : {
-          "x" : 1,
-          "y" : 2
-        },
-        "direction" : "UP",
-        "name" : "JASON",
-        "dialogue" : [ "Why Hello there", "a fine day we are having" ]
+    "items" : {
+      "Position{x=18, y=7}" : {
+        "name" : "Gramps",
+        "price" : 4,
+        "weight" : 2,
+        "attackValue" : 9
+      },
+      "Position{x=18, y=10}" : {
+        "name" : "Fring",
+        "price" : 2,
+        "weight" : 7,
+        "attackValue" : 2
       }
     },
     "enemies" : {
@@ -94,18 +92,20 @@
         "direction" : "UP"
       }
     },
-    "items" : {
-      "Position{x=18, y=7}" : {
-        "name" : "Gramps",
-        "price" : 4,
-        "weight" : 2,
-        "attackValue" : 9
-      },
-      "Position{x=18, y=10}" : {
-        "name" : "Fring",
-        "price" : 2,
-        "weight" : 7,
-        "attackValue" : 2
+    "npcs" : {
+      "Position{x=1, y=2}" : {
+        "money" : 100,
+        "maxHealth" : 100,
+        "health" : 100,
+        "attack" : 100,
+        "defense" : 0,
+        "position" : {
+          "x" : 1,
+          "y" : 2
+        },
+        "direction" : "UP",
+        "name" : "JASON",
+        "dialogueCount" : 1
       }
     }
   }
