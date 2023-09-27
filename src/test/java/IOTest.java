@@ -58,6 +58,12 @@ public class IOTest {
         testLevel.setMaze(testMaze);
     }
 
+    /**
+     * check if save things and start new game goes well
+     *
+     * @author: Austin Zerk
+     * @author: Xin Chen
+     */
     @Test
     void saveTest(){
 
@@ -73,6 +79,13 @@ public class IOTest {
         Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
     }
 
+    /**
+     * check up level function is working, loader loads things well,
+     * leave level1_cur.json for rest test
+     *
+     * @author: Austin Zerk
+     * @author: Xin Chen
+     */
     @Test
     void loadTest() {
 
