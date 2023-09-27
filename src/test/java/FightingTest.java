@@ -42,7 +42,7 @@ public class FightingTest {
         // Add things
         maze.addItem(new Position(1, 3), new Weapon("The Big Axe",3, 5, 4));
         maze.addNPC(new NPC("John", new Position(1, 4)));
-        maze.addEnemy(new Position(1, 5),new Enemy(2, 2, 2));
+        maze.addEnemy(new Position(1, 5),new Enemy(2, 2, 0));
     }
     @Test
     public void killEnemyTest(){
@@ -70,7 +70,7 @@ public class FightingTest {
         Assertions.assertNotNull(maze.getEnemyAtPosition(new Position(1,5)));
         Assertions.assertEquals(1, maze.getEnemyAtPosition(new Position(1, 5)).getHealth());
         Assertions.assertNotNull(maze.getPlayer());
-        Assertions.assertEquals(100, player.getHealth());
+        Assertions.assertEquals(99, player.getHealth());
     }
 }
 
