@@ -42,7 +42,7 @@ public class MovementTest {
         // Add things
         maze.addItem(new Position(1, 3), new Weapon("The Big Axe",3, 5, 4));
         maze.addNPC(new NPC("John", new Position(1, 4)));
-        maze.addEnemy(new Position(1, 5),new Enemy(2, 2, 2));
+        maze.addEnemy(new Position(1, 5),new Enemy("Pbrnd",2, 2, 2));
     }
 
     /**
