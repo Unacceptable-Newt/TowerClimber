@@ -1,3 +1,4 @@
+import org.example.IO.JsonLoad;
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
 import org.example.entity.Position;
@@ -20,9 +21,11 @@ public class NpcTalkerTest {
     Inventory inventory;
     Level level;
 
+    JsonLoad loader = new JsonLoad();
+
     @BeforeEach
     public void init() {
-        level = new Level(1);
+        level = loader.loadCurLevelData();
         inventory = new Inventory(5);
         level.getMaze().setPlayer(new Player(250, 100, 1, new Position(4, 4)));
         level.getMaze().getPlayer().setDirection(Direction.DOWN);
@@ -46,5 +49,8 @@ public class NpcTalkerTest {
                 "",
                 NpcTalker.interactWithAdjacent(inventory, level, "")
         );
+
+
+        loader.emptyCurFolder();
     }
 }
