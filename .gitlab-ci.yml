@@ -19,6 +19,7 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
   - test
+  - deploy
 
 variables:
   DOCKER_HOST: tcp://docker:2376
@@ -40,7 +41,7 @@ gradle-test:   # This job runs in the test stage.
 
 gradle-deploy:
   image: docker:24.0.6
-  stage: build
+  stage: deploy
   services:
     - docker:24.0.6-dind
   script:
