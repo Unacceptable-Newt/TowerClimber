@@ -42,6 +42,9 @@ public class Display extends JFrame {
     private static String displayMaze = "";
     private static String dialog = "";
 
+    //interacting with enemy
+    private static EnemyFighter enemyFighter = new EnemyFighter();
+
     public boolean isMovementKeys(int key) {
         return movementKeys.contains(key);
     }
@@ -84,6 +87,12 @@ public class Display extends JFrame {
                 else if (ch == 'e') {
                     level = ExitEvent.exit(level);
                     pickStuff(69);
+                    try {
+                        NpcTalker.interactWithAdjacent(inventory, level, dialog);
+                    } catch (IOException e){
+                        System.err.println("failed to find dialog from adjacent NPC");
+                    }
+                    enemyFighter.interactWithAdjacent(inventory,level.getMaze());
                 }
                 else if (ch == '1') selectItemFromKeyCode(49,true);
                 else if (ch == '2') selectItemFromKeyCode(50,true);
@@ -93,6 +102,7 @@ public class Display extends JFrame {
 
                 //update the maze string
                 displayMaze = Gui.updateGuiString(level.getMaze());
+                inventoryString = displayInventory(inventory,true).toString();
 
                 //print the display
                 System.out.println(inventoryString);
@@ -168,9 +178,6 @@ public class Display extends JFrame {
                     //interacting with exit
                     level = ExitEvent.exit(level);
 
-                    //interacting with enemy
-                    EnemyFighter enemyFighter = new EnemyFighter();
-
                     enemyFighter.interactWithAdjacent(inventory, level.getMaze());
                     if (level.getMaze().getPlayer().getHealth() <= 0){
                         //FIXME Player needs to die
@@ -187,7 +194,7 @@ public class Display extends JFrame {
                 // interacting with items on map
                 // Call pick stuff function and put the picked stuff in the inventory system
                 pickStuff(e.getKeyCode());
-                additionalLabel.setText(displayInventory(inventory).toString());
+                additionalLabel.setText(displayInventory(inventory,false).toString());
                 // Call the press 1-5 key, and choose the item
                 chooseStuff();
 
@@ -242,8 +249,8 @@ public class Display extends JFrame {
             Pair<Player, Inventory> playerInventoryPair = itemPicker.interactWithAdjacent(inventory, level.getMaze());
         }
 
-        String guiText = Gui.updateGuiString(level.getMaze());
-        textArea.setText(guiText);
+        //String guiText = Gui.updateGuiString(level.getMaze());
+        //textArea.setText(guiText);
 
     }
 
@@ -282,8 +289,8 @@ public class Display extends JFrame {
         }
 
         // update the GUI
-        if (textMode) inventoryString = displayInventory(inventory).toString();
-        else additionalLabel.setText(displayInventory(inventory).toString());
+        //if (textMode) inventoryString = displayInventory(inventory).toString();
+        //else additionalLabel.setText(displayInventory(inventory).toString());
     }
 
 
@@ -293,9 +300,9 @@ public class Display extends JFrame {
      * adds the inventory to the gui display board.
      * press 1-5 to choose the weapon 1-5 displayed in the inventory system
      */
-    public static StringBuilder displayInventory(Inventory inventory) {
+    public static StringBuilder displayInventory(Inventory inventory,boolean textMode) {
         int itemNumber = 1;
-        StringBuilder builder = new StringBuilder("<html>Inventory:<br>");
+        StringBuilder builder = textMode ? new StringBuilder("Inventory:\n") : new StringBuilder("<html>Inventory:<br>");
         //iterate the item, add them by different lines in the display board with the html label
         for (Item item : inventory.listItems()) {
             //make sure item is the instance of weapon
@@ -306,16 +313,17 @@ public class Display extends JFrame {
                 if (level.getMaze().getPlayer().getCurrentWeapon() == weapon)
                     builder.append(" --");
 
-                builder.append("<br>");
+                 if (textMode) builder.append("\n"); else builder.append("<br>");
             } else {
                 //make sure next weapon is in different lines
-                builder.append(itemNumber + ". " + item.getName() + "(Price:" + item.getPrice() + " Weight: " + item.getWeight() + ")<br>");
+                builder.append(itemNumber + ". " + item.getName() + "(Price:" + item.getPrice() + " Weight: " + item.getWeight());
+                if (textMode) builder.append("\n"); else builder.append(")<br>");
             }
             // label the different item to different numbers
             itemNumber++;
         }
 
-        builder.append("</html>");
+        if (!textMode) builder.append("</html>");
         return builder;
     }
 
