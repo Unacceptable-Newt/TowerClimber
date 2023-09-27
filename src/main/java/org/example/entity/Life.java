@@ -12,16 +12,18 @@ public abstract class Life {
     protected int health; // Current health.
     protected int attack;
     protected int defense;
+    
 
     protected Position position;
     protected Direction direction;
 
-    public Life(int money, int maxHealth, Position position, int attack){
+    public Life(int money, int maxHealth, Position position, int attack,int defense){
+        this.money = money;
         this.position = position;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
-        this.money = money;
         this.attack = attack;
+        this.defense = defense;
         this.direction = Direction.UP;
     }
     public int getMoney() {

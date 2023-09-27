@@ -17,20 +17,35 @@ public class Battle {
      * @param enemy The enemy
      * @return True if the enemy dies. Otherwise, return false.
      */
-    public boolean process(Player player , Enemy enemy){
+    
+     public static boolean processFights(Player player , Enemy enemy){
 
         // Data preparation for battle.
         int playerAttack = player.getAttack();
 
+         int weaponAttack;
+        if (player.getCurrentWeapon() != null) weaponAttack = player.getCurrentWeapon().getAttackValue();
+        else weaponAttack = 0;
+
+        int actualAttack = playerAttack + weaponAttack; //use the current weapon to defeat enemy
+
         int enemyAttack = enemy.getAttack();
 
         // turn 1, the player attack first
-        enemy.defend(playerAttack);
-        if (enemy.getHealth() <= 0)
-            return true; // enemy dies
+        enemy.defend(actualAttack);
+        
+        if (enemy.getHealth() <= 0){
+             return true; // enemy dies
+        }
+        else{
+        
         player.defend(enemyAttack);
 
         return false; // enemy lives
+
+        }
+           
+           
     }
 
 
