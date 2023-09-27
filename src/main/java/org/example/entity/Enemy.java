@@ -20,7 +20,7 @@ public class Enemy extends Life {
  * @param defense The defense value
  */
     public Enemy(String name ,int attack, int health, int defense) {
-        super(100, health, new Position(0, 0), attack);
+        super(100, health, new Position(5, 4), attack);
         this.name =name;
         this.attack =attack;
         this.defense = defense;
