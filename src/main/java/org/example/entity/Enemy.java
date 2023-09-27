@@ -26,7 +26,7 @@ public class Enemy extends Life {
     }
 
 
-    public int getDefence() {
+    public int getDefense() {
         return defense;
     }
 

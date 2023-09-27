@@ -13,7 +13,7 @@ public abstract class Life {
     protected int maxHealth; // Full health. Cannot heal beyond that
     protected int health; // Current health.
     protected int attack; // Each life has an inborn attack value. The player's attack value is also modified by his weapon
-    protected int defence; // Each life has an inborn defence value. The player's defence value is modified by his weapon
+    protected int defense; // Each life has an inborn defence value. The player's defence value is modified by his weapon
 
     protected Position position;
     protected Direction direction;
@@ -90,8 +90,8 @@ public abstract class Life {
 
     public void setAttack(int attack) {this.attack = attack;}
 
-    public int getDefence(){
-        return defence;
+    public int getDefense(){
+        return defense;
     }
 
     /**
@@ -103,7 +103,7 @@ public abstract class Life {
      * @param damage Incoming damage value
      */
     public void defend(int damage){
-        this.health -= damage > defence ? damage - defence : 0;
+        this.health -= damage > defense ? damage - defense : 0;
     }
 
     public void attack(){}
