@@ -18,8 +18,8 @@ public class Enemy extends Life {
  * @param health The health value
  * @param defense The defense value
  */
-    public Enemy(String name ,int attack, int health, int defense) {
-        super(100, health, new Position(5, 4), attack);
+    public Enemy(String name ,int attack, int health, int defense, Position position) {
+        super(100, health, position, attack);
         this.name = name;
         this.defense = defense;
         this.money = NORMAL_ENEMY_GOLD;
