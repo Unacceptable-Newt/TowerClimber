@@ -42,7 +42,11 @@ public class Game {
      */
     public static void main(String[] args) {
 
-        // Call the GUI
-        new Display(WIDTH, HEIGHT);
+        if (args.length == 1 && args[0].equals("-terminal")){
+            Display.TextDisplay();
+        }else {
+            // Call the GUI
+            new Display(WIDTH, HEIGHT);
+        }
     }
 }

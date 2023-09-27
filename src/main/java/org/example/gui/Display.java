@@ -18,6 +18,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 
 /**
@@ -25,13 +27,17 @@ import java.util.HashSet;
  * GUI to visualise the game
  */
 public class Display extends JFrame {
-    private JTextPane textArea;
-    private Level level;
-    private ItemPicker itemPicker;
-    private MoneyPicker moneyPicker;
-    private Inventory inventory;
+    private static JTextPane textArea;
+    private static Level level;
+    private static ItemPicker itemPicker;
+    private static MoneyPicker moneyPicker;
+    private static Inventory inventory;
 
     private HashSet<Integer> movementKeys;
+
+    private static String Inventory = "";
+    private static String displayMaze = "";
+    private static String dialog = "";
 
     public boolean isMovementKeys(int key) {
         return movementKeys.contains(key);
@@ -43,6 +49,44 @@ public class Display extends JFrame {
         this.movementKeys.add(KeyEvent.VK_S);
         this.movementKeys.add(KeyEvent.VK_A);
         this.movementKeys.add(KeyEvent.VK_D);
+    }
+
+    public static void TextDisplay(){
+        // initialise the movement objects
+        initialiseMovementObjects();
+        // initialise the picker objects
+        initialisePickerObjects();
+
+        displayMaze = Gui.updateGuiString(level.getMaze());
+        System.out.println(displayMaze);
+
+        InputStreamReader sin = new InputStreamReader(System.in);
+        char ch;
+        while (true){
+            try {
+                ch = (char) sin.read();
+                if (ch == 'q') break;
+                //move the player if movement keys are pressed passing the keycode for jPane compatibility
+                else if (ch == 'w') MovementEvents.setGuiTextOnMovementKeysPressed(87,level.getMaze());
+                else if (ch == 'a') MovementEvents.setGuiTextOnMovementKeysPressed(65,level.getMaze());
+                else if (ch == 's') MovementEvents.setGuiTextOnMovementKeysPressed(83,level.getMaze());
+                else if (ch == 'd') MovementEvents.setGuiTextOnMovementKeysPressed(68,level.getMaze());
+                // interaction events
+                else if (ch == 'e') {
+                    ExitEvent.exit(level);
+                    pickStuff(69, true);
+                }
+
+                //update the maze string
+                displayMaze = Gui.updateGuiString(level.getMaze());
+
+                //System.out.println(Inventory);
+                System.out.println(displayMaze);
+                //System.out.println(dialog);
+            } catch (IOException e){
+                System.err.println("Failed to get character from input");
+            }
+        }
     }
 
     public Display(int width, int height) {
@@ -93,7 +137,7 @@ public class Display extends JFrame {
                 if (guiText != null) {
                     textArea.setText(guiText);
                 }
-                pickStuff(e);
+                pickStuff(e.getKeyCode(),false);
             }
         });
         // Make the GUI visible
@@ -105,7 +149,7 @@ public class Display extends JFrame {
      * Stubbing player's data to test movement.
      * TODO: replace this method from objects in the Maze when it finishes.
      */
-    public void initialiseMovementObjects() {
+    public static void initialiseMovementObjects() {
 
         level = new Level(1); // FIXME: load from file instead of creating a stubbed level when load is implemented
     }
@@ -114,20 +158,18 @@ public class Display extends JFrame {
      * Rong Sun
      */
 
-    public void initialisePickerObjects() {
-        this.inventory = new Inventory(5);
-        this.itemPicker  = new ItemPicker();
-        this.moneyPicker = new MoneyPicker();
+    public static void initialisePickerObjects() {
+        inventory = new Inventory(5);
+        itemPicker  = new ItemPicker();
+        moneyPicker = new MoneyPicker();
 
     }
 
     /**
      * Rong Sun
-     * @param e
+     * @param keyCode the last key that was pressed
      */
-    public void pickStuff(KeyEvent e){
-
-        int keyCode = e.getKeyCode();
+    public static void pickStuff(int keyCode, boolean textMode){
 
         // Check if the "P" key is pressed
         if (keyCode == KeyEvent.VK_E) {
@@ -138,33 +180,30 @@ public class Display extends JFrame {
 
             // Update the GUI text
             String newItemText = "You picked up an item!";
-            if(playerInventoryPair.second().getItems().size()>size){
-                if (keyCode == KeyEvent.VK_E) {
-                    //A pop-up dialog box
-                    JOptionPane.showMessageDialog(null, "picked up", "pick message", JOptionPane.INFORMATION_MESSAGE);
+            if(playerInventoryPair.second().getItems().size()>size && !textMode){
+                //A pop-up dialog box
+                JOptionPane.showMessageDialog(null, "picked up", "pick message", JOptionPane.INFORMATION_MESSAGE);
 
-                    // Create a timer and close the prompt after a few seconds
-                    Timer timer = new Timer(3000, new ActionListener() {
-                        public void actionPerformed(ActionEvent arg0) {
-                            // Close prompt box
-                            Window[] windows = JOptionPane.getRootFrame().getOwnedWindows();
-                            for (Window window : windows) {
-                                if (window instanceof JDialog) {
-                                    JDialog dialog = (JDialog) window;
-                                    if (dialog.getContentPane().getComponentCount() == 1
-                                            && dialog.getContentPane().getComponent(0) instanceof JOptionPane) {
-                                        dialog.dispose();
-                                    }
+                // Create a timer and close the prompt after a few seconds
+                Timer timer = new Timer(3000, new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        // Close prompt box
+                        Window[] windows = JOptionPane.getRootFrame().getOwnedWindows();
+                        for (Window window : windows) {
+                            if (window instanceof JDialog) {
+                                JDialog dialog = (JDialog) window;
+                                if (dialog.getContentPane().getComponentCount() == 1
+                                        && dialog.getContentPane().getComponent(0) instanceof JOptionPane) {
+                                    dialog.dispose();
                                 }
                             }
                         }
-                    });
+                    }
+                });
 
                     // Start timer, execute after 3000 milliseconds
-                    timer.setRepeats(false);
-                    timer.start();
-
-                }
+                timer.setRepeats(false);
+                timer.start();
             }
 
 
@@ -175,9 +214,9 @@ public class Display extends JFrame {
 
         // Update the GUI char "pixels" as a string
         // You can keep this part if it's relevant to your game
-//        String guiText = movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, maze, gui);
+        //String guiText = movementEvents.setGuiTextOnMovementKeysPressed(keyCode, movement, maze, gui);
         String guiText = Gui.updateGuiString(level.getMaze());
-        if (guiText != null) {
+        if (guiText != null && !textMode) {
             textArea.setText(guiText);
         }
 
