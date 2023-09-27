@@ -34,21 +34,11 @@ public class Display extends JFrame {
     private static JTextPane textArea;
     private static Level level;
     private static ItemPicker itemPicker;
-    private static MoneyPicker moneyPicker;
     private static Inventory inventory;
 
     private HashSet<Integer> movementKeys;
-    private JTextPane textArea;
-    //private JTextArea inventoryTextArea;
-    private Level level;
-    private ItemPicker itemPicker;
-    //private MoneyPicker moneyPicker;
-    private Inventory inventory;
-    private JLabel additionalLabel;
-
-    // WSAD keys, used to move
-    private HashSet<Integer> movementKeys = setMovementKeys();
-    private static String Inventory = "";
+    private static JLabel additionalLabel;
+    private static String inventoryString = "";
     private static String displayMaze = "";
     private static String dialog = "";
 
@@ -93,14 +83,19 @@ public class Display extends JFrame {
                 // interaction events
                 else if (ch == 'e') {
                     level = ExitEvent.exit(level);
-                    pickStuff(69, true);
+                    pickStuff(69);
                 }
+                else if (ch == '1') selectItemFromKeyCode(49,true);
+                else if (ch == '2') selectItemFromKeyCode(50,true);
+                else if (ch == '3') selectItemFromKeyCode(51,true);
+                else if (ch == '4') selectItemFromKeyCode(52,true);
+                else if (ch == '5') selectItemFromKeyCode(53,true);
 
                 //update the maze string
                 displayMaze = Gui.updateGuiString(level.getMaze());
 
                 //print the display
-                //System.out.println(Inventory);
+                System.out.println(inventoryString);
                 System.out.println(displayMaze);
                 //System.out.println(dialog);
 
@@ -191,7 +186,7 @@ public class Display extends JFrame {
 
                 // interacting with items on map
                 // Call pick stuff function and put the picked stuff in the inventory system
-                pickStuff(e);
+                pickStuff(e.getKeyCode());
                 additionalLabel.setText(displayInventory(inventory).toString());
                 // Call the press 1-5 key, and choose the item
                 chooseStuff();
@@ -237,7 +232,7 @@ public class Display extends JFrame {
      * Initialise the pick helper instance and inventory system
      * @param keyCode the key code that allow key E pressed and activity catched
      */
-    public static void pickStuff(int keyCode, boolean textMode){
+    public static void pickStuff(int keyCode){
 
         // Check if the "E" key is pressed
         if (keyCode == KeyEvent.VK_E) {
@@ -264,25 +259,33 @@ public class Display extends JFrame {
                 String text;
                 int keyCode = e.getKeyCode();
 
-                // get the number of the key
-                int chosenWeaponNo = -1; // default is -1 (no use)
-                if (keyCode >= KeyEvent.VK_1 && keyCode <= KeyEvent.VK_5) {
-                    chosenWeaponNo = keyCode - KeyEvent.VK_1; // 1-5 mapping to 0-4
-                }
-
-                // if pressed the key 1-5
-                if (chosenWeaponNo >= 0 && chosenWeaponNo < inventory.listItems().size()) {
-                    Item selectedItem = inventory.listItems().get(chosenWeaponNo);
-                    if (selectedItem instanceof Weapon)
-                        level.getMaze().getPlayer().setCurrentWeapon((Weapon) selectedItem);
-                }
-
-                // update the GUI
-                text = Gui.updateGuiString(level.getMaze());
-                additionalLabel.setText(displayInventory(inventory).toString());
+                selectItemFromKeyCode(keyCode,false);
             }
         });
     }
+
+    /**
+     * adds a listener to the text area that updates the selected weapon of the player
+     * press 1-5 to choose the weapon 1-5 displayed in the inventory system
+     */
+    private static void selectItemFromKeyCode(int keyCode, boolean textMode){
+        int chosenWeaponNo = -1; // default is -1 (no use)
+        if (keyCode >= KeyEvent.VK_1 && keyCode <= KeyEvent.VK_5) {
+            chosenWeaponNo = keyCode - KeyEvent.VK_1; // 1-5 mapping to 0-4
+        }
+
+        // if pressed the key 1-5
+        if (chosenWeaponNo >= 0 && chosenWeaponNo < inventory.listItems().size()) {
+            Item selectedItem = inventory.listItems().get(chosenWeaponNo);
+            if (selectedItem instanceof Weapon)
+                level.getMaze().getPlayer().setCurrentWeapon((Weapon) selectedItem);
+        }
+
+        // update the GUI
+        if (textMode) inventoryString = displayInventory(inventory).toString();
+        else additionalLabel.setText(displayInventory(inventory).toString());
+    }
+
 
 
     /**
@@ -290,7 +293,7 @@ public class Display extends JFrame {
      * adds the inventory to the gui display board.
      * press 1-5 to choose the weapon 1-5 displayed in the inventory system
      */
-    public StringBuilder displayInventory(Inventory inventory) {
+    public static StringBuilder displayInventory(Inventory inventory) {
         int itemNumber = 1;
         StringBuilder builder = new StringBuilder("<html>Inventory:<br>");
         //iterate the item, add them by different lines in the display board with the html label
