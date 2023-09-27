@@ -8,7 +8,6 @@ package org.example.entity;
  *
  */
 public class Enemy extends Life {
-    private int defense;
     private String name;
     private final static int NORMAL_ENEMY_GOLD = 5;
 
@@ -21,27 +20,13 @@ public class Enemy extends Life {
  */
     public Enemy(String name ,int attack, int health, int defense) {
         super(100, health, new Position(0, 0), attack);
-        this.name =name;
-        this.attack =attack;
+        this.name = name;
         this.defense = defense;
         this.money = NORMAL_ENEMY_GOLD;
     }
 
     public String getName(){
         return name;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-
-    public int getAttack() {
-        return attack;
-    }
-
-    public int getDefense() {
-        return defense;
     }
 
     public void setDefense(Integer defense) {
