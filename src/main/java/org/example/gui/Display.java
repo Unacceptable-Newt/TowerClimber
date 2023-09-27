@@ -16,6 +16,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import javax.swing.JTextPane;
@@ -148,6 +149,7 @@ public class Display extends JFrame {
     /**
      * @author Austin Zerk
      * @author Yucheng Zhu
+     * @author Xin Chen
      * Stubbing player's data to test movement.
      * TODO: replace this method from objects in the Maze when it finishes.
      */
@@ -155,7 +157,29 @@ public class Display extends JFrame {
 
        // FIXME: load from file instead of creating a stubbed level when load is implemented
         JsonLoad loader = new JsonLoad();
-        level = loader.loadStartMap();
+
+        File directory = new File("src/cache/progress/current");
+
+        if(directory.exists() && directory.isDirectory()) {
+            // if exists
+            String[] files = directory.list();
+
+            if(files != null && files.length > 0) {
+                // if it has file
+                try {
+                    level = loader.loadCurLevelData();
+                }catch (Exception e){
+                    level = loader.loadStartMap();
+                }
+            } else {
+                // if it is empty
+                level = loader.loadStartMap();
+            }
+        } else {
+            // if folder is not there, create new one and start new
+            directory.mkdirs();
+            level = loader.loadStartMap();
+        }
     }
 
     /**
