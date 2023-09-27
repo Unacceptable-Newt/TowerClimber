@@ -1,0 +1,116 @@
+{
+  "maze" : {
+    "encodedWalls" : [ {
+      "length" : 65,
+      "start" : {
+        "x" : 0,
+        "y" : 0
+      },
+      "up" : false
+    }, {
+      "length" : 20,
+      "start" : {
+        "x" : 0,
+        "y" : 0
+      },
+      "up" : true
+    }, {
+      "length" : 20,
+      "start" : {
+        "x" : 64,
+        "y" : 0
+      },
+      "up" : true
+    }, {
+      "length" : 65,
+      "start" : {
+        "x" : 0,
+        "y" : 19
+      },
+      "up" : false
+    } ],
+    "columns" : 65,
+    "rows" : 20,
+    "money" : { },
+    "player" : {
+      "money" : 0,
+      "maxHealth" : 10,
+      "health" : 10,
+      "attack" : 4,
+      "defense" : 0,
+      "position" : {
+        "x" : 10,
+        "y" : 10
+      },
+      "direction" : "UP",
+      "currentWeapon" : null,
+      "level" : 1
+    },
+    "exit" : {
+      "x" : 1,
+      "y" : 1
+    },
+    "enemies" : {
+      "Position{x=5, y=4}" : {
+        "money" : 5,
+        "maxHealth" : 2,
+        "health" : 2,
+        "attack" : 2,
+        "defense" : 2,
+        "position" : {
+          "x" : 0,
+          "y" : 0
+        },
+        "direction" : "UP"
+      }
+    },
+    "items" : {
+      "Position{x=13, y=15}" : {
+        "name" : "The dragon knife",
+        "price" : 3,
+        "weight" : 5,
+        "attackValue" : 4
+      },
+      "Position{x=12, y=15}" : {
+        "name" : "The ugly fly",
+        "price" : 3,
+        "weight" : 5,
+        "attackValue" : 4
+      },
+      "Position{x=11, y=15}" : {
+        "name" : "The Small Axe",
+        "price" : 3,
+        "weight" : 5,
+        "attackValue" : 4
+      },
+      "Position{x=10, y=15}" : {
+        "name" : "The Big Axe",
+        "price" : 3,
+        "weight" : 5,
+        "attackValue" : 4
+      },
+      "Position{x=9, y=15}" : {
+        "name" : "The crazy cat",
+        "price" : 3,
+        "weight" : 5,
+        "attackValue" : 4
+      }
+    },
+    "npcs" : {
+      "Position{x=4, y=5}" : {
+        "money" : 100,
+        "maxHealth" : 100,
+        "health" : 100,
+        "attack" : 100,
+        "defense" : 0,
+        "position" : {
+          "x" : 4,
+          "y" : 5
+        },
+        "direction" : "UP",
+        "name" : "King George's Chief Councillor",
+        "dialogueCount" : 1
+      }
+    }
+  }
+}

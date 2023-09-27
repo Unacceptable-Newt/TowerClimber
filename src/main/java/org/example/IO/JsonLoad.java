@@ -62,7 +62,7 @@ public class JsonLoad {
      * @return Boolean, true if it is between 1-3
      */
     private boolean checkLevel(int level) {
-        return level >= 0 && level <= 2;
+        return level >= 1 && level <= 3;
     }
 
     /**
@@ -251,9 +251,9 @@ public class JsonLoad {
                 ArrayList<HashMap<String, Object>> jsonWalls = (ArrayList<HashMap<String, Object>>) encodedMaze.get("encodedWalls");
                 ArrayList<Wall> encodedWalls = new ArrayList<>();
                 for (HashMap w : jsonWalls){
-                    encodedWalls.add(parseWall(w));
+                    Wall newWall = parseWall(w);
+                    maze.addWall(newWall.getStart(),newWall.getLength(),newWall.isUp());
                 }
-                maze.setEncodedWalls(encodedWalls);
 
                 HashMap<String,String> money = (HashMap<String, String>) encodedMaze.get("money");
                 money.forEach((pos, m) -> {
@@ -273,7 +273,7 @@ public class JsonLoad {
 
                 HashMap<String, Object> encodedNPCs = (HashMap<String, Object>) encodedMaze.get("npcs");
                 encodedNPCs.forEach((p, n) -> {
-                    maze.addNPC(parseNPC((HashMap<String, Object>) n, parsePosition(p)));
+                    maze.addNPC(parsePosition(p), parseNPC( (HashMap<String, Object>) n, parsePosition(p)));
                 });
 
 
@@ -402,6 +402,18 @@ public class JsonLoad {
         }
     }
 
+
+    public static boolean createFolder(String folderPath) {
+        File folder = new File(folderPath);
+
+        if (folder.exists() && folder.isDirectory()) {
+            return true;
+        } else {
+            boolean created = folder.mkdirs();
+            return created;
+        }
+    }
+
     /**
      * @author: Xin Chen
      *
@@ -411,6 +423,11 @@ public class JsonLoad {
      */
     public Level loadStartMap(){
         try {
+            if (createFolder(CUR_PROGRESS_FILE_PATH)) {
+                System.out.println("Exists or created: " + CUR_PROGRESS_FILE_PATH);
+            } else {
+                System.err.println("Cannot: " + CUR_PROGRESS_FILE_PATH);
+            }
             // Set paths
             Path fileToCopyPath = Paths.get("src/cache/map/" + PREFIX + "1" + SUFFIX);
             Path destFilePath = Paths.get(CUR_PROGRESS_FILE_PATH + PREFIX + "1" + CUR_INDICATOR + SUFFIX);

@@ -130,7 +130,7 @@ public class JsonSave {
     private int checkLevelMatches(int destLevel) {
         ArrayList<String> levels = loader.loadLevelList(CUR_PROGRESS_FILE_PATH);
         if (levels.size() == 0)
-            return -1;
+            return 0;
         int curLevel = -1;
         for (String path: levels) {
             if(path.contains(CUR_INDICATOR)) {
@@ -274,7 +274,7 @@ public class JsonSave {
                     Iterator<Position> NPCiter = NPCHashMap.keySet().iterator();
                     while (NPCiter.hasNext()) {
                         Position key = NPCiter.next();
-                        newMaze.addNPC(NPCHashMap.get(key));
+                        newMaze.addNPC(key, NPCHashMap.get(key));
                     }
 
                     newMaze.setEncodedWalls(wallArrayList);
