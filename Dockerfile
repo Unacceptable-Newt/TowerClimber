@@ -9,6 +9,6 @@ RUN mkdir /app
 
 COPY --from=build /home/gradle/src/build/libs/*.jar /app/TowerCrawler-1.0.jar
 COPY --from=build /home/gradle/src/src/cache /app/src/cache
-COPY --from=build /home/gradle/src/src/data /app/data
+COPY --from=build /home/gradle/src/src/data /app/src/data
 
 ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/TowerCrawler-1.0.jar", "-terminal"]
