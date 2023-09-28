@@ -2,7 +2,9 @@ package org.example.IO;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.example.belonging.Inventory;
 import org.example.belonging.Item;
+import org.example.belonging.Weapon;
 import org.example.entity.*;
 import org.example.gameLogic.Level;
 import org.example.gameLogic.Maze;
@@ -36,6 +38,8 @@ public class JsonSave {
     private JsonLoad loader = new JsonLoad();
 
     /**
+     * check if folder exists
+     *
      * @author Xin Chen
      * @return True if folder exists, False if not
      */
@@ -104,7 +108,7 @@ public class JsonSave {
                 if (levelDiff != 0) {
                     updateFileName(level.getLevel() - levelDiff,level.getLevel());
                 }
-                saving(path,level);
+                saving(path, level);
             } else {
                 throw new RuntimeException("Level error! Encounter at class JsonSave - saveCurrentProgress(Level level), please check input param");
             }
@@ -130,7 +134,7 @@ public class JsonSave {
     private int checkLevelMatches(int destLevel) {
         ArrayList<String> levels = loader.loadLevelList(CUR_PROGRESS_FILE_PATH);
         if (levels.size() == 0)
-            return -1;
+            return 0;
         int curLevel = -1;
         for (String path: levels) {
             if(path.contains(CUR_INDICATOR)) {
@@ -209,7 +213,12 @@ public class JsonSave {
 
             // translate to string
             String jsonStr = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(mazeData);
+            Weapon curWeapon = level.getMaze().getPlayer().getCurrentWeapon();
 
+            Player newPlayer = new Player(level.getMaze().getPlayer().getMoney(),level.getMaze().getPlayer().getHealth(),level.getMaze().getPlayer().getLevel(),level.getMaze().getPlayer().getPosition());
+            newPlayer.setCurrentWeapon(curWeapon);
+
+            level.getMaze().setPlayer(newPlayer);
             // Save string
             Files.write(Paths.get(destPath), jsonStr.getBytes());
 
@@ -329,6 +338,33 @@ public class JsonSave {
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Cannot save new progress");
+        }
+    }
+
+
+    /**
+     * save inventory to json
+     *
+     * @author Xin Chen
+     * @param inventory save from display
+     */
+    public void saveInventory(Inventory inventory){
+        try{
+            String curFolderPath = CUR_PROGRESS_FILE_PATH;
+            String fileName = "inventory.json";
+            String destPath = curFolderPath + fileName;
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            // save data into MAP
+            Map<String, Object> inventoryData = new HashMap<>();
+            inventoryData.put("inventory", inventory);
+
+            // translate to string
+            String jsonStr = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(inventoryData);
+            Files.write(Paths.get(destPath), jsonStr.getBytes());
+
+        }catch (Exception e){
+            throw new RuntimeException("check saveInventory()");
         }
     }
 

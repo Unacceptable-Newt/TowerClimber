@@ -2,6 +2,7 @@ package org.example.IO;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.belonging.Inventory;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
 import org.example.entity.*;
@@ -62,7 +63,7 @@ public class JsonLoad {
      * @return Boolean, true if it is between 1-3
      */
     private boolean checkLevel(int level) {
-        return level >= 0 && level <= 2;
+        return level >= 1 && level <= 3;
     }
 
     /**
@@ -159,7 +160,8 @@ public class JsonLoad {
         Direction dir = parseDirection((String) encodedEnemies.get("direction"));
         int health = (int) encodedEnemies.get("health");
         int money = (int) encodedEnemies.get("money");
-        Enemy out = new Enemy(attack, health, defence);
+        String name = (String) encodedEnemies.get("name"); //since Yue added a string name attribute to the enemy obejct, I did some tiny modifications here <3.
+        Enemy out = new Enemy(name, attack, health, defence, new Position(5, 4));
         out.setDirection(dir);
         out.setMoney(money);
         out.setPosition(parsePosition((HashMap<String, Integer>) encodedEnemies.get("position")));
@@ -251,9 +253,9 @@ public class JsonLoad {
                 ArrayList<HashMap<String, Object>> jsonWalls = (ArrayList<HashMap<String, Object>>) encodedMaze.get("encodedWalls");
                 ArrayList<Wall> encodedWalls = new ArrayList<>();
                 for (HashMap w : jsonWalls){
-                    encodedWalls.add(parseWall(w));
+                    Wall newWall = parseWall(w);
+                    maze.addWall(newWall.getStart(),newWall.getLength(),newWall.isUp());
                 }
-                maze.setEncodedWalls(encodedWalls);
 
                 HashMap<String,String> money = (HashMap<String, String>) encodedMaze.get("money");
                 money.forEach((pos, m) -> {
@@ -274,7 +276,7 @@ public class JsonLoad {
 
                 HashMap<String, Object> encodedNPCs = (HashMap<String, Object>) encodedMaze.get("npcs");
                 encodedNPCs.forEach((p, n) -> {
-                    maze.addNPC(parseNPC((HashMap<String, Object>) n, parsePosition(p)));
+                    maze.addNPC(parseNPC( (HashMap<String, Object>) n, parsePosition(p)));
                 });
 
 
@@ -403,6 +405,18 @@ public class JsonLoad {
         }
     }
 
+
+    public static boolean createFolder(String folderPath) {
+        File folder = new File(folderPath);
+
+        if (folder.exists() && folder.isDirectory()) {
+            return true;
+        } else {
+            boolean created = folder.mkdirs();
+            return created;
+        }
+    }
+
     /**
      * @author: Xin Chen
      *
@@ -412,6 +426,11 @@ public class JsonLoad {
      */
     public Level loadStartMap(){
         try {
+            if (createFolder(CUR_PROGRESS_FILE_PATH)) {
+                System.out.println("Exists or created: " + CUR_PROGRESS_FILE_PATH);
+            } else {
+                System.err.println("Cannot: " + CUR_PROGRESS_FILE_PATH);
+            }
             // Set paths
             Path fileToCopyPath = Paths.get("src/cache/map/" + PREFIX + "1" + SUFFIX);
             Path destFilePath = Paths.get(CUR_PROGRESS_FILE_PATH + PREFIX + "1" + CUR_INDICATOR + SUFFIX);
@@ -467,6 +486,47 @@ public class JsonLoad {
             throw new RuntimeException("Check loadNextLevel()");
         }
     }
+
+    /**
+     * load inventory from json
+     *
+     * @author Xin Chen
+     * @return saved inventory if file exists. new inventory if file does not exist
+     */
+    public Inventory loadInventory() {
+        try {
+            String filePath = CUR_PROGRESS_FILE_PATH + "inventory.json";
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            // Read data from JSON
+            Map<String, Object> rawData = objectMapper.readValue(new File(filePath), new TypeReference<Map<String, Object>>() {});
+            Map<String, Object> inventoryData = (Map<String, Object>) rawData.get("inventory");
+
+            // Create inventory instance
+            int capacity = (Integer) inventoryData.get("capacity");
+            Inventory inventory = new Inventory(capacity);
+
+            // Populate inventory with weapons
+            Map<String, Map<String, Object>> itemsData = (Map<String, Map<String, Object>>) inventoryData.get("items");
+            for (Map.Entry<String, Map<String, Object>> itemEntry : itemsData.entrySet()) {
+                String name = (String) itemEntry.getValue().get("name");
+                int price = (Integer) itemEntry.getValue().get("price");
+                int weight = (Integer) itemEntry.getValue().get("weight");
+                int attackValue = (Integer) itemEntry.getValue().get("attackValue");
+
+                // Create a weapon with the extracted details
+                Weapon weapon = new Weapon(name, price, weight, attackValue);
+                inventory.addItem(weapon);
+            }
+
+            //System.out.println(inventory.getCapacity());
+            return inventory;
+        } catch (Exception e) {
+            return new Inventory(5);
+        }
+    }
+
+
 
 
 

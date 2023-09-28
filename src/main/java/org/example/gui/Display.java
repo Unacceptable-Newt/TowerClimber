@@ -1,4 +1,7 @@
 package org.example.gui;
+import org.example.IO.JsonLoad;
+import org.example.IO.JsonSave;
+import org.example.IO.JsonSave;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
 import org.example.interaction.EnemyFighter;
@@ -15,6 +18,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
@@ -41,6 +45,7 @@ public class Display extends JFrame {
     private static String inventoryString = "";
     private static String displayMaze = "";
     private static String dialog = "";
+    private static JsonSave saver = new JsonSave();
 
     //interacting with enemy
     private static EnemyFighter enemyFighter = new EnemyFighter();
@@ -167,6 +172,8 @@ public class Display extends JFrame {
         // initialise the picker objects
         initialisePickerObjects();
         textArea.setText(Gui.updateGuiString(level.getMaze()));
+        additionalLabel.setText(displayInventory(inventory,false).toString());
+
 
         // Listen to key events
         textArea.addKeyListener(new KeyAdapter() {
@@ -205,6 +212,9 @@ public class Display extends JFrame {
                 guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
                 textArea.setText(guiText);
                 // DON'T CHANGE OR SET `guiText` BELOW
+
+                // If user press "ctrl+p" game will save
+                saveGame();
             }
         });
 
@@ -216,19 +226,43 @@ public class Display extends JFrame {
     /**
      * @author Austin Zerk
      * @author Yucheng Zhu
+     * @author Xin Chen
      * Stubbing player's data to test movement.
      * TODO: replace this method from objects in the Maze when it finishes.
      */
     public static void initialiseMovementObjects() {
 
-        level = new Level(1); // FIXME: load from file instead of creating a stubbed level when load is implemented
+       // FIXME: load from file instead of creating a stubbed level when load is implemented
+        JsonLoad loader = new JsonLoad();
+
+        File directory = new File("src/cache/progress/current");
+
+        if(directory.exists() && directory.isDirectory()) {
+            // if exists
+            String[] files = directory.list();
+
+            if(files != null && files.length > 0) {
+                // if it has file
+                try {
+                    level = loader.loadCurLevelData();
+                }catch (Exception e){
+                    level = loader.loadStartMap();
+                }
+            } else {
+                // if it is empty
+                level = loader.loadStartMap();
+            }
+        } else {
+            // if folder is not there, create new one and start new
+            directory.mkdirs();
+            level = loader.loadStartMap();
+        }
     }
 
     /**
      * @author Rong Sun
      * Initialise the pick helper instance and inventory system
      */
-
     public static void initialisePickerObjects() {
         inventory = new Inventory(5);
         itemPicker  = new ItemPicker();
@@ -236,8 +270,6 @@ public class Display extends JFrame {
     }
 
     /**
-     * Rong Sun
-     * @param keyCode the last key that was pressed
      * @author Rong Sun
      * Initialise the pick helper instance and inventory system
      * @param keyCode the key code that allow key E pressed and activity catched
@@ -252,9 +284,7 @@ public class Display extends JFrame {
             Pair<Player, Inventory> playerInventoryPair = itemPicker.interactWithAdjacent(inventory, level.getMaze());
         }
 
-        //String guiText = Gui.updateGuiString(level.getMaze());
-        //textArea.setText(guiText);
-
+        saver.saveInventory(inventory);
     }
 
     /**
@@ -296,8 +326,6 @@ public class Display extends JFrame {
         //else additionalLabel.setText(displayInventory(inventory).toString());
     }
 
-
-
     /**
      * @author Rong Sun
      * adds the inventory to the gui display board.
@@ -331,6 +359,32 @@ public class Display extends JFrame {
     }
 
 
+    /**
+     * @author Xin Chen
+     * save game when player press ctrl+p
+     */
+    private void saveGame(){
+        textArea.addKeyListener(new KeyAdapter() {
+            private boolean isSaving = false;
 
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_P && !isSaving) {
+                    isSaving = true;
+
+                    saver.saveCurrentProgress(level);
+                    saver.saveInventory(inventory);
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_S) {
+                    isSaving = false;
+                }
+            }
+        });
+    }
 
 }

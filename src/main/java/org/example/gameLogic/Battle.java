@@ -7,7 +7,6 @@ import org.example.entity.Player;
  * this is the basic framework for the battle system.
  * it should be updated if the game uses the turn system 
  */
-
 public class Battle {
 
     /**
@@ -17,7 +16,6 @@ public class Battle {
      * @param enemy The enemy
      * @return True if the enemy dies. Otherwise, return false.
      */
-    
      public static boolean processFights(Player player , Enemy enemy){
 
         // Data preparation for battle.
@@ -37,16 +35,11 @@ public class Battle {
         if (enemy.getHealth() <= 0){
              return true; // enemy dies
         }
-        else{
+        else {
         
         player.defend(enemyAttack);
 
         return false; // enemy lives
-
         }
-           
-           
     }
-
-
 }
