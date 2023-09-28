@@ -147,7 +147,7 @@ public class IOTest {
 
         loader.emptyCurFolder();
 
-        // leave it for talk test
+        // leave it for talk test and later test
         saver.saveCurrentProgress(testLevel);
     }
 
