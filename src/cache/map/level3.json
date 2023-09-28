@@ -1,14 +1,7 @@
 {
   "maze" : {
     "encodedWalls" : [ {
-      "length" : 65,
-      "start" : {
-        "x" : 0,
-        "y" : 0
-      },
-      "up" : false
-    }, {
-      "length" : 20,
+      "length" : 19,
       "start" : {
         "x" : 0,
         "y" : 0
@@ -17,27 +10,45 @@
     }, {
       "length" : 20,
       "start" : {
-        "x" : 64,
+        "x" : 39,
         "y" : 0
       },
       "up" : true
     }, {
-      "length" : 65,
+      "length" : 40,
       "start" : {
         "x" : 0,
         "y" : 19
       },
       "up" : false
+    }, {
+      "length" : 40,
+      "start" : {
+        "x" : 0,
+        "y" : 0
+      },
+      "up" : false
+    }, {
+      "length" : 8,
+      "start" : {
+        "x" : 3,
+        "y" : 0
+      },
+      "up" : true
+    }, {
+      "length" : 10,
+      "start" : {
+        "x" : 3,
+        "y" : 10
+      },
+      "up" : true
     } ],
-    "columns" : 65,
+    "columns" : 40,
     "rows" : 20,
     "money" : { },
     "player" : {
       "money" : 0,
-      "maxHealth" : 10,
       "health" : 10,
-      "attack" : 4,
-      "defense" : 0,
       "position" : {
         "x" : 10,
         "y" : 10
@@ -51,65 +62,43 @@
       "y" : 1
     },
     "enemies" : {
-      "Position{x=5, y=4}" : {
-        "money" : 5,
-        "maxHealth" : 2,
-        "health" : 2,
-        "attack" : 2,
-        "defense" : 2,
+      "Position{x=30, y=10}" : {
+        "money" : 0,
+        "health" : 6,
         "position" : {
           "x" : 0,
           "y" : 0
         },
-        "direction" : "UP"
-      }
-    },
-    "items" : {
-      "Position{x=13, y=15}" : {
-        "name" : "The dragon knife",
-        "price" : 3,
-        "weight" : 5,
-        "attackValue" : 4
-      },
-      "Position{x=12, y=15}" : {
-        "name" : "The ugly fly",
-        "price" : 3,
-        "weight" : 5,
-        "attackValue" : 4
-      },
-      "Position{x=11, y=15}" : {
-        "name" : "The Small Axe",
-        "price" : 3,
-        "weight" : 5,
-        "attackValue" : 4
-      },
-      "Position{x=10, y=15}" : {
-        "name" : "The Big Axe",
-        "price" : 3,
-        "weight" : 5,
-        "attackValue" : 4
-      },
-      "Position{x=9, y=15}" : {
-        "name" : "The crazy cat",
-        "price" : 3,
-        "weight" : 5,
-        "attackValue" : 4
+        "direction" : "UP",
+        "attack" : 4,
+        "defense" : 2
       }
     },
     "npcs" : {
-      "Position{x=4, y=5}" : {
+      "Position{x=1, y=2}" : {
         "money" : 100,
-        "maxHealth" : 100,
         "health" : 100,
-        "attack" : 100,
-        "defense" : 0,
         "position" : {
-          "x" : 4,
-          "y" : 5
+          "x" : 1,
+          "y" : 2
         },
         "direction" : "UP",
-        "name" : "King George's Chief Councillor",
-        "dialogueCount" : 1
+        "name" : "JASON",
+        "dialogue" : [ "Why Hello there", "a fine day we are having" ]
+      }
+    },
+    "items" : {
+      "Position{x=18, y=7}" : {
+        "name" : "Gramps",
+        "price" : 4,
+        "weight" : 2,
+        "attackValue" : 9
+      },
+      "Position{x=18, y=10}" : {
+        "name" : "Fring",
+        "price" : 2,
+        "weight" : 7,
+        "attackValue" : 2
       }
     }
   }
