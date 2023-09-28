@@ -99,6 +99,8 @@ public class Display extends JFrame {
         // initialise the picker objects
         initialisePickerObjects();
         textArea.setText(Gui.updateGuiString(level.getMaze()));
+        additionalLabel.setText(displayInventory(inventory).toString());
+
 
         // Listen to key events
         textArea.addKeyListener(new KeyAdapter() {
