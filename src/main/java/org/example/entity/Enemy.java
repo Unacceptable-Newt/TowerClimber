@@ -35,7 +35,7 @@ public class Enemy extends Life {
      * @return The enemy statistics string
      */
     public String enemyStatistics (Enemy enemy){
-     String outPutString = "The Enemy you are facing is called " + getName() + ". The attack of the enemy is " + getAttack() + ". The Dfense of the enemy is " + getDefense()+ ". Its health is " + getHealth() + "." ;
+     String outPutString = " "+ getName() + " ATT: " + getAttack() + " DEF: " + getDefense()+ " HP: " + getHealth() + "." ;
      return outPutString;
     }
 }
