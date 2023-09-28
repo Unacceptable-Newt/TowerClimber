@@ -1,8 +1,6 @@
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
 import org.example.entity.Position;
-import org.example.entity.dialogue.DialogueKey;
-import org.example.entity.dialogue.DialogueLoader;
 import org.example.gameLogic.Level;
 import org.example.interaction.Direction;
 import org.example.interaction.NpcTalker;

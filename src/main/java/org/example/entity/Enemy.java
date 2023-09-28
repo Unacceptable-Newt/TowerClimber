@@ -19,9 +19,8 @@ public class Enemy extends Life {
  * @param defense The defense value
  */
     public Enemy(String name ,int attack, int health, int defense, Position position) {
-        super(100, health, position, attack);
+        super(100, health, position, attack, defense);
         this.name = name;
-        this.defense = defense;
         this.money = NORMAL_ENEMY_GOLD;
     }
 
@@ -29,17 +28,14 @@ public class Enemy extends Life {
         return name;
     }
 
-    public void setDefense(Integer defense) {
-        this.defense = defense;
-    }
-
-   
-
+    /**
+     * @author Yue Zhu
+     * Return the enemy statistics string
+     * @param enemy The enemy
+     * @return The enemy statistics string
+     */
     public String enemyStatistics (Enemy enemy){
      String outPutString = "The Enemy you are facing is called " + getName() + ". The attack of the enemy is " + getAttack() + ". The Dfense of the enemy is " + getDefense()+ ". Its health is " + getHealth() + "." ;
      return outPutString;
     }
-
-
-
 }

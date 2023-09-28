@@ -261,6 +261,7 @@ public class JsonLoad {
                     maze.addMoney(parsePosition(pos), Integer.parseInt(m));
                 });
                 maze.setPlayer(parsePlayer((HashMap<String, Object>) encodedMaze.get("player")));
+                maze.setRespawnPosition(maze.getPlayer().getPosition());
 
                 HashMap<String, Object> encodedItems = (HashMap<String, Object>) encodedMaze.get("items");
                 encodedItems.forEach((p, i) -> {

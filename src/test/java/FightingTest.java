@@ -22,6 +22,9 @@ public class FightingTest {
 
     private Player player;
     private Maze maze;
+    private final Inventory inventory = new Inventory(5);
+    private final EnemyFighter enemyFighter = new EnemyFighter();
+
 
     /**
      * sets up the maze and contents before every test
@@ -33,6 +36,7 @@ public class FightingTest {
         Position currentPosition = new Position(2, 5);
         player = new Player(10, 100, 1, currentPosition);
         player.setDirection(Direction.LEFT);
+        player.setCurrentWeapon(new Weapon("The Destroyer",7,7,12));
 
         // Set up maze
         int mazeX = 6;
@@ -57,8 +61,6 @@ public class FightingTest {
      */
     @Test
     public void killEnemyTest(){
-        EnemyFighter enemyFighter = new EnemyFighter();
-        Inventory inventory = new Inventory(5);
         enemyFighter.interactWithAdjacent(inventory,maze);
         Assertions.assertNull(maze.getEnemyAtPosition(new Position(1, 5)));
         Assertions.assertNotNull(maze.getPlayer());
@@ -66,12 +68,12 @@ public class FightingTest {
     }
 
     /**
-     * tests that when no enemy is in front of the player nothing happens
+     * Test that when no enemy is in front of the player nothing happens
+     * @author Yue Zhu
+     * @author Austin Zerk
      */
     @Test
     public void NoEnemyTest(){
-        EnemyFighter enemyFighter = new EnemyFighter();
-        Inventory inventory = new Inventory(5);
         player.setDirection(Direction.UP);
         enemyFighter.interactWithAdjacent(inventory, maze);
 
@@ -79,6 +81,21 @@ public class FightingTest {
         Assertions.assertEquals(2, maze.getEnemyAtPosition(new Position(1, 5)).getHealth());
         Assertions.assertNotNull(maze.getPlayer());
         Assertions.assertEquals(100, player.getHealth());
+    }
+
+    /**
+     * Test fighting the enemy with punch and kick
+     * @author Austin Zerk
+     */
+    @Test
+    public void NoWeaponTest(){
+        player.setCurrentWeapon(null);
+        enemyFighter.interactWithAdjacent(inventory,maze);
+
+        Assertions.assertNotNull(maze.getEnemyAtPosition(new Position(1,5)));
+        Assertions.assertEquals(1, maze.getEnemyAtPosition(new Position(1, 5)).getHealth());
+        Assertions.assertNotNull(maze.getPlayer());
+        Assertions.assertEquals(99, player.getHealth());
     }
 }
 
