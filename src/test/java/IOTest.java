@@ -76,21 +76,21 @@ public class IOTest {
     @Test
     void saveTest(){
 
+        //test saveCurrentProgress
         saver.saveCurrentProgress(testLevel);
         String targetFileName = "level1_cur.json";
         String currentDirectory = "src/cache/progress/current/";
         String fullPath = currentDirectory + targetFileName;
         Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
 
-        loader.emptyCurFolder();
-
-        loader.loadStartMap();
-        Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
-
+        //test saveInventory
         saver.saveInventory(inventory);
         targetFileName = "inventory.json";
         fullPath = currentDirectory + targetFileName;
         Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
+
+        // empty
+        loader.emptyCurFolder();
     }
 
     /**
@@ -103,6 +103,14 @@ public class IOTest {
     @Test
     void loadTest() {
 
+        //test loadStartMap and keep it for loading test
+        String targetFileName = "level1_cur.json";
+        String currentDirectory = "src/cache/progress/current/";
+        String fullPath = currentDirectory + targetFileName;
+        loader.loadStartMap();
+        Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
+
+        //test loadCurLevelData
         Level loaded = loader.loadFile("src/cache/progress/current/level1_cur.json");
         Level loaded2 = loader.loadCurLevelData();
 
@@ -110,14 +118,16 @@ public class IOTest {
         Assertions.assertEquals(loaded.getMaze().getPlayer().getLevel(), loaded2.getMaze().getPlayer().getLevel());
         Assertions.assertEquals(loaded.getMaze().getPlayer().getHealth(), loaded2.getMaze().getPlayer().getHealth());
 
+        //test loadNextLevel
         loader.loadNextLevel(loaded2.getLevel());
         Assertions.assertEquals(loader.loadCurLevelData().getLevel(), 2);
 
+        //test when player start new game
         loader.emptyCurFolder();
         Level loaded3 = loader.loadStartMap();
-        String targetFileName = "level1_cur.json";
-        String currentDirectory = "src/cache/progress/current/";
-        String fullPath = currentDirectory + targetFileName;
+        targetFileName = "level1_cur.json";
+        currentDirectory = "src/cache/progress/current/";
+        fullPath = currentDirectory + targetFileName;
         Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
         Level nextLevel = loader.loadNextLevel(loaded3.getLevel());
         targetFileName = "level2_cur.json";
@@ -128,7 +138,7 @@ public class IOTest {
         fullPath = currentDirectory + targetFileName;
         Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
 
-
+        //test inventory save and load
         saver.saveInventory(inventory);
         Inventory inventory1 = loader.loadInventory();
         Assertions.assertEquals(inventory.getCapacity(), inventory1.getCapacity());
@@ -137,6 +147,7 @@ public class IOTest {
 
         loader.emptyCurFolder();
 
+        // leave it for talk test
         saver.saveCurrentProgress(testLevel);
     }
 

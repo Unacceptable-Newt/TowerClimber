@@ -38,6 +38,8 @@ public class JsonSave {
     private JsonLoad loader = new JsonLoad();
 
     /**
+     * check if folder exists
+     *
      * @author Xin Chen
      * @return True if folder exists, False if not
      */
