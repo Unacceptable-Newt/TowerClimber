@@ -1,4 +1,5 @@
 import org.example.IO.JsonLoad;
+import org.example.IO.JsonSave;
 import org.example.entity.Player;
 import org.example.entity.Position;
 import org.example.gameLogic.Level;
@@ -44,9 +45,12 @@ public class ExitEventTest {
         player.setDirection(Direction.UP);
         maze.setPlayer(player);
         level.setMaze(maze);
+        JsonSave saver = new JsonSave();
+        saver.saveCurrentProgress(level);
 
         // Go to the next level
         Assertions.assertEquals(2, ExitEvent.exit(level).getLevel());
+        saver.emptyCurFolder();
 
     }
 }
