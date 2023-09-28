@@ -108,7 +108,7 @@ public class JsonSave {
                 if (levelDiff != 0) {
                     updateFileName(level.getLevel() - levelDiff,level.getLevel());
                 }
-                saving(path,level);
+                saving(path, level);
             } else {
                 throw new RuntimeException("Level error! Encounter at class JsonSave - saveCurrentProgress(Level level), please check input param");
             }

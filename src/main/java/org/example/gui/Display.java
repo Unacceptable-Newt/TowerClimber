@@ -218,9 +218,10 @@ public class Display extends JFrame {
             Pair<Player, Inventory> playerInventoryPair = itemPicker.interactWithAdjacent(inventory, level.getMaze());
         }
 
+        saver.saveInventory(inventory);
+
         String guiText = Gui.updateGuiString(level.getMaze());
         textArea.setText(guiText);
-        saver.saveInventory(inventory);
 
     }
 
@@ -289,6 +290,10 @@ public class Display extends JFrame {
     }
 
 
+    /**
+     * @author Xin Chen
+     * save game when player press ctrl+p
+     */
     private void saveGame(){
         textArea.addKeyListener(new KeyAdapter() {
             private boolean isSaving = false;
