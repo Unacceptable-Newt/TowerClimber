@@ -1,5 +1,6 @@
 import org.example.IO.JsonLoad;
 import org.example.IO.JsonSave;
+import org.example.belonging.Inventory;
 import org.example.belonging.Weapon;
 import org.example.entity.Enemy;
 import org.example.entity.NPC;
@@ -27,6 +28,7 @@ public class IOTest {
     static Maze testMaze;
     static Level testLevel;
 
+    static Inventory inventory;
     static JsonLoad loader = new JsonLoad();
     static JsonSave saver = new JsonSave();
     @BeforeAll
@@ -56,6 +58,13 @@ public class IOTest {
         testMaze.addEnemy(new Position(5, 4),new Enemy(2, 2, 2));
 
         testLevel.setMaze(testMaze);
+
+        inventory = new Inventory(5);
+
+
+        inventory.addItem(new Weapon("A", 24, 12, 14));
+        inventory.addItem(new Weapon("B", 15, 18,15));
+
     }
 
     /**
@@ -76,6 +85,11 @@ public class IOTest {
         loader.emptyCurFolder();
 
         loader.loadStartMap();
+        Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
+
+        saver.saveInventory(inventory);
+        targetFileName = "inventory.json";
+        fullPath = currentDirectory + targetFileName;
         Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
     }
 
@@ -113,6 +127,13 @@ public class IOTest {
         targetFileName = "level3_cur.json";
         fullPath = currentDirectory + targetFileName;
         Assertions.assertTrue(Files.exists(Paths.get(fullPath)));
+
+
+        saver.saveInventory(inventory);
+        Inventory inventory1 = loader.loadInventory();
+        Assertions.assertEquals(inventory.getCapacity(), inventory1.getCapacity());
+        Assertions.assertEquals(inventory.getItems().size(), inventory1.getItems().size());
+        Assertions.assertEquals(inventory.getItems().get("A").getName(), inventory1.getItems().get("A").getName());
 
         loader.emptyCurFolder();
 
