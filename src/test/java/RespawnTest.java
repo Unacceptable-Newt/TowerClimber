@@ -16,7 +16,7 @@ public class RespawnTest {
 
   Weapon nullWeapon = new Weapon(" null", 0, 0, 0);
   
-  Enemy enemy = new Enemy(10, 1 ,10);
+  Enemy enemy = new Enemy("Daniel", 10, 1, 10, new Position(8,8));
 
   
 

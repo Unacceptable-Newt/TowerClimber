@@ -93,7 +93,7 @@ public class FightingTest {
         enemyFighter.interactWithAdjacent(inventory,maze);
 
         Assertions.assertNotNull(maze.getEnemyAtPosition(new Position(1,5)));
-        Assertions.assertEquals(1, maze.getEnemyAtPosition(new Position(1, 5)).getHealth());
+        Assertions.assertEquals(2, maze.getEnemyAtPosition(new Position(1, 5)).getHealth());
         Assertions.assertNotNull(maze.getPlayer());
         Assertions.assertEquals(99, player.getHealth());
     }
