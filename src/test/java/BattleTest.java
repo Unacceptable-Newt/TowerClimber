@@ -3,8 +3,8 @@ import org.example.entity.Enemy;
 import org.example.entity.Player;
 import org.example.entity.Position;
 import org.example.gameLogic.Battle;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class BattleTest {
     

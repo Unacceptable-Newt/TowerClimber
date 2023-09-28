@@ -1,9 +1,9 @@
 import org.example.entity.Enemy;
 import org.example.entity.Position;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-  /*
+/*
      * @author Yue Zhu
      * this test is aimed to test whether the function, enemyStatistics, can display the enemy statistics well .
      * @param enemy The enemy
