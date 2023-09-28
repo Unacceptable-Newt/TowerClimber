@@ -3,7 +3,7 @@
     "encodedWalls" : [ {
       "length" : 19,
       "start" : {
-        "x" : 1,
+        "x" : 0,
         "y" : 0
       },
       "up" : true
@@ -28,21 +28,7 @@
         "y" : 0
       },
       "up" : false
-    }, {
-      "length" : 8,
-      "start" : {
-        "x" : 3,
-        "y" : 0
-      },
-      "up" : true
-    }, {
-      "length" : 10,
-      "start" : {
-        "x" : 3,
-        "y" : 10
-      },
-      "up" : true
-    } ],
+    }],
     "columns" : 40,
     "rows" : 20,
     "money" : { },
