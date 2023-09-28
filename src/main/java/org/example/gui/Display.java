@@ -93,6 +93,7 @@ public class Display extends JFrame {
                         dialog = NpcTalker.interactWithAdjacent(inventory, level, dialog);
                     } catch (IOException e){
                         System.err.println("failed to find dialog from adjacent NPC");
+                        System.err.println(e.getMessage());
                     }
                     enemyFighter.interactWithAdjacent(inventory,level.getMaze());
                 }
