@@ -116,8 +116,12 @@ public class Display extends JFrame {
                     MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, level.getMaze());
 
                     // Check if enemy is adjacent
-                    if (Approach.isNearby(level.getMaze().getPlayer(), level.getMaze().getEnemies())) {
-
+                    if (Approach.isNearby(level.getMaze().getPlayer(), level.getMaze().getEnemies()) != null) {
+                          Enemy selectedEnemy = Approach.isNearby(
+                            level.getMaze().getPlayer(), 
+                            level.getMaze().getEnemies()
+                        );
+                          dialogueText  =  selectedEnemy.enemyStatistics(selectedEnemy);
                     }
 
                 } else if (keyCode == KeyEvent.VK_E) { // exit event

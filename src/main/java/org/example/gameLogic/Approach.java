@@ -34,13 +34,13 @@ public class Approach {
         }
     }
 
-    public static boolean isNearby(Player player, HashMap<Position, Enemy> enemies) {
+    public static Enemy isNearby(Player player, HashMap<Position, Enemy> enemies) {
         for (Enemy enemy: enemies.values()) {
             if (isNearby(player, enemy)) {
-                return true;
+                return enemy;
             }
         }
-        return false;
+        return null;
     }
 
     public static double calculateDistance (Position p1, Position p2) {
