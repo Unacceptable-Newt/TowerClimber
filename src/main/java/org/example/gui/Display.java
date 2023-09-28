@@ -296,7 +296,6 @@ public class Display extends JFrame {
                     JsonSave saver = new JsonSave();
                     saver.saveCurrentProgress(level);
                     saver.saveInventory(inventory);
-                    System.out.println("saved!");
                     e.consume();
                 }
             }
