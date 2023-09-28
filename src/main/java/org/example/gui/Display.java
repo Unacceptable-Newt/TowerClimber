@@ -92,8 +92,11 @@ public class Display extends JFrame {
                 else if (ch == 'd') MovementEvents.setGuiTextOnMovementKeysPressed(68,level.getMaze());
                 // interaction events
                 else if (ch == 'e') {
+                    //check if player is facing exit;
                     level = ExitEvent.exit(level);
+                    //check if player is facing item
                     pickStuff(69);
+                    //check if player is facing NPC
                     try {
                         dialog = NpcTalker.interactWithAdjacent(inventory, level, dialog);
                     } catch (IOException e){
@@ -102,14 +105,17 @@ public class Display extends JFrame {
                     }
                     enemyFighter.interactWithAdjacent(inventory,level.getMaze());
                 }
+                //keys for selecting items
                 else if (ch == '1') selectItemFromKeyCode(49,true);
                 else if (ch == '2') selectItemFromKeyCode(50,true);
                 else if (ch == '3') selectItemFromKeyCode(51,true);
                 else if (ch == '4') selectItemFromKeyCode(52,true);
                 else if (ch == '5') selectItemFromKeyCode(53,true);
 
+                else if (ch == 'p') {saver.saveCurrentProgress(level); saver.saveInventory(inventory);}
                 //update the maze string
                 displayMaze = Gui.updateGuiString(level.getMaze());
+                //update the inventory string
                 inventoryString = displayInventory(inventory,true).toString();
 
                 //print the display
@@ -174,6 +180,13 @@ public class Display extends JFrame {
         textArea.setText(Gui.updateGuiString(level.getMaze()));
         additionalLabel.setText(displayInventory(inventory,false).toString());
 
+        // If user press "ctrl+p" game will save
+        //initialise user input for saving
+        saveGame();
+
+        // Call the press 1-5 key, and choose the item
+        // initialises user input for picking up objects
+        chooseStuff();
 
         // Listen to key events
         textArea.addKeyListener(new KeyAdapter() {
@@ -204,17 +217,15 @@ public class Display extends JFrame {
                 // interacting with items on map
                 // Call pick stuff function and put the picked stuff in the inventory system
                 pickStuff(e.getKeyCode());
+
+                //updates the inventory display
                 additionalLabel.setText(displayInventory(inventory,false).toString());
-                // Call the press 1-5 key, and choose the item
-                chooseStuff();
 
                 // Update the GUI char "pixels" as a string
                 guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
                 textArea.setText(guiText);
                 // DON'T CHANGE OR SET `guiText` BELOW
 
-                // If user press "ctrl+p" game will save
-                saveGame();
             }
         });
 
@@ -300,6 +311,7 @@ public class Display extends JFrame {
                 int keyCode = e.getKeyCode();
 
                 selectItemFromKeyCode(keyCode,false);
+                additionalLabel.setText(displayInventory(inventory,false).toString());
             }
         });
     }
