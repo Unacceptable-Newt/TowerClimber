@@ -40,6 +40,7 @@ public class Display extends JFrame {
     //private MoneyPicker moneyPicker;
     private Inventory inventory;
     private JLabel additionalLabel;
+    private JsonSave saver = new JsonSave();
 
     // WSAD keys, used to move
     private HashSet<Integer> movementKeys = setMovementKeys();
@@ -217,6 +218,7 @@ public class Display extends JFrame {
 
         String guiText = Gui.updateGuiString(level.getMaze());
         textArea.setText(guiText);
+        saver.saveInventory(inventory);
 
     }
 
@@ -293,7 +295,7 @@ public class Display extends JFrame {
             public void keyPressed(KeyEvent e) {
                 if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_P && !isSaving) {
                     isSaving = true;
-                    JsonSave saver = new JsonSave();
+
                     saver.saveCurrentProgress(level);
                     saver.saveInventory(inventory);
                     e.consume();
@@ -308,7 +310,5 @@ public class Display extends JFrame {
             }
         });
     }
-
-
 
 }

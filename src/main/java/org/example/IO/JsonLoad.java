@@ -518,7 +518,7 @@ public class JsonLoad {
                 inventory.addItem(weapon);
             }
 
-            System.out.println(inventory.getCapacity());
+            //System.out.println(inventory.getCapacity());
             return inventory;
         } catch (Exception e) {
             return new Inventory(5);

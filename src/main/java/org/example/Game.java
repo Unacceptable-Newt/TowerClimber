@@ -44,5 +44,6 @@ public class Game {
 
         // Call the GUI
         new Display(WIDTH, HEIGHT);
+
     }
 }
