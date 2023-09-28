@@ -112,6 +112,7 @@ public class Display extends JFrame {
                 if (isInKeySet(movementKeys, keyCode)) { // Movement events
                     MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, level.getMaze());
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
+
                     //interacting with exit
                     level = ExitEvent.exit(level);
 
@@ -119,7 +120,7 @@ public class Display extends JFrame {
                     EnemyFighter enemyFighter = new EnemyFighter();
 
                     enemyFighter.interactWithAdjacent(inventory, level.getMaze());
-                    if (level.getMaze().getPlayer().getHealth() <= 0){
+                    if (level.getMaze().getPlayer().getHealth() <= 0) {
                         //FIXME Player needs to die
                     }
 

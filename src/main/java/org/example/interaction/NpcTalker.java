@@ -46,7 +46,6 @@ public class NpcTalker {
                     );
 
             // increment the dialogue count by 1
-
             return DialogueLoader.loadDialogue(npc, dialogueKey);
         }
     }
