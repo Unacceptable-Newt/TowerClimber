@@ -34,10 +34,8 @@ public class EnemyFighter implements Interaction {
      * @return Modified player and inventory
      */
     @Override
-    public Pair<Player, Inventory> interactWithAdjacent(Inventory inventory, Maze maze){ 
+    public Pair<Player, Inventory> interactWithAdjacent(Inventory inventory, Maze maze) {
         // Data preparation for battle.
-    
-
         Position enemyPosition = Movement.getFrontalPosition(
                 maze.getPlayer().getDirection(),
                 maze.getPlayer().getPosition());
@@ -45,19 +43,15 @@ public class EnemyFighter implements Interaction {
         Enemy enemy = maze.getEnemyAtPosition(enemyPosition);
         Player player = maze.getPlayer();
 
-        if(enemy != null){
+        if (enemy != null) {
            boolean winOrLoss = Battle.processFights(player, enemy);
            
            
-           if(winOrLoss){ 
-            
-            // In this case, the player win
-            maze.getEnemies().remove(enemyPosition); //remove defeated enemy
-
-            maze.getPlayer().addMoney(enemy.getMoney()); // get loot
-
-            return new Pair<>(maze.getPlayer(), inventory); // update the player and the inventory
-
+           if (winOrLoss) {
+                // In this case, the player wins
+                maze.getEnemies().remove(enemyPosition); //remove defeated enemy
+                maze.getPlayer().addMoney(enemy.getMoney()); // get loot
+                return new Pair<>(maze.getPlayer(), inventory); // update the player and the inventory
            }
            
            else{  // The player will die and respawn
@@ -70,7 +64,7 @@ public class EnemyFighter implements Interaction {
            return new Pair<>(maze.getPlayer(), inventory);  // the inventory system remains unchanged.
            }
         }
-        else{
+        else {
             return new Pair<>(maze.getPlayer(), inventory); 
         }
 

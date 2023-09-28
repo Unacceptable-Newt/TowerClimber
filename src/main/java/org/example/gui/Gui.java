@@ -1,9 +1,7 @@
 package org.example.gui;
 
 import org.example.PersistentDataNames;
-import org.example.belonging.Inventory;
 import org.example.belonging.Item;
-import org.example.belonging.Weapon;
 import org.example.entity.*;
 import org.example.gameLogic.Maze;
 

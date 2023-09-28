@@ -3,6 +3,8 @@ import org.example.IO.JsonLoad;
 import org.example.IO.JsonSave;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
+import org.example.entity.Enemy;
+import org.example.gameLogic.Approach;
 import org.example.interaction.EnemyFighter;
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
@@ -110,7 +112,14 @@ public class Display extends JFrame {
                 int keyCode = e.getKeyCode();
                 // Get the text after considering change brought by movement
                 if (isInKeySet(movementKeys, keyCode)) { // Movement events
+                    // Movement
                     MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, level.getMaze());
+
+                    // Check if enemy is adjacent
+                    if (Approach.isNearby(level.getMaze().getPlayer(), level.getMaze().getEnemies())) {
+
+                    }
+
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
                     //interacting with exit
                     level = ExitEvent.exit(level);
