@@ -1,5 +1,6 @@
 package org.example.gui;
 import org.example.IO.JsonLoad;
+import org.example.IO.JsonSave;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
 import org.example.interaction.EnemyFighter;
@@ -138,6 +139,9 @@ public class Display extends JFrame {
                 guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
                 textArea.setText(guiText);
                 // DON'T CHANGE OR SET `guiText` BELOW
+
+                // If user press "ctrl+p" game will save
+                saveGame();
             }
         });
 
@@ -187,7 +191,9 @@ public class Display extends JFrame {
      * Initialise the pick helper instance and inventory system
      */
     public void initialisePickerObjects() {
-        this.inventory = new Inventory(5);
+        JsonLoad loader = new JsonLoad();
+
+        this.inventory = loader.loadInventory();
         this.itemPicker  = new ItemPicker();
 
     }
@@ -278,6 +284,31 @@ public class Display extends JFrame {
         return builder;
     }
 
+
+    private void saveGame(){
+        textArea.addKeyListener(new KeyAdapter() {
+            private boolean isSaving = false;
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_P && !isSaving) {
+                    isSaving = true;
+                    JsonSave saver = new JsonSave();
+                    saver.saveCurrentProgress(level);
+                    saver.saveInventory(inventory);
+                    System.out.println("saved!");
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_S) {
+                    isSaving = false;
+                }
+            }
+        });
+    }
 
 
 

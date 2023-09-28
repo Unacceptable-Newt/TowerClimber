@@ -2,7 +2,9 @@ package org.example.IO;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.example.belonging.Inventory;
 import org.example.belonging.Item;
+import org.example.belonging.Weapon;
 import org.example.entity.*;
 import org.example.gameLogic.Level;
 import org.example.gameLogic.Maze;
@@ -209,7 +211,12 @@ public class JsonSave {
 
             // translate to string
             String jsonStr = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(mazeData);
+            Weapon curWeapon = level.getMaze().getPlayer().getCurrentWeapon();
 
+            Player newPlayer = new Player(level.getMaze().getPlayer().getMoney(),level.getMaze().getPlayer().getHealth(),level.getMaze().getPlayer().getLevel(),level.getMaze().getPlayer().getPosition());
+            newPlayer.setCurrentWeapon(curWeapon);
+
+            level.getMaze().setPlayer(newPlayer);
             // Save string
             Files.write(Paths.get(destPath), jsonStr.getBytes());
 
@@ -329,6 +336,33 @@ public class JsonSave {
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Cannot save new progress");
+        }
+    }
+
+
+    /**
+     * save inventory to json
+     *
+     * @author Xin Chen
+     * @param inventory save from display
+     */
+    public void saveInventory(Inventory inventory){
+        try{
+            String curFolderPath = CUR_PROGRESS_FILE_PATH;
+            String fileName = "inventory.json";
+            String destPath = curFolderPath + fileName;
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            // save data into MAP
+            Map<String, Object> inventoryData = new HashMap<>();
+            inventoryData.put("inventory", inventory);
+
+            // translate to string
+            String jsonStr = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(inventoryData);
+            Files.write(Paths.get(destPath), jsonStr.getBytes());
+
+        }catch (Exception e){
+            throw new RuntimeException("check saveInventory()");
         }
     }
 

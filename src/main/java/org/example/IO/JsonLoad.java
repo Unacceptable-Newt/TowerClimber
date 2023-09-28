@@ -2,6 +2,7 @@ package org.example.IO;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.belonging.Inventory;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
 import org.example.entity.*;
@@ -484,6 +485,47 @@ public class JsonLoad {
             throw new RuntimeException("Check loadNextLevel()");
         }
     }
+
+    /**
+     * load inventory from json
+     *
+     * @author Xin Chen
+     * @return saved inventory if file exists. new inventory if file does not exist
+     */
+    public Inventory loadInventory() {
+        try {
+            String filePath = CUR_PROGRESS_FILE_PATH + "inventory.json";
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            // Read data from JSON
+            Map<String, Object> rawData = objectMapper.readValue(new File(filePath), new TypeReference<Map<String, Object>>() {});
+            Map<String, Object> inventoryData = (Map<String, Object>) rawData.get("inventory");
+
+            // Create inventory instance
+            int capacity = (Integer) inventoryData.get("capacity");
+            Inventory inventory = new Inventory(capacity);
+
+            // Populate inventory with weapons
+            Map<String, Map<String, Object>> itemsData = (Map<String, Map<String, Object>>) inventoryData.get("items");
+            for (Map.Entry<String, Map<String, Object>> itemEntry : itemsData.entrySet()) {
+                String name = (String) itemEntry.getValue().get("name");
+                int price = (Integer) itemEntry.getValue().get("price");
+                int weight = (Integer) itemEntry.getValue().get("weight");
+                int attackValue = (Integer) itemEntry.getValue().get("attackValue");
+
+                // Create a weapon with the extracted details
+                Weapon weapon = new Weapon(name, price, weight, attackValue);
+                inventory.addItem(weapon);
+            }
+
+            System.out.println(inventory.getCapacity());
+            return inventory;
+        } catch (Exception e) {
+            return new Inventory(5);
+        }
+    }
+
+
 
 
 
