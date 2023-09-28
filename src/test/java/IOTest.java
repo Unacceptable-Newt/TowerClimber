@@ -55,7 +55,7 @@ public class IOTest {
         testMaze.addItem(new Position(13, 15), new Weapon("The dragon knife",3, 5, 4));
         testMaze.addNPC(new NPC("King George's Chief Councillor", new Position(4, 5)));
 //        maze.addEnemy(new Position(25, 20),new Enemy(2, 2, 2));
-        testMaze.addEnemy(new Position(5, 4),new Enemy(2, 2, 2));
+        testMaze.addEnemy(new Position(5, 4),new Enemy("Tom", 2, 2, 2, new Position(5, 4)));
 
         testLevel.setMaze(testMaze);
 
