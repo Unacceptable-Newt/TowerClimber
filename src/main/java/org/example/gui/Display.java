@@ -96,8 +96,19 @@ public class Display extends JFrame {
                 else if (ch == 'd') MovementEvents.setGuiTextOnMovementKeysPressed(68,level.getMaze());
                 // interaction events
                 else if (ch == 'e') {
+                    Object frontalObject = Movement.getPlayerFrontalObject(level.getMaze());
+
+                    if (frontalObject == null) {
+                        dialog = "Nothing to interact with.\nTip: you must stand beside a letter and face it to interact with it";
+                    }
                     //check if player is facing exit;
-                    level = ExitEvent.exit(level);
+                    if (frontalObject instanceof Position && level.getLevel() == Game.MAX_LEVEL) {
+                        dialog = "Congratulations, you've won the game!";
+                        //resets game once final exit is reached
+                        saver.emptyCurFolder();
+                    }else {
+                        level = ExitEvent.exit(level);
+                    }
                     //check if player is facing item
                     pickStuff(69);
                     //check if player is facing NPC
@@ -116,6 +127,7 @@ public class Display extends JFrame {
                 else if (ch == '4') selectItemFromKeyCode(52,true);
                 else if (ch == '5') selectItemFromKeyCode(53,true);
 
+                //saves if p is pressed
                 else if (ch == 'p') {saver.saveCurrentProgress(level); saver.saveInventory(inventory);}
                 //update the maze string
                 displayMaze = Gui.updateGuiString(level.getMaze());
@@ -211,14 +223,13 @@ public class Display extends JFrame {
                     //interacting with exit
                     if (frontalObject instanceof Position && level.getLevel() == Game.MAX_LEVEL) {
                         dialogueText = "Congratulations, you've won the game!";
+                        //resets game once final exit is reached
+                        saver.emptyCurFolder();
                     } else {
                         level = ExitEvent.exit(level);
                     }
 
                     enemyFighter.interactWithAdjacent(inventory, level.getMaze());
-                    if (level.getMaze().getPlayer().getHealth() <= 0) {
-                        //FIXME Player needs to die
-                    }
 
                     // interacting with NPC
                     try {
