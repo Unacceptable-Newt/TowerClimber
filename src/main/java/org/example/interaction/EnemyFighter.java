@@ -60,7 +60,7 @@ public class EnemyFighter implements Interaction {
 
            maze.setPlayer(respwanedPlayer); // back to the start position 
 
-           return new Pair<>(maze.getPlayer(), inventory);  // the inventory system remains unchanged.
+           return new Pair<>(null, inventory);  // the inventory system remains unchanged.
            }
         }
         else {

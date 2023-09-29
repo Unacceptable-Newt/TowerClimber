@@ -133,8 +133,8 @@ public class Display extends JFrame {
                     //interacting with enemy
                     EnemyFighter enemyFighter = new EnemyFighter();
 
-                    enemyFighter.interactWithAdjacent(inventory, level.getMaze());
-                    if (level.getMaze().getPlayer().getPosition() == Maze.respawnPosition){ //check if the player is at the respawn position
+                    Pair<Player,Inventory> combatResults = enemyFighter.interactWithAdjacent(inventory, level.getMaze());
+                    if (combatResults.first() == null){ //check if the player is at the respawn position
                         dialogueText = "You are dead";
                     }
 
