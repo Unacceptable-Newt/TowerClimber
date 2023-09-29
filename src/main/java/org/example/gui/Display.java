@@ -105,6 +105,10 @@ public class Display extends JFrame {
         textArea.setText(Gui.updateGuiString(level.getMaze()));
         additionalLabel.setText(displayInventory(inventory).toString());
 
+        // If user press "ctrl+p" game will save
+        saveGame();
+        // Call the press 1-5 key, and choose the item
+        chooseStuff();
 
         // Listen to key events
         textArea.addKeyListener(new KeyAdapter() {
@@ -150,16 +154,12 @@ public class Display extends JFrame {
                 // Call pick stuff function and put the picked stuff in the inventory system
                 pickStuff(e);
                 additionalLabel.setText(displayInventory(inventory).toString());
-                // Call the press 1-5 key, and choose the item
-                chooseStuff();
 
                 // Update the GUI char "pixels" as a string
                 guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
                 textArea.setText(guiText);
                 // DON'T CHANGE OR SET `guiText` BELOW
 
-                // If user press "ctrl+p" game will save
-                saveGame();
             }
         });
 
