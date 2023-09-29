@@ -30,7 +30,7 @@ public class DialogueLoaderTest {
                 );
 
         Assertions.assertEquals(
-                "King George's Chief Councillor: 'Tis the fifth time that the princess was kidnapped! Methinks a great mystery surrounds her. Oh mighty hero, thou art the last hope of our land and ... the 5689th person to accept his majesty's missions.",
+                "King George's Chief Councillor: 'Tis the fifth time that the princess was... um, kidnapped! Methinks a great mystery surrounds her. Oh mighty hero, thou art the last hope of our land and ... the 5689th person to accept his majesty's missions.",
                 DialogueLoader.loadDialogue(npc, dialogueKey)
         );
     }
@@ -54,7 +54,7 @@ public class DialogueLoaderTest {
 
         // Resets the dialogue to 1, and loads the first dialogue
         Assertions.assertEquals(
-                "King George's Chief Councillor: 'Tis the fifth time that the princess was kidnapped! Methinks a great mystery surrounds her. Oh mighty hero, thou art the last hope of our land and ... the 5689th person to accept his majesty's missions.",
+                "King George's Chief Councillor: 'Tis the fifth time that the princess was... um, kidnapped! Methinks a great mystery surrounds her. Oh mighty hero, thou art the last hope of our land and ... the 5689th person to accept his majesty's missions.",
                 DialogueLoader.loadDialogue(npc, dialogueKey)
         );
     }
