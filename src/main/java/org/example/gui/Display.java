@@ -8,11 +8,12 @@ import org.example.gameLogic.Approach;
 import org.example.interaction.EnemyFighter;
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
+import org.example.entity.Position;
 import org.example.interaction.ItemPicker;
 import org.example.interaction.NpcTalker;
 import org.example.util.Pair;
 import org.example.gameLogic.Level;
-
+import org.example.gameLogic.Maze;
 
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
@@ -31,6 +32,7 @@ import static org.example.gui.MovementEvents.setMovementKeys;
  * @author Austin Zerk
  * @author Yucheng Zhu
  * @author Rong Sun
+ * @author Yue Zhu
  * GUI to visualise the game.
  * Also defines the keys triggering the events
  */
@@ -132,8 +134,8 @@ public class Display extends JFrame {
                     EnemyFighter enemyFighter = new EnemyFighter();
 
                     enemyFighter.interactWithAdjacent(inventory, level.getMaze());
-                    if (level.getMaze().getPlayer().getHealth() <= 0){
-                        //FIXME Player needs to die
+                    if (level.getMaze().getPlayer().getPosition() == Maze.respawnPosition){ //check if the player is at the respawn position
+                        dialogueText = "You are dead";
                     }
 
                     // interacting with NPC

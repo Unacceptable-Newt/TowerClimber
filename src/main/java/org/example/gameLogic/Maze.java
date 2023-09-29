@@ -23,7 +23,7 @@ public class Maze {
     private HashMap<Position, Item> Items = new HashMap<>();
     private HashMap<Position, NPC> NPCs = new HashMap<>();
     private HashMap<Position, Enemy> Enemies = new HashMap<>();
-    private Position respawnPosition = new Position(2,2);
+    public static Position respawnPosition = new Position(2,2);
 
     /**
      * @author Austin Zerk
