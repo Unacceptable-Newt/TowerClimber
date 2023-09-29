@@ -241,6 +241,7 @@
       "Position{x=18, y=1}" : {
         "money" : 4,
         "health" : 3,
+        "name" : "Mighty Tup",
         "position" : {
           "x" : 18,
           "y" : 1
@@ -251,6 +252,7 @@
       }, "Position{x=8, y=2}" : {
         "money" : 4,
         "health" : 3,
+        "name" : "Giant Slime",
         "position" : {
           "x" : 8,
           "y" : 2
@@ -261,6 +263,7 @@
       }, "Position{x=39, y=7}" : {
         "money" : 4,
         "health" : 3,
+        "name" : "Horrible Medusa",
         "position" : {
           "x" : 39,
           "y" : 7
@@ -271,6 +274,7 @@
       }, "Position{x=41, y=13}" : {
         "money" : 4,
         "health" : 3,
+        "name" : "Daniel",
         "position" : {
           "x" : 41,
           "y" : 13

@@ -4,32 +4,46 @@ import org.example.entity.Enemy;
 import org.example.entity.Player;
 import org.example.entity.Position;
 
+import java.util.HashMap;
+
 /**
 * @author Yue Zhu
-* this function handles the interaction between an enemy and a player position relation 
-* @param player The player
-* @param enemy The enemy
-* @return True if the player is nearby the enemy.
+* this function handles the interaction between an enemy and a player position relation
+* @return True if the player is near the enemy.
 */
-
 public class Approach {
-
-    public static boolean isNearby (Player player, Enemy enemy){
+    /**
+     * @author Yue Zhu
+     * If an enemy is near the player
+     * @param player The player
+     * @param enemy The enemy
+     * @return True if the player is near the enemy.
+     */
+//    public static boolean isNearby(Player player, Enemy enemy) {
+    public static boolean isNearby(Player player, Enemy enemy) {
         //data preparation:
         Position positionPlayer = player.getPosition();
-        Position positionEnemy= enemy.getPosition();
+        Position positionEnemy = enemy.getPosition();
         double distance = calculateDistance(positionPlayer, positionEnemy);
         double standard = Math.sqrt(2);
-        if(distance<=standard){
+        if (distance <= standard) {
             return true;
         }
         else{
             return false;
         }
-
     }
 
-    public static double calculateDistance (Position p1, Position p2){
+    public static Enemy isNearby(Player player, HashMap<Position, Enemy> enemies) {
+        for (Enemy enemy: enemies.values()) {
+            if (isNearby(player, enemy)) {
+                return enemy;
+            }
+        }
+        return null;
+    }
+
+    public static double calculateDistance (Position p1, Position p2) {
         int x1 = p1.getX();
         int y1 = p1.getY();
         int x2 = p2.getX();

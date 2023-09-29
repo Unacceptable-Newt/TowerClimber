@@ -18,14 +18,13 @@ import org.example.util.Pair;
 public class EnemyFighter implements Interaction {
 
     /**
-     * @author Austin Zerk, Yucheng Zhu
+     * @author Austin Zerk, Yucheng Zhu,Yue Zhu
      * Fights the enemy for one turn (i.e. the player hits the enemy, and then he/she/it retaliates).
      * The enemy will lose health. And if he/she/it survives, the player will also lose health.
      * The player can interact with the enemy repeated to complete the fight.
      *
      * If the player wins in this turn, he gains loot, and the enemy disappear.
-     * If the enemy wins in this turn, the player respawns, and the enemy regains the full health
-     *
+     * If the enemy wins in this turn, the player respawns
      * Changes the player and his inventory in the process.
      *
      * @param inventory The player's inventory.
@@ -34,10 +33,8 @@ public class EnemyFighter implements Interaction {
      * @return Modified player and inventory
      */
     @Override
-    public Pair<Player, Inventory> interactWithAdjacent(Inventory inventory, Maze maze){ 
+    public Pair<Player, Inventory> interactWithAdjacent(Inventory inventory, Maze maze) {
         // Data preparation for battle.
-    
-
         Position enemyPosition = Movement.getFrontalPosition(
                 maze.getPlayer().getDirection(),
                 maze.getPlayer().getPosition());
@@ -50,7 +47,7 @@ public class EnemyFighter implements Interaction {
            
            
            if (winOrLoss) {
-            
+
             // In this case, the player win
             maze.getEnemies().remove(enemyPosition); //remove defeated enemy
             maze.getPlayer().addMoney(enemy.getMoney()); // get loot
@@ -67,7 +64,7 @@ public class EnemyFighter implements Interaction {
            return new Pair<>(maze.getPlayer(), inventory);  // the inventory system remains unchanged.
            }
         }
-        else{
+        else {
             return new Pair<>(maze.getPlayer(), inventory); 
         }
 

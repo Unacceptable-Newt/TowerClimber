@@ -5,17 +5,20 @@ import org.example.IO.JsonSave;
 import org.example.IO.JsonSave;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
+import org.example.entity.Enemy;
+import org.example.gameLogic.Approach;
 import org.example.entity.Position;
 import org.example.gameLogic.Maze;
 import org.example.interaction.EnemyFighter;
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
+import org.example.entity.Position;
 import org.example.interaction.ItemPicker;
 import org.example.interaction.NpcTalker;
 import org.example.move.Movement;
 import org.example.util.Pair;
 import org.example.gameLogic.Level;
-
+import org.example.gameLogic.Maze;
 
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
@@ -35,6 +38,7 @@ import static org.example.gui.MovementEvents.setMovementKeys;
  * @author Austin Zerk
  * @author Yucheng Zhu
  * @author Rong Sun
+ * @author Yue Zhu
  * GUI to visualise the game.
  * Also defines the keys triggering the events
  */
@@ -129,6 +133,21 @@ public class Display extends JFrame {
 
                 //saves if p is pressed
                 else if (ch == 'p') {saver.saveCurrentProgress(level); saver.saveInventory(inventory);}
+
+                //display enemy info if close to enemy
+                if (Approach.isNearby(level.getMaze().getPlayer(), level.getMaze().getEnemies()) != null) {
+                    Enemy selectedEnemy = Approach.isNearby(
+                            level.getMaze().getPlayer(),
+                            level.getMaze().getEnemies()
+                    );
+                    dialog  =  selectedEnemy.enemyStatistics(selectedEnemy);
+                }
+
+                //displays death message if player dies
+                Pair<Player,Inventory> combatResults = enemyFighter.interactWithAdjacent(inventory, level.getMaze());
+                if (combatResults.first() == null){ //check if the player is at the respawn position
+                    dialog = "You are dead";
+                }
                 //update the maze string
                 displayMaze = Gui.updateGuiString(level.getMaze());
                 //update the inventory string
@@ -212,7 +231,18 @@ public class Display extends JFrame {
                 int keyCode = e.getKeyCode();
                 // Get the text after considering change brought by movement
                 if (isInKeySet(movementKeys, keyCode)) { // Movement events
+                    // Movement
                     MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, level.getMaze());
+
+                    // Check if enemy is adjacent
+                    if (Approach.isNearby(level.getMaze().getPlayer(), level.getMaze().getEnemies()) != null) {
+                          Enemy selectedEnemy = Approach.isNearby(
+                            level.getMaze().getPlayer(),
+                            level.getMaze().getEnemies()
+                        );
+                          dialogueText  =  selectedEnemy.enemyStatistics(selectedEnemy);
+                    }
+
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
                     Object frontalObject = Movement.getPlayerFrontalObject(level.getMaze());
                     // No object to interact with
@@ -229,6 +259,13 @@ public class Display extends JFrame {
                         level = ExitEvent.exit(level);
                     }
 
+                    //interacting with enemy
+                    EnemyFighter enemyFighter = new EnemyFighter();
+
+                    Pair<Player,Inventory> combatResults = enemyFighter.interactWithAdjacent(inventory, level.getMaze());
+                    if (combatResults.first() == null){ //check if the player is at the respawn position
+                        dialogueText = "You are dead";
+                    }
                     enemyFighter.interactWithAdjacent(inventory, level.getMaze());
 
                     // interacting with NPC
