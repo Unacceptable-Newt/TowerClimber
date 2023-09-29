@@ -7,5 +7,5 @@ package org.example;
  * This ensures all names are used in a consistent way.
  */
 public enum PersistentDataNames {
-    PLAYER, ENEMIES, NPCS, INVENTORY, TREASURES, WALL, EXIT
+    PLAYER, ENEMIES, NPCS, INVENTORY, WALL, EXIT
 }
