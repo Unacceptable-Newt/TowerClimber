@@ -3,11 +3,13 @@ import org.example.IO.JsonLoad;
 import org.example.IO.JsonSave;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
+import org.example.gameLogic.Maze;
 import org.example.interaction.EnemyFighter;
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
 import org.example.interaction.ItemPicker;
 import org.example.interaction.NpcTalker;
+import org.example.move.Movement;
 import org.example.util.Pair;
 import org.example.gameLogic.Level;
 
@@ -113,6 +115,11 @@ public class Display extends JFrame {
                     MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, level.getMaze());
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
 
+                    // No object to interact with
+                    if (Movement.getPlayerFrontalObject(level.getMaze()) == null) {
+                        dialogueText = "Nothing to interact with.\nTip: you must stand beside a letter and face it to interact with it";
+                    }
+
                     //interacting with exit
                     level = ExitEvent.exit(level);
 
@@ -168,7 +175,7 @@ public class Display extends JFrame {
 
         File directory = new File("src/cache/progress/current");
 
-        if(directory.exists() && directory.isDirectory()) {
+        if (directory.exists() && directory.isDirectory()) {
             // if exists
             String[] files = directory.list();
 
@@ -176,7 +183,7 @@ public class Display extends JFrame {
                 // if it has file
                 try {
                     level = loader.loadCurLevelData();
-                }catch (Exception e){
+                } catch (Exception e) {
                     level = loader.loadStartMap();
                 }
             } else {
@@ -198,7 +205,7 @@ public class Display extends JFrame {
         JsonLoad loader = new JsonLoad();
 
         this.inventory = loader.loadInventory();
-        this.itemPicker  = new ItemPicker();
+        this.itemPicker = new ItemPicker();
 
     }
 
