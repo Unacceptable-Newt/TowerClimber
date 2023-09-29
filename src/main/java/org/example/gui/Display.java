@@ -2,6 +2,7 @@ package org.example.gui;
 import org.example.Game;
 import org.example.IO.JsonLoad;
 import org.example.IO.JsonSave;
+import org.example.IO.JsonSave;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
 import org.example.entity.Position;
@@ -23,6 +24,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import javax.swing.JTextPane;
 
@@ -37,17 +39,24 @@ import static org.example.gui.MovementEvents.setMovementKeys;
  * Also defines the keys triggering the events
  */
 public class Display extends JFrame {
-    private JTextPane textArea;
-    //private JTextArea inventoryTextArea;
-    private Level level;
-    private ItemPicker itemPicker;
-    //private MoneyPicker moneyPicker;
-    private Inventory inventory;
-    private JLabel additionalLabel;
-    private JsonSave saver = new JsonSave();
+    private static JTextPane textArea;
+    private static Level level;
+    private static ItemPicker itemPicker;
+    private static Inventory inventory;
 
-    // WSAD keys, used to move
-    private HashSet<Integer> movementKeys = setMovementKeys();
+    private HashSet<Integer> movementKeys;
+    private static JLabel additionalLabel;
+    private static String inventoryString = "";
+    private static String displayMaze = "";
+    private static String dialog = "";
+    private static JsonSave saver = new JsonSave();
+
+    //interacting with enemy
+    private static EnemyFighter enemyFighter = new EnemyFighter();
+
+    public boolean isMovementKeys(int key) {
+        return movementKeys.contains(key);
+    }
 
     /**
      * @author Austin Zerk
@@ -55,6 +64,76 @@ public class Display extends JFrame {
      * @author Rong Sun
      * GUI to visualise the game
      */
+    private void setMovementKeys() {
+        this.movementKeys = new HashSet<>();
+        this.movementKeys.add(KeyEvent.VK_W);
+        this.movementKeys.add(KeyEvent.VK_S);
+        this.movementKeys.add(KeyEvent.VK_A);
+        this.movementKeys.add(KeyEvent.VK_D);
+    }
+
+    public static void TextDisplay(){
+        // initialise the movement objects
+        initialiseMovementObjects();
+        // initialise the picker objects
+        initialisePickerObjects();
+
+        displayMaze = Gui.updateGuiString(level.getMaze());
+        System.out.println(displayMaze);
+
+        InputStreamReader sin = new InputStreamReader(System.in);
+        char ch;
+        while (true){
+            try {
+                ch = (char) sin.read();
+                dialog = "";
+                if (ch == '\n') continue;
+                if (ch == 'q') break;
+                //move the player if movement keys are pressed passing the keycode for jPane compatibility
+                else if (ch == 'w') MovementEvents.setGuiTextOnMovementKeysPressed(87,level.getMaze());
+                else if (ch == 'a') MovementEvents.setGuiTextOnMovementKeysPressed(65,level.getMaze());
+                else if (ch == 's') MovementEvents.setGuiTextOnMovementKeysPressed(83,level.getMaze());
+                else if (ch == 'd') MovementEvents.setGuiTextOnMovementKeysPressed(68,level.getMaze());
+                // interaction events
+                else if (ch == 'e') {
+                    //check if player is facing exit;
+                    level = ExitEvent.exit(level);
+                    //check if player is facing item
+                    pickStuff(69);
+                    //check if player is facing NPC
+                    try {
+                        dialog = NpcTalker.interactWithAdjacent(inventory, level, dialog);
+                    } catch (IOException e){
+                        System.err.println("failed to find dialog from adjacent NPC");
+                        System.err.println(e.getMessage());
+                    }
+                    enemyFighter.interactWithAdjacent(inventory,level.getMaze());
+                }
+                //keys for selecting items
+                else if (ch == '1') selectItemFromKeyCode(49,true);
+                else if (ch == '2') selectItemFromKeyCode(50,true);
+                else if (ch == '3') selectItemFromKeyCode(51,true);
+                else if (ch == '4') selectItemFromKeyCode(52,true);
+                else if (ch == '5') selectItemFromKeyCode(53,true);
+
+                else if (ch == 'p') {saver.saveCurrentProgress(level); saver.saveInventory(inventory);}
+                //update the maze string
+                displayMaze = Gui.updateGuiString(level.getMaze());
+                //update the inventory string
+                inventoryString = displayInventory(inventory,true).toString();
+
+                //print the display
+                System.out.println(inventoryString);
+                System.out.println(displayMaze);
+                System.out.println(dialog);
+
+            // if getting the input fails inform the user but do not stop the program
+            } catch (IOException e){
+                System.err.println("Failed to get character from input");
+            }
+        }
+    }
+
     public Display(int width, int height) {
         // Set movement keys only once
         setMovementKeys();
@@ -103,8 +182,15 @@ public class Display extends JFrame {
         // initialise the picker objects
         initialisePickerObjects();
         textArea.setText(Gui.updateGuiString(level.getMaze()));
-        additionalLabel.setText(displayInventory(inventory).toString());
+        additionalLabel.setText(displayInventory(inventory, false).toString());
 
+        // If user press "ctrl+p" game will save
+        //initialise user input for saving
+        saveGame();
+
+        // Call the press 1-5 key, and choose the item
+        // initialises user input for picking up objects
+        chooseStuff();
 
         // Listen to key events
         textArea.addKeyListener(new KeyAdapter() {
@@ -129,9 +215,6 @@ public class Display extends JFrame {
                         level = ExitEvent.exit(level);
                     }
 
-                    //interacting with enemy
-                    EnemyFighter enemyFighter = new EnemyFighter();
-
                     enemyFighter.interactWithAdjacent(inventory, level.getMaze());
                     if (level.getMaze().getPlayer().getHealth() <= 0) {
                         //FIXME Player needs to die
@@ -147,18 +230,16 @@ public class Display extends JFrame {
 
                 // interacting with items on map
                 // Call pick stuff function and put the picked stuff in the inventory system
-                pickStuff(e);
-                additionalLabel.setText(displayInventory(inventory).toString());
-                // Call the press 1-5 key, and choose the item
-                chooseStuff();
+                pickStuff(e.getKeyCode());
+
+                //updates the inventory display
+                additionalLabel.setText(displayInventory(inventory,false).toString());
 
                 // Update the GUI char "pixels" as a string
                 guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
                 textArea.setText(guiText);
                 // DON'T CHANGE OR SET `guiText` BELOW
 
-                // If user press "ctrl+p" game will save
-                saveGame();
             }
         });
 
@@ -174,7 +255,7 @@ public class Display extends JFrame {
      * Stubbing player's data to test movement.
      * TODO: replace this method from objects in the Maze when it finishes.
      */
-    public void initialiseMovementObjects() {
+    public static void initialiseMovementObjects() {
 
        // FIXME: load from file instead of creating a stubbed level when load is implemented
         JsonLoad loader = new JsonLoad();
@@ -207,22 +288,18 @@ public class Display extends JFrame {
      * @author Rong Sun
      * Initialise the pick helper instance and inventory system
      */
-    public void initialisePickerObjects() {
-        JsonLoad loader = new JsonLoad();
-
-        this.inventory = loader.loadInventory();
-        this.itemPicker = new ItemPicker();
+    public static void initialisePickerObjects() {
+        inventory = new Inventory(5);
+        itemPicker  = new ItemPicker();
 
     }
 
     /**
      * @author Rong Sun
      * Initialise the pick helper instance and inventory system
-     * @param e the key event that allow key E pressed and activity catched
+     * @param keyCode the key code that allow key E pressed and activity catched
      */
-    public void pickStuff(KeyEvent e){
-
-        int keyCode = e.getKeyCode();
+    public static void pickStuff(int keyCode){
 
         // Check if the "E" key is pressed
         if (keyCode == KeyEvent.VK_E) {
@@ -233,10 +310,6 @@ public class Display extends JFrame {
         }
 
         saver.saveInventory(inventory);
-
-        String guiText = Gui.updateGuiString(level.getMaze());
-        textArea.setText(guiText);
-
     }
 
     /**
@@ -251,35 +324,42 @@ public class Display extends JFrame {
                 String text;
                 int keyCode = e.getKeyCode();
 
-                // get the number of the key
-                int chosenWeaponNo = -1; // default is -1 (no use)
-                if (keyCode >= KeyEvent.VK_1 && keyCode <= KeyEvent.VK_5) {
-                    chosenWeaponNo = keyCode - KeyEvent.VK_1; // 1-5 mapping to 0-4
-                }
-
-                // if pressed the key 1-5
-                if (chosenWeaponNo >= 0 && chosenWeaponNo < inventory.listItems().size()) {
-                    Item selectedItem = inventory.listItems().get(chosenWeaponNo);
-                    if (selectedItem instanceof Weapon)
-                        level.getMaze().getPlayer().setCurrentWeapon((Weapon) selectedItem);
-                }
-
-                // update the GUI
-                text = Gui.updateGuiString(level.getMaze());
-                additionalLabel.setText(displayInventory(inventory).toString());
+                selectItemFromKeyCode(keyCode,false);
+                additionalLabel.setText(displayInventory(inventory,false).toString());
             }
         });
     }
 
+    /**
+     * adds a listener to the text area that updates the selected weapon of the player
+     * press 1-5 to choose the weapon 1-5 displayed in the inventory system
+     */
+    private static void selectItemFromKeyCode(int keyCode, boolean textMode){
+        int chosenWeaponNo = -1; // default is -1 (no use)
+        if (keyCode >= KeyEvent.VK_1 && keyCode <= KeyEvent.VK_5) {
+            chosenWeaponNo = keyCode - KeyEvent.VK_1; // 1-5 mapping to 0-4
+        }
+
+        // if pressed the key 1-5
+        if (chosenWeaponNo >= 0 && chosenWeaponNo < inventory.listItems().size()) {
+            Item selectedItem = inventory.listItems().get(chosenWeaponNo);
+            if (selectedItem instanceof Weapon)
+                level.getMaze().getPlayer().setCurrentWeapon((Weapon) selectedItem);
+        }
+
+        // update the GUI
+        //if (textMode) inventoryString = displayInventory(inventory).toString();
+        //else additionalLabel.setText(displayInventory(inventory).toString());
+    }
 
     /**
      * @author Rong Sun
      * adds the inventory to the gui display board.
      * press 1-5 to choose the weapon 1-5 displayed in the inventory system
      */
-    public StringBuilder displayInventory(Inventory inventory) {
+    public static StringBuilder displayInventory(Inventory inventory,boolean textMode) {
         int itemNumber = 1;
-        StringBuilder builder = new StringBuilder("<html>Inventory:<br>");
+        StringBuilder builder = textMode ? new StringBuilder("Inventory:\n") : new StringBuilder("<html>Inventory:<br>");
         //iterate the item, add them by different lines in the display board with the html label
         for (Item item : inventory.listItems()) {
             //make sure item is the instance of weapon
@@ -290,16 +370,17 @@ public class Display extends JFrame {
                 if (level.getMaze().getPlayer().getCurrentWeapon() == weapon)
                     builder.append(" --");
 
-                builder.append("<br>");
+                 if (textMode) builder.append("\n"); else builder.append("<br>");
             } else {
                 //make sure next weapon is in different lines
-                builder.append(itemNumber + ". " + item.getName() + "(Price:" + item.getPrice() + " Weight: " + item.getWeight() + ")<br>");
+                builder.append(itemNumber + ". " + item.getName() + "(Price:" + item.getPrice() + " Weight: " + item.getWeight());
+                if (textMode) builder.append("\n"); else builder.append(")<br>");
             }
             // label the different item to different numbers
             itemNumber++;
         }
 
-        builder.append("</html>");
+        if (!textMode) builder.append("</html>");
         return builder;
     }
 

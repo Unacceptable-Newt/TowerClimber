@@ -19,6 +19,11 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
   - test
+  - deploy
+
+variables:
+  DOCKER_HOST: tcp://docker:2376
+  DOCKER_TLS_CERTDIR: "/certs"
 
 gradle-build:       # This job runs in the build stage, which runs first.
   stage: build
@@ -33,4 +38,18 @@ gradle-test:   # This job runs in the test stage.
     - ./gradlew test
   tags:
     - comp2100
-    
+
+gradle-deploy:
+  image: docker:24.0.6
+  stage: deploy
+  when: manual
+  services:
+    - docker:24.0.6-dind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGESTRY_PASSWORD
+    - docker build -t yaboibo/comp2120-assignment3 .
+    - docker push yaboibo/comp2120-assignment3
+  tags:
+    - comp2100
+    - docker
+  allow_failure: true
