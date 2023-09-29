@@ -117,6 +117,21 @@ public class Display extends JFrame {
                 else if (ch == '5') selectItemFromKeyCode(53,true);
 
                 else if (ch == 'p') {saver.saveCurrentProgress(level); saver.saveInventory(inventory);}
+
+                //display enemy info if close to enemy
+                if (Approach.isNearby(level.getMaze().getPlayer(), level.getMaze().getEnemies()) != null) {
+                    Enemy selectedEnemy = Approach.isNearby(
+                            level.getMaze().getPlayer(),
+                            level.getMaze().getEnemies()
+                    );
+                    dialog  =  selectedEnemy.enemyStatistics(selectedEnemy);
+                }
+
+                //displays death message if player dies
+                Pair<Player,Inventory> combatResults = enemyFighter.interactWithAdjacent(inventory, level.getMaze());
+                if (combatResults.first() == null){ //check if the player is at the respawn position
+                    dialog = "You are dead";
+                }
                 //update the maze string
                 displayMaze = Gui.updateGuiString(level.getMaze());
                 //update the inventory string
