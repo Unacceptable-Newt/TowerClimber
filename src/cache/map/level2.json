@@ -70,8 +70,7 @@
           "y" : 2
         },
         "direction" : "UP",
-        "name" : "JASON",
-        "dialogue" : [ "Why Hello there", "a fine day we are having" ]
+        "name" : "General Jason"
       }
     },
     "items" : {

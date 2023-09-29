@@ -154,6 +154,7 @@ public class Movement {
     }
 
     /**
+     * Get an object at the given position in the given maze
      * @author Yucheng Zhu
      * @param maze The maze where the player is in
      * @param position The position to get the object. The object is not removed.
@@ -186,6 +187,7 @@ public class Movement {
     }
 
     /**
+     * Get the object the player currently faces
      * @author Yucheng Zhu
      * @author Austin Zerk
      * @author Rong Sun

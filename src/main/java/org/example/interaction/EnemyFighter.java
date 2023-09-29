@@ -47,20 +47,21 @@ public class EnemyFighter implements Interaction {
            
            
            if (winOrLoss) {
-                // In this case, the player wins
-                maze.getEnemies().remove(enemyPosition); //remove defeated enemy
-                maze.getPlayer().addMoney(enemy.getMoney()); // get loot
-                return new Pair<>(maze.getPlayer(), inventory); // update the player and the inventory
+
+            // In this case, the player win
+            maze.getEnemies().remove(enemyPosition); //remove defeated enemy
+            maze.getPlayer().addMoney(enemy.getMoney()); // get loot
+
+            return new Pair<>(maze.getPlayer(), inventory); // update the player and the inventory
+
            }
            
-           else{  // The player will die and respawn
-           Position respawnPosition = maze.getRespawnPosition();
+           else {  // The player will die and respawn
+               Position respawnPosition = maze.getRespawnPosition();
+               Player respwanedPlayer = respwanFunction(respawnPosition);
+               maze.setPlayer(respwanedPlayer); // back to the start position
 
-           Player respwanedPlayer = respwanFunction(respawnPosition);
-
-           maze.setPlayer(respwanedPlayer); // back to the start position 
-
-           return new Pair<>(null, inventory);  // the inventory system remains unchanged.
+           return new Pair<>(maze.getPlayer(), inventory);  // the inventory system remains unchanged.
            }
         }
         else {

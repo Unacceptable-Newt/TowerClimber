@@ -12,14 +12,13 @@ import java.io.IOException;
 import static org.example.move.Movement.getFrontalPosition;
 
 /**
- * @author Yucheng Zhu
  * Initialises a talk with an adjacent NPC
+ * @author Yucheng Zhu
  */
 public class NpcTalker {
     /**
-     * @author Yucheng Zhu
-     *
      * Interacts with an adjacent NPC to talk to him/her and changes the player and his inventory in the process.
+     * @author Yucheng Zhu
      * @param inventory The player's inventory.
      * @param level The current floor of the dungeon.
      *
@@ -46,7 +45,6 @@ public class NpcTalker {
                     );
 
             // increment the dialogue count by 1
-
             return DialogueLoader.loadDialogue(npc, dialogueKey);
         }
     }
