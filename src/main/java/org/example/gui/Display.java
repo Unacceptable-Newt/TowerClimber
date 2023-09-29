@@ -1,14 +1,18 @@
 package org.example.gui;
+import org.example.Game;
 import org.example.IO.JsonLoad;
 import org.example.IO.JsonSave;
 import org.example.IO.JsonSave;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
+import org.example.entity.Position;
+import org.example.gameLogic.Maze;
 import org.example.interaction.EnemyFighter;
 import org.example.belonging.Inventory;
 import org.example.entity.Player;
 import org.example.interaction.ItemPicker;
 import org.example.interaction.NpcTalker;
+import org.example.move.Movement;
 import org.example.util.Pair;
 import org.example.gameLogic.Level;
 
@@ -92,8 +96,19 @@ public class Display extends JFrame {
                 else if (ch == 'd') MovementEvents.setGuiTextOnMovementKeysPressed(68,level.getMaze());
                 // interaction events
                 else if (ch == 'e') {
+                    Object frontalObject = Movement.getPlayerFrontalObject(level.getMaze());
+
+                    if (frontalObject == null) {
+                        dialog = "Nothing to interact with.\nTip: you must stand beside a letter and face it to interact with it";
+                    }
                     //check if player is facing exit;
-                    level = ExitEvent.exit(level);
+                    if (frontalObject instanceof Position && level.getLevel() == Game.MAX_LEVEL) {
+                        dialog = "Congratulations, you've won the game!";
+                        //resets game once final exit is reached
+                        saver.emptyCurFolder();
+                    }else {
+                        level = ExitEvent.exit(level);
+                    }
                     //check if player is facing item
                     pickStuff(69);
                     //check if player is facing NPC
@@ -112,6 +127,7 @@ public class Display extends JFrame {
                 else if (ch == '4') selectItemFromKeyCode(52,true);
                 else if (ch == '5') selectItemFromKeyCode(53,true);
 
+                //saves if p is pressed
                 else if (ch == 'p') {saver.saveCurrentProgress(level); saver.saveInventory(inventory);}
                 //update the maze string
                 displayMaze = Gui.updateGuiString(level.getMaze());
@@ -178,7 +194,7 @@ public class Display extends JFrame {
         // initialise the picker objects
         initialisePickerObjects();
         textArea.setText(Gui.updateGuiString(level.getMaze()));
-        additionalLabel.setText(displayInventory(inventory,false).toString());
+        additionalLabel.setText(displayInventory(inventory, false).toString());
 
         // If user press "ctrl+p" game will save
         //initialise user input for saving
@@ -198,13 +214,22 @@ public class Display extends JFrame {
                 if (isInKeySet(movementKeys, keyCode)) { // Movement events
                     MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, level.getMaze());
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
+                    Object frontalObject = Movement.getPlayerFrontalObject(level.getMaze());
+                    // No object to interact with
+                    if (frontalObject == null) {
+                        dialogueText = "Nothing to interact with.\nTip: you must stand beside a letter and face it to interact with it";
+                    }
+
                     //interacting with exit
-                    level = ExitEvent.exit(level);
+                    if (frontalObject instanceof Position && level.getLevel() == Game.MAX_LEVEL) {
+                        dialogueText = "Congratulations, you've won the game!";
+                        //resets game once final exit is reached
+                        saver.emptyCurFolder();
+                    } else {
+                        level = ExitEvent.exit(level);
+                    }
 
                     enemyFighter.interactWithAdjacent(inventory, level.getMaze());
-                    if (level.getMaze().getPlayer().getHealth() <= 0){
-                        //FIXME Player needs to die
-                    }
 
                     // interacting with NPC
                     try {
@@ -248,7 +273,7 @@ public class Display extends JFrame {
 
         File directory = new File("src/cache/progress/current");
 
-        if(directory.exists() && directory.isDirectory()) {
+        if (directory.exists() && directory.isDirectory()) {
             // if exists
             String[] files = directory.list();
 
@@ -256,7 +281,7 @@ public class Display extends JFrame {
                 // if it has file
                 try {
                     level = loader.loadCurLevelData();
-                }catch (Exception e){
+                } catch (Exception e) {
                     level = loader.loadStartMap();
                 }
             } else {

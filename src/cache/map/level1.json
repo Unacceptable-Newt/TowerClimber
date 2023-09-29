@@ -289,26 +289,7 @@
           "y" : 3
         },
         "direction" : "UP",
-        "name" : "JASON"
-      },
-      "Position{x=54, y=1}" : {
-        "money" : 100,
-        "health" : 100,
-        "position" : {
-          "x" : 2,
-          "y" : 3
-        },
-        "direction" : "UP",
-        "name" : "JAMES"
-      }, "Position{x=55, y=7}" : {
-        "money" : 100,
-        "health" : 100,
-        "position" : {
-          "x" : 2,
-          "y" : 3
-        },
-        "direction" : "UP",
-        "name" : "JACKSON"
+        "name" : "King George's Chief Councillor"
       }
     },
     "items" : {

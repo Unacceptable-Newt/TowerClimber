@@ -67,19 +67,6 @@ public class Level {
 
     }
 
-
-
-    /**
-     * @author Yucheng Zhu
-     * Play the current level
-     *
-     * @return Next level (i.e. player goes to the next floor)
-     */
-    public int play() {
-        // FIXME
-        return 1;
-    }
-
     /**
      * @author
      *
@@ -88,6 +75,5 @@ public class Level {
     public void save() {
         JsonSave saver= new JsonSave();
         saver.saveCurrentProgress(this);
-        // FIXME
     }
 }

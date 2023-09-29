@@ -75,6 +75,16 @@
       }
     },
     "npcs" : {
+      "Position{x=5, y=5}" : {
+        "money" : 100,
+        "health" : 100,
+        "position" : {
+          "x" : 5,
+          "y" : 5
+        },
+        "direction" : "UP",
+        "name" : "King George's Chief Councillor"
+      },
       "Position{x=1, y=2}" : {
         "money" : 100,
         "health" : 100,
@@ -83,8 +93,7 @@
           "y" : 2
         },
         "direction" : "UP",
-        "name" : "JASON",
-        "dialogue" : [ "Why Hello there", "a fine day we are having" ]
+        "name" : "Princess Margaret"
       }
     },
     "items" : {
