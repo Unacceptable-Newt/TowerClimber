@@ -94,10 +94,10 @@ public class Display extends JFrame {
                 if (ch == '\n') continue;
                 if (ch == 'q') break;
                 //move the player if movement keys are pressed passing the keycode for jPane compatibility
-                else if (ch == 'w') MovementEvents.setGuiTextOnMovementKeysPressed(87,level.getMaze());
-                else if (ch == 'a') MovementEvents.setGuiTextOnMovementKeysPressed(65,level.getMaze());
-                else if (ch == 's') MovementEvents.setGuiTextOnMovementKeysPressed(83,level.getMaze());
-                else if (ch == 'd') MovementEvents.setGuiTextOnMovementKeysPressed(68,level.getMaze());
+                else if (ch == 'w') MovementEvents.setGuiTextOnMovementKeysPressed(87, level.getMaze());
+                else if (ch == 'a') MovementEvents.setGuiTextOnMovementKeysPressed(65, level.getMaze());
+                else if (ch == 's') MovementEvents.setGuiTextOnMovementKeysPressed(83, level.getMaze());
+                else if (ch == 'd') MovementEvents.setGuiTextOnMovementKeysPressed(68, level.getMaze());
                 // interaction events
                 else if (ch == 'e') {
                     Object frontalObject = Movement.getPlayerFrontalObject(level.getMaze());
@@ -113,9 +113,9 @@ public class Display extends JFrame {
                     }else {
                         level = ExitEvent.exit(level);
                     }
-                    //check if player is facing item
+                    // check if player is facing item
                     pickStuff(69);
-                    //check if player is facing NPC
+                    // check if player is facing NPC
                     try {
                         dialog = NpcTalker.interactWithAdjacent(inventory, level, dialog);
                     } catch (IOException e){
@@ -124,23 +124,23 @@ public class Display extends JFrame {
                     }
                     enemyFighter.interactWithAdjacent(inventory,level.getMaze());
                 }
-                //keys for selecting items
+                // keys for selecting items
                 else if (ch == '1') selectItemFromKeyCode(49,true);
                 else if (ch == '2') selectItemFromKeyCode(50,true);
                 else if (ch == '3') selectItemFromKeyCode(51,true);
                 else if (ch == '4') selectItemFromKeyCode(52,true);
                 else if (ch == '5') selectItemFromKeyCode(53,true);
 
-                //saves if p is pressed
+                // saves if p is pressed
                 else if (ch == 'p') {saver.saveCurrentProgress(level); saver.saveInventory(inventory);}
 
-                //display enemy info if close to enemy
+                // display enemy info if close to enemy
                 if (Approach.isNearby(level.getMaze().getPlayer(), level.getMaze().getEnemies()) != null) {
                     Enemy selectedEnemy = Approach.isNearby(
                             level.getMaze().getPlayer(),
                             level.getMaze().getEnemies()
                     );
-                    dialog  =  selectedEnemy.enemyStatistics(selectedEnemy);
+                    dialog = selectedEnemy.enemyStatistics(selectedEnemy);
                 }
 
                 //displays death message if player dies
@@ -263,7 +263,7 @@ public class Display extends JFrame {
                     EnemyFighter enemyFighter = new EnemyFighter();
 
                     Pair<Player,Inventory> combatResults = enemyFighter.interactWithAdjacent(inventory, level.getMaze());
-                    if (combatResults.first() == null){ //check if the player is at the respawn position
+                    if (combatResults.first() == null) { // check if the player is at the respawn position
                         dialogueText = "You are dead";
                     }
                     enemyFighter.interactWithAdjacent(inventory, level.getMaze());
@@ -287,7 +287,6 @@ public class Display extends JFrame {
                 guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
                 textArea.setText(guiText);
                 // DON'T CHANGE OR SET `guiText` BELOW
-
             }
         });
 

@@ -43,7 +43,7 @@ public class RespawnTest {
       boolean defeatedOrNot = org.example.gameLogic.Battle.processFights(player,enemy);
       // the player will be defeated by enemy, the respwan function will be invoked.
       Position testRespawnePosition = new Position(1, 1);
-      Player respawnedPlayer =  EnemyFighter.respwanFunction(testRespawnePosition);
+      Player respawnedPlayer =  EnemyFighter.respawnFunction(testRespawnePosition);
       Assertions.assertEquals(1, respawnedPlayer.getLevel());
       Assertions.assertEquals(testRespawnePosition, respawnedPlayer.getPosition());
       Assertions.assertEquals(0, respawnedPlayer.getMoney());

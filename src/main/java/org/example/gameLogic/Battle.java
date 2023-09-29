@@ -20,10 +20,13 @@ public class Battle {
 
         // Data preparation for battle.
         int playerAttack = player.getAttack();
+        int weaponAttack;
 
-         int weaponAttack;
-        if (player.getCurrentWeapon() != null) weaponAttack = player.getCurrentWeapon().getAttackValue();
-        else weaponAttack = 0;
+        if (player.getCurrentWeapon() != null) {
+            weaponAttack = player.getCurrentWeapon().getAttackValue();
+        } else {
+            weaponAttack = 0;
+        }
 
         int actualAttack = playerAttack + weaponAttack; //use the current weapon to defeat enemy
 
@@ -32,14 +35,11 @@ public class Battle {
         // turn 1, the player attack first
         enemy.defend(actualAttack);
         
-        if (enemy.getHealth() <= 0){
+        if (enemy.getHealth() <= 0) {
              return true; // enemy dies
-        }
-        else {
-        
+        } else {
         player.defend(enemyAttack);
-
-        return false; // enemy lives
+            return false; // enemy lives
         }
     }
 }
