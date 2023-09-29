@@ -2,6 +2,7 @@ package org.example.IO;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.Game;
 import org.example.belonging.Inventory;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
@@ -25,8 +26,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 /**
- * @author Xin Chen
  * JSON loader
+ * @author Xin Chen
  */
 public class JsonLoad {
 
@@ -38,6 +39,7 @@ public class JsonLoad {
 
 
     /**
+     * Check if a folder described in the given string exists
      * @author Xin Chen
      * @param progress The progress from gui
      * @return True if folder exists, False if not
@@ -57,18 +59,18 @@ public class JsonLoad {
     }
 
     /**
-     * @author Xin Chen
      * Check level num is valid or not
+     * @author Xin Chen
      * @param level It should be the level number reading from loader or game
      * @return Boolean, true if it is between 1-3
      */
     private boolean checkLevel(int level) {
-        return level >= 1 && level <= 3;
+        return level >= Game.MIN_LEVEL && level <= Game.MAX_LEVEL;
     }
 
     /**
-     * @author Xin Chen
      * Load list of json folders that saving the
+     * @author Xin Chen
      * @return null if folder is empty, list if folder has files
      */
     public ArrayList<String> loadProgressList() {
@@ -95,8 +97,8 @@ public class JsonLoad {
     }
 
     /**
-     * @author Xin Chen
      * Check "levelX.json" and "levelX_cur.json", where X is num
+     * @author Xin Chen
      * @param path Should be dir path to progress folder
      * @return A list of different level json files
      */
@@ -120,8 +122,8 @@ public class JsonLoad {
     }
 
     /**
-     * @author Austin Zerk
      * This function is used to pass the hashmap representing the position
+     * @author Austin Zerk
      * @param positionMap a hashmap with the x and y as keys and their integer values as values
      * @return Position of the hashmap
      */
@@ -229,8 +231,8 @@ public class JsonLoad {
     }
 
     /**
-     * @author Xin Chen
      * Load files, this should be used to update files
+     * @author Xin Chen
      * @param filePath Path to the dest files
      * @return Game state (class Level)
      */
@@ -295,8 +297,8 @@ public class JsonLoad {
     }
 
     /**
-     * @author Xin Chen
      * Extract level number from file name
+     * @author Xin Chen
      * @param filePath Exactly path to the file
      * @return Level num in the path
      */
@@ -312,10 +314,8 @@ public class JsonLoad {
     }
 
     /**
-     * @author Xin Chen
-     *
      * Load cur progress
-     *
+     * @author Xin Chen
      * @return A level object
      */
     public Level loadCurLevelData() {
@@ -336,11 +336,9 @@ public class JsonLoad {
     }
 
     /**
-     * @author Xin Chen
-     *
      * Ask player if he/she would like to save the previous game, if not empty everything in the "current" folder,
      * If yes save the current folder to new progress then move the dest progress to "current" folder
-     *
+     * @author Xin Chen
      * @param progress String: Load the progress chosen from gui
      * @param saveOrNot Boolean: Check if player wants to overwrite on the current folder
      */
@@ -406,6 +404,11 @@ public class JsonLoad {
     }
 
 
+    /**
+     * Create a folder if not already exist
+     * @author Xin Chen
+     * @return Level 1 map
+     */
     public static boolean createFolder(String folderPath) {
         File folder = new File(folderPath);
 
@@ -418,10 +421,8 @@ public class JsonLoad {
     }
 
     /**
-     * @author: Xin Chen
-     *
      * This function is for loading new game from preset folder
-     *
+     * @author Xin Chen
      * @return Level 1 map
      */
     public Level loadStartMap(){
@@ -451,8 +452,8 @@ public class JsonLoad {
     }
 
     /**
-     * @author: Xin Chen
-     *
+     * Load the next level
+     * @author Xin Chen
      * @param curLevel When player get into next level, should have cur level pass in
      * @return An object level back
      */
@@ -460,7 +461,7 @@ public class JsonLoad {
         Level newLevel = null;
         try {
             int nextLevel = curLevel + 1;
-            if(nextLevel >3){
+            if (nextLevel > Game.MAX_LEVEL){
                 throw new RuntimeException("Reach the max level.");
             }
             // Set paths
@@ -531,9 +532,8 @@ public class JsonLoad {
 
 
     /**
+     * Empty everything in CUR_PROGRESS_FILE_PATH
      * @author Xin Chen
-     *
-     * Empty everything in CURPROGRESSFILEPATH
      */
     public void emptyCurFolder() {
         // Empty everything in "src/cache/progress/current"
@@ -554,5 +554,4 @@ public class JsonLoad {
             e.printStackTrace();
         }
     }
-
 }

@@ -1,8 +1,10 @@
 package org.example.gui;
+import org.example.Game;
 import org.example.IO.JsonLoad;
 import org.example.IO.JsonSave;
 import org.example.belonging.Item;
 import org.example.belonging.Weapon;
+import org.example.entity.Position;
 import org.example.gameLogic.Maze;
 import org.example.interaction.EnemyFighter;
 import org.example.belonging.Inventory;
@@ -114,14 +116,18 @@ public class Display extends JFrame {
                 if (isInKeySet(movementKeys, keyCode)) { // Movement events
                     MovementEvents.setGuiTextOnMovementKeysPressed(keyCode, level.getMaze());
                 } else if (keyCode == KeyEvent.VK_E) { // exit event
-
+                    Object frontalObject = Movement.getPlayerFrontalObject(level.getMaze());
                     // No object to interact with
-                    if (Movement.getPlayerFrontalObject(level.getMaze()) == null) {
+                    if (frontalObject == null) {
                         dialogueText = "Nothing to interact with.\nTip: you must stand beside a letter and face it to interact with it";
                     }
 
                     //interacting with exit
-                    level = ExitEvent.exit(level);
+                    if (frontalObject instanceof Position && level.getLevel() == Game.MAX_LEVEL) {
+                        dialogueText = "Congratulations, you've won the game!";
+                    } else {
+                        level = ExitEvent.exit(level);
+                    }
 
                     //interacting with enemy
                     EnemyFighter enemyFighter = new EnemyFighter();

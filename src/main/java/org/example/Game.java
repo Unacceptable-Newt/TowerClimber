@@ -12,6 +12,10 @@ public class Game {
     private final static int WIDTH = 1024;
     private final static int HEIGHT = 800;
 
+    // Win the game after MAX_LEVEL
+    public final static int MIN_LEVEL = 1;
+    public final static int MAX_LEVEL = 3;
+
     /**
      * @author Yucheng Zhu
      * Run the game
@@ -20,6 +24,5 @@ public class Game {
     public static void main(String[] args) {
         // Call the GUI
         new Display(WIDTH, HEIGHT);
-
     }
 }

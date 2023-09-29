@@ -1,6 +1,19 @@
 {
   "inventory" : {
-    "items" : { },
+    "items" : {
+      "Gramps" : {
+        "name" : "Gramps",
+        "price" : 4,
+        "weight" : 2,
+        "attackValue" : 9
+      },
+      "Fring" : {
+        "name" : "Fring",
+        "price" : 2,
+        "weight" : 7,
+        "attackValue" : 2
+      }
+    },
     "capacity" : 5
   }
 }
