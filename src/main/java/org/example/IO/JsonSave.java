@@ -152,7 +152,7 @@ public class JsonSave {
      * Rename files with CURINDICATOR in CURPROGRESSFILEPATH
      * @param curLevel Where player is currently at
      */
-    protected void updateFileName(int curLevel, int destLevel) {
+    public void updateFileName(int curLevel, int destLevel) {
         // If the player goes to another level,
         // then this function will be triggered,
         // replacing "level${curLevel}_cur.json" with "level${curLevel}.json" and "level${destLevel}.json" with "level${destLevel}_cur.json",
@@ -169,12 +169,6 @@ public class JsonSave {
             if (!Files.exists(destFilePath) && !Files.exists(destFileCurPath)) {
                 Files.copy(curFilePath, destFileCurPath, StandardCopyOption.REPLACE_EXISTING);
             }
-
-            // Old concept, ignore now
-//            // Rename cur file to normal
-//            Path destinationPath = Paths.get(CURPROGRESSFILEPATH + PREFIX + curLevel + SURFFIX);
-//            Files.move(curFilePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-
 
             File fileToDelete = new File(String.valueOf(curFilePath));
             if (fileToDelete.exists()) {
@@ -236,7 +230,7 @@ public class JsonSave {
      * @param datalist A list of other files
      * @param curPlayer The player that changed his/her attributes
      */
-    protected void updateFiles(ArrayList<String> datalist, Player curPlayer)  {
+    public void updateFiles(ArrayList<String> datalist, Player curPlayer)  {
         // overwrite all files, not ending with "_cur", with updated player
         for (String path: datalist) {
             if (path.contains("_cur")) {
@@ -258,7 +252,6 @@ public class JsonSave {
                     HashMap<Position, Integer> moneyHashMap = oldMaze.getMoney();
 
                     //update player
-                    //TODO double check position with other members
                     Player newPlayer = new Player(
                             curPlayer.getMoney(),
                             curPlayer.getHealth(),
@@ -307,40 +300,6 @@ public class JsonSave {
         }
     }
 
-    /**
-     * @author Xin Chen
-     * Save progress to new progress folder
-     */
-    public void saveToNewProgress() {
-        try {
-            String destFolderPath = FOLDER_PATH + "/" + folderName+"/";
-            String curFolderPath = CUR_PROGRESS_FILE_PATH;
-
-            // create folder
-            Files.createDirectories(Paths.get(destFolderPath));
-
-            // get what current folder has
-            Stream<Path> paths = Files.walk(Paths.get(curFolderPath));
-
-            // copy all current files to new progress
-            paths.forEach(sourcePath -> {
-                try {
-                    Files.copy(
-                            sourcePath,
-                            Paths.get(destFolderPath).resolve(Paths.get(curFolderPath).relativize(sourcePath))
-                    );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-
-            paths.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Cannot save new progress");
-        }
-    }
-
 
     /**
      * save inventory to json
@@ -350,6 +309,7 @@ public class JsonSave {
      */
     public void saveInventory(Inventory inventory){
         try{
+            if (inventory == null) throw new RuntimeException("inventory is null");
             String curFolderPath = CUR_PROGRESS_FILE_PATH;
             String fileName = "inventory.json";
             String destPath = curFolderPath + fileName;

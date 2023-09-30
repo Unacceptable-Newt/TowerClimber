@@ -48,7 +48,8 @@ public class NpcTalkerTest {
                 NpcTalker.interactWithAdjacent(inventory, level, "")
         );
 
-
+        // empty cur folder after this test
+        loader.emptyCurFolder();
 
     }
 }

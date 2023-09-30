@@ -3,8 +3,8 @@ package org.example;
 import org.example.gui.Display;
 
 /**
- * @author Yucheng Zhu
  * Runs the game
+ * @author Yucheng Zhu
  */
 public class Game {
 
@@ -17,8 +17,8 @@ public class Game {
     public final static int MAX_LEVEL = 3;
 
     /**
-     * @author Yucheng Zhu
      * Run the game
+     * @author Yucheng Zhu
      * @param args Typically nothing at the moment
      */
     public static void main(String[] args) {
