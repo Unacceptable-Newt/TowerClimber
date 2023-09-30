@@ -99,16 +99,10 @@
     },
     "items" : {
       "Position{x=18, y=7}" : {
-        "name" : "Gramps",
+        "name" : "Cannon",
         "price" : 4,
-        "weight" : 2,
+        "weight" : 8,
         "attackValue" : 9
-      },
-      "Position{x=18, y=10}" : {
-        "name" : "Fring",
-        "price" : 2,
-        "weight" : 7,
-        "attackValue" : 2
       }
     }
   }
