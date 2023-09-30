@@ -39,26 +39,6 @@ public class JsonLoad {
 
 
     /**
-     * Check if a folder described in the given string exists
-     * @author Xin Chen
-     * @param progress The progress from gui
-     * @return True if folder exists, False if not
-     */
-    private boolean folderExists(String progress) {
-        try {
-            String folderPath = FOLDER_PATH;
-            if (Objects.equals(progress, "")) {
-                folderPath = FOLDER_PATH + "/" + progress;
-            }
-
-            File folder = new File(folderPath);
-            return folder.exists() && folder.isDirectory();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    /**
      * Check level num is valid or not
      * @author Xin Chen
      * @param level It should be the level number reading from loader or game
@@ -66,34 +46,6 @@ public class JsonLoad {
      */
     private boolean checkLevel(int level) {
         return level >= Game.MIN_LEVEL && level <= Game.MAX_LEVEL;
-    }
-
-    /**
-     * Load list of json folders that saving the
-     * @author Xin Chen
-     * @return null if folder is empty, list if folder has files
-     */
-    public ArrayList<String> loadProgressList() {
-        // Read out all the first level folder in FOLDERPATH,
-        // the file format of the folder is "dd_MM_yy_HH_mm" and "current",
-        // only read these, nothing else.
-
-        ArrayList<String> progressList = new ArrayList<>();
-        File folder = new File(FOLDER_PATH);
-        File[] listOfFiles = folder.listFiles();
-
-        if (listOfFiles != null) {
-            for (File file : listOfFiles) {
-                if (file.isDirectory()) {
-                    String folderName = file.getName();
-                    if (folderName.matches("\\d{2}_\\d{2}_\\d{2}_\\d{2}_\\d{2}") || folderName.equals("current")) {
-                        progressList.add(folderName);
-                    }
-                }
-            }
-        }
-
-        return progressList;
     }
 
     /**
@@ -302,7 +254,7 @@ public class JsonLoad {
      * @param filePath Exactly path to the file
      * @return Level num in the path
      */
-    protected int extractLevelNumber(String filePath) {
+    public int extractLevelNumber(String filePath) {
         Pattern pattern = Pattern.compile("level(\\d+)(_cur)?\\.json");
         Matcher matcher = pattern.matcher(filePath);
 
@@ -334,75 +286,6 @@ public class JsonLoad {
         }
         return level;
     }
-
-    /**
-     * Ask player if he/she would like to save the previous game, if not empty everything in the "current" folder,
-     * If yes save the current folder to new progress then move the dest progress to "current" folder
-     * @author Xin Chen
-     * @param progress String: Load the progress chosen from gui
-     * @param saveOrNot Boolean: Check if player wants to overwrite on the current folder
-     */
-    public Level loadProgress(String progress, boolean saveOrNot) {
-        // Will if there is a current ask the player to save it,
-        // otherwise this archive is all written to current,
-        // yes then save current to the current time folder,
-        // will be loaded into the progress of all the discs written to current
-        if (loadProgressList().contains(progress)) {
-            if (saveOrNot) { // yes
-                emptyCurFolder();
-                String folderProgressPath = FOLDER_PATH + progress;
-                try {
-                    // Get what current folder has
-                    Stream<Path> paths = Files.walk(Paths.get(folderProgressPath));
-                    // Copy all current files to new progress
-                    paths.forEach(sourcePath -> {
-                        try {
-                            Files.copy(sourcePath, Paths.get(CUR_PROGRESS_FILE_PATH).resolve(Paths.get(CUR_PROGRESS_FILE_PATH).relativize(sourcePath)));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                    paths.close();
-
-                    return loadCurLevelData();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    throw new RuntimeException("Cannot load correctly in loadProgress(), 1st");
-                }
-            } else { // No
-                // Save first
-                JsonSave saver = new JsonSave();
-                saver.saveToNewProgress();
-
-                // Empty
-                emptyCurFolder();
-
-                // Copy previous progress to current
-                String folderProgressPath = FOLDER_PATH + progress;
-                try {
-                    // get what progress has
-                    Stream<Path> paths = Files.walk(Paths.get(folderProgressPath));
-
-                    // Copy all progress to cur
-                    paths.forEach(sourcePath -> {
-                        try {
-                            Files.copy(sourcePath, Paths.get(CUR_PROGRESS_FILE_PATH).resolve(Paths.get(CUR_PROGRESS_FILE_PATH).relativize(sourcePath)));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                    paths.close();
-                    return loadCurLevelData();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    throw new RuntimeException("Cannot save and load correctly in loadProgress(), 2nd");
-                }
-            }
-        } else {
-            throw new RuntimeException("There is no such a progress");
-        }
-    }
-
 
     /**
      * Create a folder if not already exist
@@ -526,9 +409,6 @@ public class JsonLoad {
             return new Inventory(5);
         }
     }
-
-
-
 
 
     /**
