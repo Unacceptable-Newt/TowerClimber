@@ -125,11 +125,11 @@ public class Display extends JFrame {
                     enemyFighter.interactWithAdjacent(inventory,level.getMaze());
                 }
                 //keys for selecting items
-                else if (ch == '1') selectItemFromKeyCode(49,true);
-                else if (ch == '2') selectItemFromKeyCode(50,true);
-                else if (ch == '3') selectItemFromKeyCode(51,true);
-                else if (ch == '4') selectItemFromKeyCode(52,true);
-                else if (ch == '5') selectItemFromKeyCode(53,true);
+                else if (ch == '1') ItemPicker.selectItemFromKeyCode(49,true,inventory,level);
+                else if (ch == '2') ItemPicker.selectItemFromKeyCode(50,true,inventory,level);
+                else if (ch == '3') ItemPicker.selectItemFromKeyCode(51,true,inventory,level);
+                else if (ch == '4') ItemPicker.selectItemFromKeyCode(52,true,inventory,level);
+                else if (ch == '5') ItemPicker.selectItemFromKeyCode(53,true,inventory,level);
 
                 //saves if p is pressed
                 else if (ch == 'p') {saver.saveCurrentProgress(level); saver.saveInventory(inventory);}
@@ -151,7 +151,7 @@ public class Display extends JFrame {
                 //update the maze string
                 displayMaze = Gui.updateGuiString(level.getMaze());
                 //update the inventory string
-                inventoryString = displayInventory(inventory,true).toString();
+                inventoryString = ItemPicker.displayInventory(inventory,true,level).toString();
 
                 //print the display
                 System.out.println(inventoryString);
@@ -213,7 +213,7 @@ public class Display extends JFrame {
         // initialise the picker objects
         initialisePickerObjects();
         textArea.setText(Gui.updateGuiString(level.getMaze()));
-        additionalLabel.setText(displayInventory(inventory, false).toString());
+        additionalLabel.setText(ItemPicker.displayInventory(inventory, false,level).toString());
 
         // If user press "ctrl+p" game will save
         //initialise user input for saving
@@ -281,7 +281,7 @@ public class Display extends JFrame {
                 pickStuff(e.getKeyCode());
 
                 //updates the inventory display
-                additionalLabel.setText(displayInventory(inventory,false).toString());
+                additionalLabel.setText(ItemPicker.displayInventory(inventory,false,level).toString());
 
                 // Update the GUI char "pixels" as a string
                 guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
@@ -372,16 +372,16 @@ public class Display extends JFrame {
                 String text;
                 int keyCode = e.getKeyCode();
 
-                selectItemFromKeyCode(keyCode,false);
-                additionalLabel.setText(displayInventory(inventory,false).toString());
+                ItemPicker.selectItemFromKeyCode(keyCode,false,inventory,level);
+                additionalLabel.setText(ItemPicker.displayInventory(inventory,false,level).toString());
             }
         });
     }
 
-    /**
+/*    *//**
      * adds a listener to the text area that updates the selected weapon of the player
      * press 1-5 to choose the weapon 1-5 displayed in the inventory system
-     */
+     *//*
     private static void selectItemFromKeyCode(int keyCode, boolean textMode){
         int chosenWeaponNo = -1; // default is -1 (no use)
         if (keyCode >= KeyEvent.VK_1 && keyCode <= KeyEvent.VK_5) {
@@ -398,13 +398,13 @@ public class Display extends JFrame {
         // update the GUI
         //if (textMode) inventoryString = displayInventory(inventory).toString();
         //else additionalLabel.setText(displayInventory(inventory).toString());
-    }
+    }*/
 
-    /**
+/*    *//**
      * @author Rong Sun
      * adds the inventory to the gui display board.
      * press 1-5 to choose the weapon 1-5 displayed in the inventory system
-     */
+     *//*
     public static StringBuilder displayInventory(Inventory inventory,boolean textMode) {
         int itemNumber = 1;
         StringBuilder builder = textMode ? new StringBuilder("Inventory:\n") : new StringBuilder("<html>Inventory:<br>");
@@ -430,7 +430,7 @@ public class Display extends JFrame {
 
         if (!textMode) builder.append("</html>");
         return builder;
-    }
+    }*/
 
 
     /**
