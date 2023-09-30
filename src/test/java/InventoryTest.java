@@ -220,6 +220,14 @@ public class InventoryTest {
         Assertions.assertEquals(0, inventory.getCapacity());
     }
 
+    @Test
+    void setCapacity1() {
+        // update with neagtive number
+        inventory.setCapacity(6);
+
+        Assertions.assertEquals(6, inventory.getCapacity());
+    }
+
 
 
 
