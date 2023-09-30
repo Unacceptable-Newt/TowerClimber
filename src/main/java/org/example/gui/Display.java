@@ -135,7 +135,7 @@ public class Display extends JFrame {
                             level.getMaze().getPlayer(),
                             level.getMaze().getEnemies()
                     );
-                    dialog  =  selectedEnemy.enemyStatistics(selectedEnemy);
+                    dialog = selectedEnemy.enemyStatistics(selectedEnemy);
                 }
 
                 // displays death message if player dies
@@ -266,7 +266,7 @@ public class Display extends JFrame {
                     EnemyFighter enemyFighter = new EnemyFighter();
 
                     Pair<Player,Inventory> combatResults = enemyFighter.interactWithAdjacent(inventory, level.getMaze());
-                    if (combatResults.first() == null){ //check if the player is at the respawn position
+                    if (combatResults.first() == null) { // check if the player is at the respawn position
                         dialogueText = "You are dead";
                     }
                     enemyFighter.interactWithAdjacent(inventory, level.getMaze());
@@ -290,7 +290,6 @@ public class Display extends JFrame {
                 guiText = Gui.updateGuiString(level.getMaze(), dialogueText);
                 textArea.setText(guiText);
                 // DON'T CHANGE OR SET `guiText` BELOW
-
             }
         });
 

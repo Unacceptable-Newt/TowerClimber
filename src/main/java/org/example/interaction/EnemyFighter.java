@@ -58,10 +58,10 @@ public class EnemyFighter implements Interaction {
            
            else {  // The player will die and respawn
                Position respawnPosition = maze.getRespawnPosition();
-               Player respwanedPlayer = respwanFunction(respawnPosition);
+               Player respwanedPlayer = respawnFunction(respawnPosition);
                maze.setPlayer(respwanedPlayer); // back to the start position
 
-           return new Pair<>(maze.getPlayer(), inventory);  // the inventory system remains unchanged.
+           return new Pair<>(null, inventory);  // the inventory system remains unchanged.
            }
         }
         else {
@@ -71,8 +71,8 @@ public class EnemyFighter implements Interaction {
        
     }
 
-    public static Player respwanFunction(Position respawnPosition){
-        Player respwanedPlayer = new Player(0, 10, 1, respawnPosition);
-        return respwanedPlayer;
+    public static Player respawnFunction(Position respawnPosition){
+        Player respawnedPlayer = new Player(0, 10, 1, respawnPosition);
+        return respawnedPlayer;
     }
 }
