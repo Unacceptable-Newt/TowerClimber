@@ -337,7 +337,8 @@ public class Display extends JFrame {
      * Initialise the pick helper instance and inventory system
      */
     public static void initialisePickerObjects() {
-        inventory = new Inventory(5);
+        JsonLoad loader = new JsonLoad();
+        inventory = loader.loadInventory();
         itemPicker  = new ItemPicker();
 
     }
