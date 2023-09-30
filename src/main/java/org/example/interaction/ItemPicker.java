@@ -6,22 +6,19 @@ import org.example.belonging.Weapon;
 import org.example.entity.Player;
 import org.example.gameLogic.Level;
 import org.example.gameLogic.Maze;
-import org.example.gui.Display;
 import org.example.move.Movement;
 import org.example.util.Pair;
 
 import java.awt.event.KeyEvent;
 
 /**
- * @author Rong Sun
  * Initialises picking up an adjacent item
+ * @author Rong Sun
  */
 public class ItemPicker implements Interaction {
-
-
     /**
-     * @author Rong Sun
      * Interacts with an adjacent item to pick it up and changes the player and his inventory in the process.
+     * @author Rong Sun
      * @param inventory The player's inventory.
      * @param maze The maze.
      * @return New updated player and inventory
@@ -37,28 +34,26 @@ public class ItemPicker implements Interaction {
             maze.pickItemAtPosition(movement.getFrontalPosition(maze.getPlayer().getDirection()
                     ,maze.getPlayer().getPosition()));
 
-
                 // add the item into the inventory
                 inventory.addItem((Item) frontalObject);
 
         }
-
 
         // return the new player and inventory
         return new Pair<>(maze.getPlayer(), inventory);
     }
 
     /**
-     * @author Rong Sun
      * adds the inventory to the gui display board.
      * press 1-5 to choose the weapon 1-5 displayed in the inventory system
+     * @author Rong Sun
      */
     public static StringBuilder displayInventory(Inventory inventory, boolean textMode, Level level) {
         int itemNumber = 1;
         StringBuilder builder = textMode ? new StringBuilder("Inventory:\n") : new StringBuilder("<html>Inventory:<br>");
-        //iterate the item, add them by different lines in the display board with the html label
+        // iterate through the item, add them by different lines in the display board with the html label
         for (Item item : inventory.listItems()) {
-            //make sure item is the instance of weapon
+            // make sure item is the instance of weapon
             if (item instanceof Weapon weapon) {
                 if (level.getMaze().getPlayer().getCurrentWeapon() == weapon)
                     builder.append("-- ");
@@ -68,7 +63,7 @@ public class ItemPicker implements Interaction {
 
                 if (textMode) builder.append("\n"); else builder.append("<br>");
             } else {
-                //make sure next weapon is in different lines
+                // make sure next weapon is in different lines
                 builder.append(itemNumber + ". " + item.getName() + "(Price:" + item.getPrice() + " Weight: " + item.getWeight());
                 if (textMode) builder.append("\n"); else builder.append(")<br>");
             }
@@ -83,6 +78,12 @@ public class ItemPicker implements Interaction {
     /**
      * adds a listener to the text area that updates the selected weapon of the player
      * press 1-5 to choose the weapon 1-5 displayed in the inventory system
+     *
+     * @author Rong Sun
+     * @param keyCode Which key is pressed
+     * @param textMode True returns text. Otherwise, false
+     * @param inventory The player's inventory
+     * @param level The current level
      */
     public static void selectItemFromKeyCode(int keyCode, boolean textMode, Inventory inventory, Level level){
         int chosenWeaponNo = -1; // default is -1 (no use)
@@ -96,13 +97,5 @@ public class ItemPicker implements Interaction {
             if (selectedItem instanceof Weapon)
                 level.getMaze().getPlayer().setCurrentWeapon((Weapon) selectedItem);
         }
-
-        // update the GUI
-        //if (textMode) inventoryString = displayInventory(inventory).toString();
-        //else additionalLabel.setText(displayInventory(inventory).toString());
     }
-
-
-
-
 }
