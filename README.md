@@ -1,6 +1,6 @@
 # COMP2120-Assignment-3-Workshop-10-Group-A
 
-[**1. Project summary**](Project%20summary)
+[**1. Project summary**](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Project%20summary)
 
 - [List of features](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Project%20summary/List%20of%20features)
 - [Description of the game](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Project%20summary/Description%20of%20the%20game)
@@ -34,7 +34,7 @@
 
 ### Dependencies
 
-Ensure you have installed [java](https://www.java.com/en/download/help/download_options.html) with version 9 or later, and [Gradle](https://gradle.org/install/) which must be version 7.5 or later.
+Ensure you have installed [Java](https://www.java.com/en/download/help/download_options.html) with version 9 or later, and [Gradle](https://gradle.org/install/) which must be version 7.5 or later.
 
 ## Building from source files
 
@@ -64,7 +64,7 @@ to run the program in terminal mode add the `-terminal` flag when executing the 
 
 ## Running with docker
 
-to run with [docker](https://www.docker.com/get-started/), docker must be installed on the system. then run the following command to pull the image and run locally.
+to run with [Docker](https://www.docker.com/get-started/), Docker must be installed on the system. then run the following command to pull the image and run locally.
 
 ```
 docker run --rm -it yaboibo/comp2120-assignment3
