@@ -4,6 +4,7 @@ import org.example.Game;
 import org.example.IO.JsonLoad;
 import org.example.IO.JsonSave;
 import org.example.belonging.Inventory;
+import org.example.belonging.Weapon;
 import org.example.entity.Position;
 import org.example.gameLogic.Level;
 import org.example.move.LevelStates;
@@ -28,7 +29,7 @@ public class ExitEvent {
      * @return level Next level (current level + 1)
      */
 
-    public static Level exit(Level level) {
+    public static Level exit(Level level,Inventory inventory) {
         Object frontalObject = Movement.getPlayerFrontalObject(
                 level.getMaze()
         );
@@ -40,9 +41,12 @@ public class ExitEvent {
             JsonLoad loader = new JsonLoad();
             JsonSave saver = new JsonSave();
             saver.saveCurrentProgress(level);
+            saver.saveInventory(inventory);
 
             // start a new level in the next floor
+            Weapon playersWeapon = level.getMaze().getPlayer().getCurrentWeapon();
             level = loader.loadNextLevel(level.getLevel());
+            level.getMaze().getPlayer().setCurrentWeapon(playersWeapon);
         }
 
         return level; // return the level of floor to go

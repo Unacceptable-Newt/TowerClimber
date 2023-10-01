@@ -106,7 +106,7 @@ public class Display extends JFrame {
                         // resets game once final exit is reached
                         saver.emptyCurFolder();
                     }else {
-                        level = ExitEvent.exit(level);
+                        level = ExitEvent.exit(level,inventory);
                     }
                     // check if player is facing item
                     pickStuff(69);
@@ -261,7 +261,7 @@ public class Display extends JFrame {
                         //resets game once final exit is reached
                         saver.emptyCurFolder();
                     } else {
-                        level = ExitEvent.exit(level);
+                        level = ExitEvent.exit(level,inventory);
                     }
 
                     //interacting with enemy
@@ -323,6 +323,10 @@ public class Display extends JFrame {
                     // if it has file
                     try {
                         level = loader.loadCurLevelData();
+                        inventory = loader.loadInventory();
+                        if (level.getMaze().getPlayer().getCurrentWeapon() != null)
+                            inventory.addItem(level.getMaze().getPlayer().getCurrentWeapon());
+
                     } catch (Exception e) {
                         level = loader.loadStartMap();
                     }
@@ -338,6 +342,8 @@ public class Display extends JFrame {
         }else {
 
             level = loader.loadStartMap();
+            inventory = new Inventory(5);
+            saver.saveInventory(inventory);
         }
     }
 
@@ -349,7 +355,7 @@ public class Display extends JFrame {
      */
     public static void initialisePickerObjects() {
         JsonLoad loader = new JsonLoad();
-        inventory = loader.loadInventory();
+        //inventory = loader.loadInventory();
         itemPicker  = new ItemPicker();
 
     }
@@ -369,7 +375,7 @@ public class Display extends JFrame {
             Pair<Player, Inventory> playerInventoryPair = itemPicker.interactWithAdjacent(inventory, level.getMaze());
         }
 
-        saver.saveInventory(inventory);
+        //saver.saveInventory(inventory);
     }
 
     /**

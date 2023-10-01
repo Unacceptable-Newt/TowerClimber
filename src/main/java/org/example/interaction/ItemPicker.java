@@ -56,10 +56,10 @@ public class ItemPicker implements Interaction {
         for (Item item : inventory.listItems()) {
             // make sure item is the instance of weapon
             if (item instanceof Weapon weapon) {
-                if (Objects.equals(level.getMaze().getPlayer().getCurrentWeapon().getName(), weapon.getName()))
+                if (Objects.equals(level.getMaze().getPlayer().getCurrentWeapon(), weapon))
                     builder.append("-- ");
                 builder.append(itemNumber + ". " + weapon.getName() + "(Price:" + weapon.getPrice() + " Weight:" + weapon.getWeight() + " Attack:" + weapon.getAttackValue() + ")");
-                if (Objects.equals(level.getMaze().getPlayer().getCurrentWeapon().getName(), weapon.getName()))
+                if (Objects.equals(level.getMaze().getPlayer().getCurrentWeapon(), weapon))
                     builder.append(" --");
 
                 if (textMode) builder.append("\n"); else builder.append("<br>");
