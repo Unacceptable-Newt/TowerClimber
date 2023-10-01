@@ -64,7 +64,7 @@ to run the program in terminal mode add the `-terminal` flag when executing the 
 
 ## Running with docker
 
-to run with [docker](https://www.docker.com/get-started/) docker must be installed on the system. then run the following command to pull the image and run locally.
+to run with [docker](https://www.docker.com/get-started/), docker must be installed on the system. then run the following command to pull the image and run locally.
 
 ```
 docker run --rm -it yaboibo/comp2120-assignment3
