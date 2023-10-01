@@ -38,6 +38,8 @@ public class ExitEvent {
 
             // Load the next level from the JSON file
             JsonLoad loader = new JsonLoad();
+            JsonSave saver = new JsonSave();
+            saver.saveCurrentProgress(level);
 
             // start a new level in the next floor
             level = loader.loadNextLevel(level.getLevel());

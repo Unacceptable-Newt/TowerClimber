@@ -356,7 +356,8 @@ public class JsonLoad {
             Files.copy(fileToCopyPath, destFilePath, StandardCopyOption.REPLACE_EXISTING);
 
             // GetMaze for reload player
-            Maze curMaze = this.loadFile(curFilePath.toString()).getMaze();
+            Maze curMaze = loadCurLevelData().getMaze();
+
             ArrayList<String> datalist = this.loadLevelList(curFilePath.toString());
 
             JsonSave saver = new JsonSave();
@@ -364,6 +365,9 @@ public class JsonLoad {
             saver.updateFileName(curLevel,curLevel+1);
 
             newLevel = loadCurLevelData();
+            newLevel.getMaze().getPlayer().setCurrentWeapon(curMaze.getPlayer().getCurrentWeapon());
+            saver.saveCurrentProgress(newLevel);
+            System.out.println(newLevel.getMaze().getPlayer().getCurrentWeapon());
             return newLevel;
 
         } catch (Exception e){
