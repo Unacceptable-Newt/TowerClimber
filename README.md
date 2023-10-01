@@ -2,33 +2,33 @@
 
 [**1. Project summary**](Project%20summary)
 
-- [List of features](Project%20summary/List%20of%20features)
-- [Description of the game](Project%20summary/Description%20of%20the%20game)
-- [Future development](Project%20summary/Future%20development)
-- [Additional notes](Project%20summary/Additional%20notes)
+- [List of features](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Project%20summary/List%20of%20features)
+- [Description of the game](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Project%20summary/Description%20of%20the%20game)
+- [Future development](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Project%20summary/Future%20development)
+- [Additional notes](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Project%20summary/Additional%20notes)
 
-[**2. Evidence of planning and scheduling of issues**](Evidence%20of%20planning%20and%20scheduling%20of%20issues/Planning%20and%20scheduling)
+[**2. Evidence of planning and scheduling of issues**](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Evidence%20of%20planning%20and%20scheduling%20of%20issues/Planning%20and%20scheduling)
 
-- [Sprint cycles](Evidence%20of%20planning%20and%20scheduling%20of%20issues/Sprint%20cycles)
+- [Sprint cycles](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Evidence%20of%20planning%20and%20scheduling%20of%20issues/Sprint%20cycles)
 
-[**3. Meeting minutes**](3.%20Meeting%20minutes)
+[**3. Meeting minutes**](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/3.%20Meeting%20minutes)
 
-- [Sprint 1 meeting 1](Meeting%20minutes/Sprint%201%20meeting%201)
-- [Sprint 1 review](Sprint%201%20review)
-- [Sprint 2 meeting 1](Meeting%20minutes/Sprint%202%20meeting%201)
-- [Sprint 2 reviews and retrospective](Meeting%20minutes/Sprint%202%20reviews%20and%20retrospective)
-- [Sprint 3 planning meeting](Meeting%20minutes/Sprint%203%20planning%20meeting)
-- [Sprint 3 reviews and retrospective](Meeting%20minutes/Sprint%203%20reviews%20and%20retrospective)
-- [Sprint 4 planning meeting](Meeting%20minutes/Sprint%204%20planning%20meeting)
-- [Sprint 4 reviews and retrospective](Meeting%20minutes/Sprint%204%20reviews%20and%20retrospective)
+- [Sprint 1 meeting 1](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Meeting%20minutes/Sprint%201%20meeting%201)
+- [Sprint 1 review](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Sprint%201%20review)
+- [Sprint 2 meeting 1](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Meeting%20minutes/Sprint%202%20meeting%201)
+- [Sprint 2 reviews and retrospective](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Meeting%20minutes/Sprint%202%20reviews%20and%20retrospective)
+- [Sprint 3 planning meeting](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Meeting%20minutes/Sprint%203%20planning%20meeting)
+- [Sprint 3 reviews and retrospective](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Meeting%20minutes/Sprint%203%20reviews%20and%20retrospective)
+- [Sprint 4 planning meeting](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Meeting%20minutes/Sprint%204%20planning%20meeting)
+- [Sprint 4 reviews and retrospective](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/Meeting%20minutes/Sprint%204%20reviews%20and%20retrospective)
 
-[**4. Team structure and roles**](4.%20Team%20structure%20and%20roles)
+[**4. Team structure and roles**](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/4.%20Team%20structure%20and%20roles)
 
-[**5. Test**](5.%20Test)
+[**5. Test**](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/5.%20Test)
 
-[**6. Why Apache 2.0 License**](6.%20Why%20Apache%202.0%20License)
+[**6. Why Apache 2.0 License**](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/6.%20Why%20Apache%202.0%20License)
 
-[**7. Reflection**](7.%20Reflection)
+[**7. Reflection**](https://gitlab.cecs.anu.edu.au/u7581147/comp-2120-assignment-3-workshop-10-group-a/-/wikis/7.%20Reflection)
 
 ## Game Installation
 
