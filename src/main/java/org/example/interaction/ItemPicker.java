@@ -10,6 +10,7 @@ import org.example.move.Movement;
 import org.example.util.Pair;
 
 import java.awt.event.KeyEvent;
+import java.util.Objects;
 
 /**
  * Initialises picking up an adjacent item
@@ -55,10 +56,10 @@ public class ItemPicker implements Interaction {
         for (Item item : inventory.listItems()) {
             // make sure item is the instance of weapon
             if (item instanceof Weapon weapon) {
-                if (level.getMaze().getPlayer().getCurrentWeapon() == weapon)
+                if (Objects.equals(level.getMaze().getPlayer().getCurrentWeapon().getName(), weapon.getName()))
                     builder.append("-- ");
                 builder.append(itemNumber + ". " + weapon.getName() + "(Price:" + weapon.getPrice() + " Weight:" + weapon.getWeight() + " Attack:" + weapon.getAttackValue() + ")");
-                if (level.getMaze().getPlayer().getCurrentWeapon() == weapon)
+                if (Objects.equals(level.getMaze().getPlayer().getCurrentWeapon().getName(), weapon.getName()))
                     builder.append(" --");
 
                 if (textMode) builder.append("\n"); else builder.append("<br>");
