@@ -4,32 +4,30 @@ By signing your name and UID each member of the group acknowledges that all the 
 
 ---
 
-- Group Member 1 Name:
-- Group Member 1 UID:
+- Group Member 1 Name: Austin Zerk
+- Group Member 1 UID: u6648099
 
 ---
 
-- Group Member 2 Name:
-- Group Member 2 UID:
+- Group Member 2 Name: Rong Sun
+- Group Member 2 UID: u6591996
 
 ---
 
-- Group Member 3 Name:
-- Group Member 3 UID:
+- Group Member 3 Name: Shin Chen
+- Group Member 3 UID: u7413394
 
 ---
 
-- Group Member 4 Name:
-- Group Member 4 UID:
+- Group Member 4 Name: Yue Zhu
+- Group Member 4 UID: u7442130
 
 ---
 
-- Group Member 5 Name: (Remove if not applicable)
-- Group Member 5 UID: (Remove if not applicable)
+- Group Member 5 Name: Yucheng Zhu
+- Group Member 5 UID: u7581147
 
 ---
 
 # References (If any)
 
-- [1] [test.com](test.com) - Description/other info
-- [2] [test.com](test.com) - Description/other info
