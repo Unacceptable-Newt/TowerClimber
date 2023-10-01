@@ -1,4 +1,4 @@
-# COMP2120-Assignment-3-Workshop-XX-Group-X
+# COMP2120-Assignment-3-Workshop-10-Group-A
 
 ## Make sure to read the Instructions on the course page before starting!
 
