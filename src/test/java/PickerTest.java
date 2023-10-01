@@ -97,7 +97,7 @@ public class PickerTest {
         maze.addItem(new Position(1, 1), new Weapon("A", 1, 1, 1));
         Pair<Player, Inventory> playerInventoryPair = itemPicker.interactWithAdjacent(inventory, maze);
         Assertions.assertEquals(1, playerInventoryPair.second().listItems().size());
-        Assertions.assertEquals(24,playerInventoryPair.second().getItems().get("A").getPrice());
+        Assertions.assertEquals(1,playerInventoryPair.second().getItems().get("A").getPrice());
     }
 
 
