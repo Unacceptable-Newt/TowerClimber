@@ -21,8 +21,10 @@ import java.util.stream.Stream;
 
 
 /**
- * @author Xin Chen
  * JSON saver
+ *
+ * @author Xin Chen
+ *
  */
 public class JsonSave {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yy_HH_mm");

@@ -418,6 +418,11 @@ public class Display extends JFrame {
         });
     }
 
+    /**
+     * to restart the whole game
+     *
+     * @author Xin Chen
+     */
     private void loadNewGame(){
         textArea.addKeyListener(new KeyAdapter() {
             @Override
