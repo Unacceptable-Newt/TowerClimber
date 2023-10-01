@@ -61,8 +61,6 @@ public class Inventory {
     public void addItem(Item itemToAdd) {
         if(items.size()>=capacity){
             return;
-        }else if (items.containsKey(itemToAdd.getName())) {
-            return;
         }
         this.items.put(itemToAdd.getName(), itemToAdd);
     }

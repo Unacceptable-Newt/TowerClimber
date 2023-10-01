@@ -71,7 +71,7 @@ public class Display extends JFrame {
 
     public static void TextDisplay(){
         // initialise the movement objects
-        initialiseMovementObjects();
+        initialiseMovementObjects(true);
 
         // initialise the picker objects
         initialisePickerObjects();
@@ -106,7 +106,7 @@ public class Display extends JFrame {
                         // resets game once final exit is reached
                         saver.emptyCurFolder();
                     }else {
-                        level = ExitEvent.exit(level);
+                        level = ExitEvent.exit(level,inventory);
                     }
                     // check if player is facing item
                     pickStuff(69);
@@ -212,7 +212,7 @@ public class Display extends JFrame {
         this.add(panel);
 
         // initialise the movement objects
-        initialiseMovementObjects();
+        initialiseMovementObjects(true);
         // initialise the picker objects
         initialisePickerObjects();
         textArea.setText(Gui.updateGuiString(level.getMaze()));
@@ -221,6 +221,8 @@ public class Display extends JFrame {
         // If user press "ctrl+p" game will save
         //initialise user input for saving
         saveGame();
+
+        loadNewGame();
 
         // Call the press 1-5 key, and choose the item
         // initialises user input for picking up objects
@@ -259,7 +261,7 @@ public class Display extends JFrame {
                         //resets game once final exit is reached
                         saver.emptyCurFolder();
                     } else {
-                        level = ExitEvent.exit(level);
+                        level = ExitEvent.exit(level,inventory);
                     }
 
                     //interacting with enemy
@@ -303,32 +305,45 @@ public class Display extends JFrame {
      * @author Xin Chen
      * Stubbing player's data to test movement.
      */
-    public static void initialiseMovementObjects() {
+    public static void initialiseMovementObjects(boolean newGame) {
 
        // Load from file instead with the implemented load
         JsonLoad loader = new JsonLoad();
 
         File directory = new File("src/cache/progress/current");
 
-        if (directory.exists() && directory.isDirectory()) {
-            // if exists
-            String[] files = directory.list();
+        // false to restart, true to continue
+        if(newGame) {
 
-            if(files != null && files.length > 0) {
-                // if it has file
-                try {
-                    level = loader.loadCurLevelData();
-                } catch (Exception e) {
+            if (directory.exists() && directory.isDirectory()) {
+                // if exists
+                String[] files = directory.list();
+
+                if (files != null && files.length > 0) {
+                    // if it has file
+                    try {
+                        level = loader.loadCurLevelData();
+                        inventory = loader.loadInventory();
+                        if (level.getMaze().getPlayer().getCurrentWeapon() != null)
+                            inventory.addItem(level.getMaze().getPlayer().getCurrentWeapon());
+
+                    } catch (Exception e) {
+                        level = loader.loadStartMap();
+                    }
+                } else {
+                    // if it is empty
                     level = loader.loadStartMap();
                 }
             } else {
-                // if it is empty
+                // if folder is not there, create new one and start new
+                directory.mkdirs();
                 level = loader.loadStartMap();
             }
-        } else {
-            // if folder is not there, create new one and start new
-            directory.mkdirs();
+        }else {
+
             level = loader.loadStartMap();
+            inventory = new Inventory(5);
+            saver.saveInventory(inventory);
         }
     }
 
@@ -340,7 +355,7 @@ public class Display extends JFrame {
      */
     public static void initialisePickerObjects() {
         JsonLoad loader = new JsonLoad();
-        inventory = loader.loadInventory();
+        //inventory = loader.loadInventory();
         itemPicker  = new ItemPicker();
 
     }
@@ -360,7 +375,7 @@ public class Display extends JFrame {
             Pair<Player, Inventory> playerInventoryPair = itemPicker.interactWithAdjacent(inventory, level.getMaze());
         }
 
-        saver.saveInventory(inventory);
+        //saver.saveInventory(inventory);
     }
 
     /**
@@ -407,5 +422,27 @@ public class Display extends JFrame {
                 }
             }
         });
+    }
+
+    /**
+     * to restart the whole game
+     *
+     * @author Xin Chen
+     */
+    private void loadNewGame(){
+        textArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_N) {
+                    JsonSave saver = new JsonSave();
+                    saver.emptyCurFolder();
+                    inventory = new Inventory(5);
+                    saver.saveInventory(inventory);
+                    initialiseMovementObjects(false);
+                    e.consume();
+                }
+            }
+        });
+
     }
 }

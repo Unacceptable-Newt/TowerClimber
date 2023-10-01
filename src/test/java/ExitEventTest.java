@@ -1,5 +1,6 @@
 import org.example.IO.JsonLoad;
 import org.example.IO.JsonSave;
+import org.example.belonging.Inventory;
 import org.example.entity.Player;
 import org.example.entity.Position;
 import org.example.gameLogic.Level;
@@ -22,6 +23,7 @@ public class ExitEventTest {
     public void testExitEventNotNearAnExit() {
         // Set up a level where the player is facing the exit, because the player's not facing the exit
         Level level = new Level(1);
+        Inventory inventory = new Inventory(5);
         Maze maze = new Maze(30, 20, new Position(1, 1));
         Player player = new Player(50, 100, 1, new Position(1, 2));
         player.setDirection(Direction.DOWN);
@@ -29,7 +31,7 @@ public class ExitEventTest {
         level.setMaze(maze);
 
         // Stay at the current level
-        Assertions.assertEquals(1, ExitEvent.exit(level).getLevel());
+        Assertions.assertEquals(1, ExitEvent.exit(level,inventory).getLevel());
     }
 
     /**
@@ -40,6 +42,7 @@ public class ExitEventTest {
     public void testExitEventFacingAnExit() {
         // Set up a level where the player is facing the exit
         Level level = new Level(1);
+        Inventory inventory = new Inventory(5);
         Maze maze = new Maze(30, 20, new Position(1, 1));
         Player player = new Player(50, 100, 1, new Position(1, 2));
         player.setDirection(Direction.UP);
@@ -49,7 +52,7 @@ public class ExitEventTest {
         saver.saveCurrentProgress(level);
 
         // Go to the next level
-        Assertions.assertEquals(2, ExitEvent.exit(level).getLevel());
+        Assertions.assertEquals(2, ExitEvent.exit(level, inventory).getLevel());
         saver.emptyCurFolder();
 
     }

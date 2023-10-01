@@ -355,15 +355,14 @@ public class JsonLoad {
             // Then update the player to the new class level
             Files.copy(fileToCopyPath, destFilePath, StandardCopyOption.REPLACE_EXISTING);
 
-            // GetMaze for reload player
-            Maze curMaze = this.loadFile(curFilePath.toString()).getMaze();
             ArrayList<String> datalist = this.loadLevelList(curFilePath.toString());
 
             JsonSave saver = new JsonSave();
-            saver.updateFiles(datalist, curMaze.getPlayer());
             saver.updateFileName(curLevel,curLevel+1);
 
             newLevel = loadCurLevelData();
+            saver.saveCurrentProgress(newLevel);
+            System.out.println(newLevel.getMaze().getPlayer().getCurrentWeapon());
             return newLevel;
 
         } catch (Exception e){
